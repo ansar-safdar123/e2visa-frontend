@@ -19,8 +19,7 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="What are you looking for?"
-          className="w-full p-5 bg-white/10 backdrop-blur-md text-[background: #FFFFFF;
-] rounded-full pl-14 pr-4 outline-none focus:ring-2 font-[300] focus:ring-white/30"
+          className="w-full p-5 bg-white/10 backdrop-blur-md text-[#FFFFFF] rounded-full pl-14 pr-4 outline-none focus:ring-2 font-[300] focus:ring-white/30"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
