@@ -6,7 +6,7 @@ import Button from "../ui/Button";
 
 const FeaturedSection = () => {
   return (
-    <section className="py-20 min-h-[455px] px-4 bg-white">
+    <section className="py-20 min-h-[255px] px-4 bg-white">
       <div className="container relative mx-auto">
         <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="relative">

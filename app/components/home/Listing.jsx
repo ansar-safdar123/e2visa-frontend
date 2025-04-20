@@ -150,8 +150,8 @@ export default function ListingsTabs() {
           ))}
         </div>
 
-        <div className="mt-6 text-right">
-          <button className="text-white underline">View All →</button>
+        <div className="mt-12 text-right">
+          <button className="text-white font-medium text-2xl">View All &gt; </button>
         </div>
       </div>
     </div>

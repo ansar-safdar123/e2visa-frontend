@@ -99,5 +99,9 @@ body {
 .professional-name-tags{
   background: #FFFFFFB2;
   backdrop-filter: blur(45.74422073364258px)
+}
 
+.footer-bar{
+  background: var(--Blue-Gray-800, #1E293B);
+  color: #FFFFFF;
 }
