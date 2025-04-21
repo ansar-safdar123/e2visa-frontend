@@ -105,3 +105,8 @@ body {
   background: var(--Blue-Gray-800, #1E293B);
   color: #FFFFFF;
 }
+.signin-bg{
+  /* background: #FFFFFFCC; */
+  background: rgba(255, 255, 255, 0.8);
+
+}

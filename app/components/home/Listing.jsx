@@ -77,7 +77,7 @@ export default function ListingsTabs() {
   const [activeTab, setActiveTab] = useState("top");
 
   return (
-    <div className="bg-[#1B263B]  py-[92px] text-white min-h-screen">
+    <div className="bg-[#1B263B]  py-[92px] text-white">
       <div className="container mx-auto px-4">
         <div className="flex justify-center">
 
