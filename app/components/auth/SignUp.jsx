@@ -7,17 +7,8 @@ import Image from "next/image";
 
 const SignUp = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const userType = searchParams.get('type');
-
-  useEffect(() => {
-    if (!userType) {
-      router.push('/signup-options');
-    }
-  }, [userType, router]);
-
   const [formData, setFormData] = useState({
-    userType: userType || '',
+    userType: '',
     fullName: "",
     email: "",
     password: "",
@@ -35,6 +26,21 @@ const SignUp = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  useEffect(() => {
+    // Get the user type from URL in client-side
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type');
+    
+    if (!type) {
+      router.push('/signup-options');
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        userType: type
+      }));
+    }
+  }, [router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
