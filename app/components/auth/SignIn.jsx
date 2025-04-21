@@ -106,7 +106,7 @@ const SignIn = () => {
           {/* Register Link */}
           <div className="text-center text-[18px] font-medium mt-6 2xl:mt-10 text-[#1B263B]">
             Don't have an account?{' '}
-            <Link href="/signup" className="text-[#1E1E1E] font-medium hover:underline">
+            <Link href="/signup-options" className="text-[#1E1E1E] font-medium hover:underline">
               Register
             </Link>
           </div>

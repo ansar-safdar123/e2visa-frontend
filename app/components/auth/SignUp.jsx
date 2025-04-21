@@ -1,34 +1,46 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 const SignUp = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const userType = searchParams.get('type');
+
+  useEffect(() => {
+    if (!userType) {
+      router.push('/signup-options');
+    }
+  }, [userType, router]);
+
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    timeframe: '',
-    address: '',
-    country: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    broker: '',
-    attorney: '',
-    newsletter: ''
+    userType: userType || '',
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    timeframe: "",
+    address: "",
+    country: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    broker: "",
+    attorney: "",
+    newsletter: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -40,9 +52,14 @@ const SignUp = () => {
   return (
     <div className="min-h-[700px] flex items-center justify-center px-4 bg-[url('/images/auth/signin/signinImg.png')] bg-cover bg-center relative">
       <div className="signin-bg rounded-2xl shadow-lg px-12 py-20 w-full my-[50px] max-w-[927px]">
-        <h1 className="text-[32px] 2xl:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">Welcome Back!!</h1>
+        <h1 className="text-[32px] 2xl:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">
+          Welcome Back!!
+        </h1>
         <div className="flex items-center justify-center w-full">
-          <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-[540px]">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6 w-full max-w-[540px]"
+          >
             {/* Full Name Input */}
             <div className="relative">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -62,7 +79,12 @@ const SignUp = () => {
                 placeholder="Enter your full name"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="fullName" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Full Name</label>
+              <label
+                htmlFor="fullName"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Full Name
+              </label>
             </div>
 
             {/* Email Input */}
@@ -84,7 +106,12 @@ const SignUp = () => {
                 placeholder="email@gmail.com"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="email" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Email</label>
+              <label
+                htmlFor="email"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Email
+              </label>
             </div>
 
             {/* Password Input */}
@@ -106,14 +133,19 @@ const SignUp = () => {
                 placeholder="Enter your password"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="password" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Password</label>
+              <label
+                htmlFor="password"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Password
+              </label>
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-4 flex items-center"
               >
                 <Image
-                  src={`/images/auth/${showPassword ? 'eye-off' : 'eye'}.svg`}
+                  src={`/images/auth/${showPassword ? "eye-off" : "eye"}.svg`}
                   alt={showPassword ? "Hide password" : "Show password"}
                   width={20}
                   height={20}
@@ -140,14 +172,21 @@ const SignUp = () => {
                 placeholder="Confirm your password"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="confirmPassword" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Confirm Password</label>
+              <label
+                htmlFor="confirmPassword"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Confirm Password
+              </label>
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute inset-y-0 right-4 flex items-center"
               >
                 <Image
-                  src={`/images/auth/${showConfirmPassword ? 'eye-off' : 'eye'}.svg`}
+                  src={`/images/auth/${
+                    showConfirmPassword ? "eye-off" : "eye"
+                  }.svg`}
                   alt={showConfirmPassword ? "Hide password" : "Show password"}
                   width={20}
                   height={20}
@@ -174,7 +213,12 @@ const SignUp = () => {
                 placeholder="Enter your phone no"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="phone" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Phone no</label>
+              <label
+                htmlFor="phone"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Phone no
+              </label>
             </div>
 
             {/* Timeframe Input */}
@@ -196,7 +240,12 @@ const SignUp = () => {
                 placeholder="Enter timeframe"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="timeframe" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Time frame for immigrating to the US?</label>
+              <label
+                htmlFor="timeframe"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Time frame for immigrating to the US?
+              </label>
             </div>
 
             {/* Address Input */}
@@ -218,7 +267,12 @@ const SignUp = () => {
                 placeholder="Enter your address"
                 className="pl-12 w-full pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
-              <label htmlFor="address" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Address</label>
+              <label
+                htmlFor="address"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Address
+              </label>
             </div>
 
             {/* Country and City Selection */}
@@ -234,7 +288,12 @@ const SignUp = () => {
                   <option value="">Select Country</option>
                   {/* Add country options */}
                 </select>
-                <label htmlFor="country" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Country</label>
+                <label
+                  htmlFor="country"
+                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  Country
+                </label>
               </div>
               <div className="relative">
                 <select
@@ -247,7 +306,12 @@ const SignUp = () => {
                   <option value="">Select City</option>
                   {/* Add city options */}
                 </select>
-                <label htmlFor="city" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">City</label>
+                <label
+                  htmlFor="city"
+                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  City
+                </label>
               </div>
             </div>
 
@@ -263,7 +327,12 @@ const SignUp = () => {
                   placeholder="Enter State"
                   className="w-full pl-4 pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
-                <label htmlFor="state" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">State</label>
+                <label
+                  htmlFor="state"
+                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  State
+                </label>
               </div>
               <div className="relative">
                 <input
@@ -275,7 +344,12 @@ const SignUp = () => {
                   placeholder="Enter Zipcode"
                   className="w-full pl-4 pr-4 py-4 rounded-full border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
-                <label htmlFor="zipcode" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Zipcode</label>
+                <label
+                  htmlFor="zipcode"
+                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  Zipcode
+                </label>
               </div>
             </div>
 
@@ -292,7 +366,12 @@ const SignUp = () => {
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
-              <label htmlFor="broker" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Do you have a Broker?</label>
+              <label
+                htmlFor="broker"
+                className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Do you have a Broker?
+              </label>
             </div>
 
             {/* Attorney Selection */}
@@ -308,7 +387,12 @@ const SignUp = () => {
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
-              <label htmlFor="attorney" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Do you have an Attorney?</label>
+              <label
+                htmlFor="attorney"
+                className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Do you have an Attorney?
+              </label>
             </div>
 
             {/* Newsletter Selection */}
@@ -324,7 +408,12 @@ const SignUp = () => {
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
-              <label htmlFor="newsletter" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Register for newsletters?</label>
+              <label
+                htmlFor="newsletter"
+                className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                Register for newsletters?
+              </label>
             </div>
 
             {/* Create Account Button */}
@@ -337,8 +426,11 @@ const SignUp = () => {
 
             {/* Login Link */}
             <div className="text-center text-[18px] font-medium mt-6 2xl:mt-10 text-[#1B263B]">
-              Already have an account?{' '}
-              <Link href="/login" className="text-[#1E1E1E] font-medium hover:underline">
+              Already have an account?{" "}
+              <Link
+                href="/signin"
+                className="text-[#1E1E1E] font-medium hover:underline"
+              >
                 Login
               </Link>
             </div>
@@ -349,4 +441,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp; 
+export default SignUp;
