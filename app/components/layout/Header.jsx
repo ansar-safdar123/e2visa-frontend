@@ -2,8 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import ProfileDropdown from '../common/ProfileDropdown';
+import { useAuth } from '@/app/context/AuthContext';
 
 const Header = () => {
+  const { user } = useAuth();
+
   return (
     <header className="bg-[#1B263B] text-white py-[17px]">
       <div className="container mx-auto px-4">
@@ -34,12 +38,19 @@ const Header = () => {
             >
               Contact Us
             </Link>
-            <Link 
+            <div className="flex items-center">
+            {user ? (
+              <ProfileDropdown user={user} />
+            ) : (
+              <Link 
               href="/signin"
               className="px-[33.63px] py-4 rounded-full bg-white hover:bg-gray-100 "
             >
               Sign In
-            </Link>
+            </Link> 
+            )}
+          </div>
+            
           </div>
         </nav>
       </div>

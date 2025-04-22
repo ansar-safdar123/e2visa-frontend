@@ -3,15 +3,28 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign in logic here
+    // Here you would typically make an API call to verify credentials
+    // For now, we'll simulate a successful login
+    const userData = {
+      name: 'John Doe',
+      email: email,
+      image: '/images/auth/signin/user2.png'
+    };
+    
+    login(userData);
+    router.push('/');
   };
 
   return (

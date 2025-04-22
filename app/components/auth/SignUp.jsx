@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from '../../context/AuthContext';
 
 const SignUp = () => {
   const router = useRouter();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     userType: '',
     fullName: "",
@@ -52,7 +54,15 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle sign up logic here
+    // Here you would typically make an API call to register the user
+    // For now, we'll simulate a successful registration
+    const userData = {
+      name: formData.fullName,
+      email: formData.email,
+      image: '/images/auth/signin/user2.png'
+    };
+    login(userData);
+    router.push('/');
   };
 
   return (
