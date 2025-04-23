@@ -30,7 +30,7 @@ const SignIn = () => {
   return (
     <div className="min-h-[700px] flex items-center justify-center px-4 bg-[url('/images/auth/signin/signinImg.png')] bg-cover bg-center relative">
         {/* <div className="absolute inset-0 bg-[#1B263B]/80 z-0" /> */}
-        <div class="signin-bg rounded-2xl shadow-lg px-12 py-20 w-full my-[50px] max-w-[927px]">
+        <div className="signin-bg rounded-2xl shadow-lg px-12 py-20 w-full my-[50px] max-w-[927px]">
         <h1 className="text-[32px] 2xl:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">Welcome Back!</h1>
         <div className="flex items-center justify-center w-full">
 
