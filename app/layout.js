@@ -3,6 +3,8 @@ import "./globals.css";
 import { Lato } from "next/font/google";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,7 +12,7 @@ const geistSans = Geist({
 });
 const lato = Lato({
   subsets: ["latin"],
-  weight: ["400", "700"], // You can add more weights like '100', '300', '900'
+  weight: ["100", "300", "400", "700", "900"],
   variable: "--font-lato",
 });
 
@@ -30,11 +32,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         cz-shortcut-listen="true"
-        className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} antialiased min-h-screen flex flex-col font-lato`}
       >
         <Header />
         <main className="flex-grow">{children}</main>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

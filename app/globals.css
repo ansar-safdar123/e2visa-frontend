@@ -102,3 +102,92 @@ body {
 .signin-bg {
   background: rgba(255, 255, 255, 0.8);
 }
+.bgImg{
+  background-image: url('../public/images/HeroSection/bgImg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Slider Custom Styles */
+.listing-slider .slick-prev,
+.listing-slider .slick-next {
+  width: 32px;
+  height: 32px;
+  background: #0A3161 !important;
+  border-radius: 50%;
+  z-index: 1;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.listing-slider .slick-prev::before {
+  content: "<" !important;
+  font-size: 20px;
+  color: white !important;
+  opacity: 1;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 5px;
+  margin-right: 3px;
+}
+
+.listing-slider .slick-next::before {
+  content: ">" !important;
+  font-size: 20px;
+  color: white !important;
+  opacity: 1;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 5px;
+  margin-left: 3px;
+
+}
+
+.listing-slider .slick-prev {
+  left: -30px;
+}
+
+.listing-slider .slick-next {
+  right: -30px;
+}
+
+.listing-slider .slick-prev:hover,
+.listing-slider .slick-next:hover {
+  background: #0A3161 !important;
+}
+
+.listing-slider .slick-dots li button:before {
+  color: white;
+}
+
+.listing-slider .slick-dots li.slick-active button:before {
+  color: #2EC4B6;
+}
+
+.listing-slider .slick-slide {
+  padding: 0 10px;
+}
+
+/* Ensure arrows are visible on mobile */
+@media (max-width: 768px) {
+  .listing-slider .slick-prev {
+    left: -30px;
+  }
+  
+  .listing-slider .slick-next {
+    right: -30px;
+  }
+}

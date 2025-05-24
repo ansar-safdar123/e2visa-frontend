@@ -22,9 +22,8 @@ const Button = ({
   };
 
   return (
-      //   className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
     <button
-    className="px-[33.63px] py-4 rounded-full text-[#1B263B] bg-white hover:bg-gray-100 "
+    className="px-[15px] xl:px-[33.63px] xl:text-base text-xs xl:py-4 py-2 rounded-lg text-[#1B263B] bg-white hover:bg-gray-100 "
 
       {...props}
     >

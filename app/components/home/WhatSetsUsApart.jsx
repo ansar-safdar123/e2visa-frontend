@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 const WhatSetsUsApart = () => {
@@ -25,60 +26,33 @@ const WhatSetsUsApart = () => {
   ];
 
   return (
-    <section className="py-16 px-4 overflow-hidden">
-      <h2 className="text-3xl font-bold text-center mb-12">
-        What Sets Us Apart
-      </h2>
-
-      <div className="max-w-7xl mx-auto relative">
-        {/* Carousel container */}
-        <div className="flex gap-6 justify-center items-stretch">
+    <section className="py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-center xl:text-4xl text-2xl text-[#40433F] font-bold my-10">What Sets Us Apart</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="w-[384px] bg-white rounded-[20px] p-8 border border-[#E5E7EB]"
+              className="border border-gray-200 rounded-lg p-6"
             >
-              <span className="text-[#2EC4B6] text-base font-medium mb-4 block">
-                {feature.id}
-              </span>
-              <h3 className="text-xl font-semibold mb-4 text-[#1F2937]">
+              <div className="mb-4">
+                <Image
+                  src="/images/setsUsApart/tick.png"
+                  alt="Search"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer"
+                />
+              </div>
+              <h3 className="text-[#40433F] font-bold xl:text-2xl text-lg  mb-2">
                 {feature.title}
               </h3>
-              <p className="text-[#4B5563] text-base">{feature.description}</p>
+              <p className="font-medium text-[#40433F] text-sm xl:text-lg">
+                {feature.description}
+              </p>
             </div>
           ))}
-        </div>
-
-        {/* Navigation dots */}
-        <div className="flex justify-center items-center gap-2 mt-8">
-          <button
-            className="w-8 h-8 rounded-full bg-[#2EC4B6] flex items-center justify-center text-white"
-            aria-label="Previous slide"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M15 19l-7-7 7-7"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-          <button
-            className="w-8 h-8 rounded-full bg-[#2EC4B6] flex items-center justify-center text-white"
-            aria-label="Next slide"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M9 5l7 7-7 7"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+         
         </div>
       </div>
     </section>
