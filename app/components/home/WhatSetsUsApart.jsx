@@ -29,8 +29,8 @@ const WhatSetsUsApart = () => {
     <section className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-center xl:text-4xl text-2xl text-[#40433F] font-bold my-10">What Sets Us Apart</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature, index) => (
             <div
               key={feature.id}
               className="border border-gray-200 rounded-lg p-6"
@@ -44,7 +44,7 @@ const WhatSetsUsApart = () => {
                   className="cursor-pointer"
                 />
               </div>
-              <h3 className="text-[#40433F] font-bold xl:text-2xl text-lg  mb-2">
+              <h3 className="text-[#40433F] font-bold xl:text-2xl text-lg mb-2">
                 {feature.title}
               </h3>
               <p className="font-medium text-[#40433F] text-sm xl:text-lg">
@@ -52,7 +52,6 @@ const WhatSetsUsApart = () => {
               </p>
             </div>
           ))}
-         
         </div>
       </div>
     </section>

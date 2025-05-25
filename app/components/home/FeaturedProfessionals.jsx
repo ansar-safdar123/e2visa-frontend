@@ -84,9 +84,9 @@ const FeaturedProfessionals = () => {
                   <img
                     src={pro.image}
                     alt={pro.name}
-                    className="w-full h-full rounded-[22px]"
+                    className="w-full h-full object-cover rounded-[22px]"
                   />
-                  <div className="text-center w-full absolute left-1/2 -translate-x-1/2  bottom-5 text-[15.25px] p-3">
+                  <div className="text-center absolute left-1/2 -translate-x-1/2 w-full bottom-5 text-[15.25px] p-3">
                     <div className="professional-name-tags w-full px-4 py-2 rounded-lg inline-block font-semibold">
                       {pro.name}
                       <br />

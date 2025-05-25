@@ -98,7 +98,8 @@ body {
 }
 
 .footer-bar {
-  background: var(--Blue-Gray-800, #1E293B);
+  /* background: var(--Blue-Gray-800, #1E293B); */
+  background:#50534F;
   color: #FFFFFF;
 }
 
