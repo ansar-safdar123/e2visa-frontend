@@ -2,8 +2,31 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  const isActive = (path) => {
+    return pathname === path;
+  };
+
+  const usefulLinks = [
+    { name: "Cookies Policy", href: "/cookies-policy" },
+    { name: "Terms & Conditions", href: "/terms-conditions" },
+    { name: "Disclaimer", href: "/disclaimer" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+  ];
+
+  const quickLinks = [
+    { name: "Home", href: "/" },
+    { name: "Buy a Business", href: "/buy-business" },
+    { name: "Buy Real Estate", href: "/real-estate" },
+    { name: "Find a Professional", href: "/professionals" },
+    { name: "Article", href: "/articles" },
+    { name: "Forum", href: "/forum" },
+  ];
+
   return (
     <footer>
       <div className="footer-bar text-white">
@@ -119,16 +142,13 @@ const Footer = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold ">Useful Links</h3>
               <ul className="space-y-3">
-                {[
-                  { name: "Cookies Policy", href: "/cookies-policy" },
-                  { name: "Terms & Conditions", href: "/terms-conditions" },
-                  { name: "Disclaimer", href: "/disclaimer" },
-                  { name: "Privacy Policy", href: "/privacy-policy" },
-                ].map((item) => (
+                {usefulLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-base font-bold hover:text-gray-300"
+                      className={`text-base font-bold hover:text-gray-300 transition-colors ${
+                        isActive(item.href) ? 'text-[#2EC4B6]' : ''
+                      }`}
                     >
                       {item.name}
                     </Link>
@@ -141,18 +161,13 @@ const Footer = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold ">Quick Links</h3>
               <ul className="space-y-3">
-                {[
-                  { name: "Home", href: "/" },
-                  { name: "Buy a Business", href: "/buy-business" },
-                  { name: "Buy Real Estate", href: "/real-estate" },
-                  { name: "Find a Professional", href: "/professionals" },
-                  { name: "Article", href: "/articles" },
-                  { name: "Forum", href: "/forum" },
-                ].map((item) => (
+                {quickLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-base font-bold hover:text-gray-300"
+                      className={`text-base font-bold hover:text-gray-300 transition-colors ${
+                        isActive(item.href) ? 'text-[#2EC4B6]' : ''
+                      }`}
                     >
                       {item.name}
                     </Link>

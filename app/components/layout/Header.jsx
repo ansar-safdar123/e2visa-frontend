@@ -3,16 +3,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import ProfileDropdown from '../common/ProfileDropdown';
 import { useAuth } from '@/app/context/AuthContext';
 
 const Header = () => {
   const { user } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const isActive = (path) => {
+    return pathname === path;
+  };
+
+  const menuItems = [
+    { href: '/', label: 'Home' },
+    { href: '/buy-business', label: 'Buy a Business' },
+    { href: '/real-estate', label: 'Buy Real Estate' },
+    { href: '/professionals', label: 'Find a Professional' },
+    { href: '/forum', label: 'Forum' },
+    { href: '/articles', label: 'Articles' },
+  ];
 
   return (
     <header className="bg-[#40433F] text-white py-[17px] relative">
@@ -30,12 +45,17 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-10 text-sm xl:text-[18px] font-medium">
-            <Link href="/" className="hover:text-gray-300">Home</Link>
-            <Link href="/buy-business" className="hover:text-gray-300">Buy a Business</Link>
-            <Link href="/real-estate" className="hover:text-gray-300">Buy Real Estate</Link>
-            <Link href="/professionals" className="hover:text-gray-300">Find a Professional</Link>
-            <Link href="/forum" className="hover:text-gray-300">Forum</Link>
-            <Link href="/articles" className="hover:text-gray-300">Articles</Link>
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`hover:text-gray-300 transition-colors ${
+                  isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex items-center xl:gap-4 gap-2">
@@ -44,9 +64,7 @@ const Header = () => {
               <Link 
                 href="/contact"
                 className="xl:text-base text-xs px-3 md:px-[15px] xl:px-[33.63px] py-2 xl:py-4 text- rounded-lg bg-white hover:bg-gray-100"
-              
               >
-
                 Contact Us
               </Link>
               <div className="flex items-center">
@@ -56,9 +74,7 @@ const Header = () => {
                   <Link 
                     href="/signin"
                     className="xl:text-base text-xs px-3 md:px-[15px] xl:px-[33.63px] py-2 xl:py-4 text- rounded-lg bg-white hover:bg-gray-100"
-                  
                   >
-
                     Sign In
                   </Link> 
                 )}
@@ -109,12 +125,18 @@ const Header = () => {
           </button>
         </div>
         <div className="flex flex-col space-y-4 p-4 mt-8">
-          <Link href="/" className="text-white hover:text-gray-300" onClick={toggleSidebar}>Home</Link>
-          <Link href="/buy-business" className="text-white hover:text-gray-300" onClick={toggleSidebar}>Buy a Business</Link>
-          <Link href="/real-estate" className="text-white hover:text-gray-300" onClick={toggleSidebar}>Buy Real Estate</Link>
-          <Link href="/professionals" className="text-white hover:text-gray-300" onClick={toggleSidebar}>Find a Professional</Link>
-          <Link href="/forum" className="text-white hover:text-gray-300" onClick={toggleSidebar}>Forum</Link>
-          <Link href="/articles" className="text-white hover:text-gray-300" onClick={toggleSidebar}>Articles</Link>
+          {menuItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`text-white hover:text-gray-300 transition-colors ${
+                isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''
+              }`}
+              onClick={toggleSidebar}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
 
