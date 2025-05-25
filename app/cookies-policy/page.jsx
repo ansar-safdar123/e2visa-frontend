@@ -67,7 +67,7 @@ export default function CookiesPolicy() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#40433F]">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <div className='w-full h-[full]'>
 
@@ -81,8 +81,8 @@ export default function CookiesPolicy() {
                   </div>
 
       {/* Content Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="bg-white rounded-lg p-8 md:p-12 max-w-7xl mx-auto">
+      <div className="px-4 py-16">
+        <div className="bg-white container rounded-lg p-8 md:p-12">
           {/* Personal Statement Section */}
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-[#40433F] mb-4">Personal Statement</h2>
