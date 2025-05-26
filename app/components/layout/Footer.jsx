@@ -20,10 +20,10 @@ const Footer = () => {
 
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "Buy a Business", href: "/buy-business" },
-    { name: "Buy Real Estate", href: "/real-estate" },
+    { name: "Find a Business", href: "/buy-business" },
+    { name: "Find a Real Estate", href: "/real-estate" },
     { name: "Find a Professional", href: "/professionals" },
-    { name: "Article", href: "/articles" },
+    { name: "Articles", href: "/articles" },
     { name: "Forum", href: "/forum" },
   ];
 
@@ -79,56 +79,6 @@ const Footer = () => {
 
       <footer className="bg-[#40433F] text-white">
         <div className="container mx-auto py-20 px-4">
-          {/* <div className="flex justify-between pb-10 gap-3">
-            <div className="">
-              <div className="flex items-center gap-6">
-                <div className="w-[53px] h-[56px] relative">
-                  <Image
-                    src="/images/footer/arrow.png"
-                    alt="E2Visa Logo"
-                    fill
-                  />
-                </div>
-                <h1 className="text-[64px] font-normal uppercase tracking-widest ">
-                  <span className="block">contact</span>
-                </h1>
-              </div>
-              <h1 className="text-[64px] leading-13 font-normal uppercase tracking-widest ">
-                <span className="block">us today</span>
-              </h1>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold ">Get a Free consultation</h3>
-              <div className="flex gap-3">
-                <div className="relative">
-                  <Image
-                    src="/images/footer/email.png"
-                    alt="Search"
-                    width={24}
-                    height={24}
-                    className="absolute top-1/2 -translate-y-1/2 left-6"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Enter your email to get started"
-                    className="rounded-full px-6 py-4 pl-14 bg-[#FFFFFF] font-medium text-[#64748B] outline-none text-sm w-[304px]"
-                  />
-                </div>
-                <button className="bg-[#2EC4B6] text-left rounded-full pl-5 cursor-pointer relative text-white py-2 w-[196px] font-bold text-base ">
-                  GET STARTED
-                  <span className="w-[44px] h-[44px] flex items-center justify-center absolute top-1/2 p-4 -translate-y-1/2 right-2 bg-white rounded-full">
-                    <Image
-                      src="/images/footer/upArrow.png"
-                      alt="E2Visa Logo"
-                      width={24}
-                      height={24}
-                      className=""
-                    />
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div> */}
           <div className=" grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
             {/* Contact Section */}
             <div className="space-y-4 ">

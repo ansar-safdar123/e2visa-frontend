@@ -74,10 +74,10 @@ const WhatSetsUsApart = () => {
                   className="cursor-pointer"
                 />
               </div>
-              <h3 className="text-[#40433F] font-bold xl:text-2xl text-lg mb-2">
+              <h3 className="text-[#40433F] font-semibold text-sm xl:text-base mb-2">
                 {feature.title}
               </h3>
-              <p className="font-medium text-[#40433F] text-sm xl:text-lg">
+              <p className="font-normal text-[#40433F] text-sm xl:text-base">
                 {feature.description}
               </p>
             </div>

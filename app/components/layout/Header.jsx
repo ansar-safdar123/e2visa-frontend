@@ -22,8 +22,8 @@ const Header = () => {
 
   const menuItems = [
     { href: '/', label: 'Home' },
-    { href: '/buy-business', label: 'Buy a Business' },
-    { href: '/real-estate', label: 'Buy Real Estate' },
+    { href: '/buy-business', label: 'Find a Business' },
+    { href: '/real-estate', label: 'Find a Real Estate' },
     { href: '/professionals', label: 'Find a Professional' },
     { href: '/forum', label: 'Forum' },
     { href: '/articles', label: 'Articles' },
