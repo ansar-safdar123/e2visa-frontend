@@ -20,9 +20,9 @@ const Footer = () => {
 
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "Find a Business", href: "/buy-business" },
-    { name: "Find a Real Estate", href: "/real-estate" },
-    { name: "Find a Professional", href: "/professionals" },
+    { name: "Find A Business", href: "/buy-business" },
+    { name: "Find A Real Estate", href: "/real-estate" },
+    { name: "Find A Professional", href: "/professionals" },
     { name: "Articles", href: "/articles" },
     { name: "Forum", href: "/forum" },
   ];

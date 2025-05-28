@@ -22,9 +22,9 @@ const Header = () => {
 
   const menuItems = [
     { href: '/', label: 'Home' },
-    { href: '/buy-business', label: 'Find a Business' },
-    { href: '/real-estate', label: 'Find a Real Estate' },
-    { href: '/professionals', label: 'Find a Professional' },
+    { href: '/buy-business', label: 'Find A Business' },
+    { href: '/real-estate', label: 'Find A Real Estate' },
+    { href: '/professionals', label: 'Find A Professional' },
     { href: '/forum', label: 'Forum' },
     { href: '/articles', label: 'Articles' },
   ];

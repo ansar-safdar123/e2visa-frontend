@@ -69,112 +69,151 @@ export default function CookiesPolicy() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className='w-full h-[full]'>
-
-      <Image
-                  src="/images/Cookies/cookie.png"
-                  alt="Search"
-                  width={324}
-                  height={324}
-                  className="cursor-pointer w-full h-full"
-                />
-                  </div>
+      <div 
+        className='relative w-full h-[200px] bg-cover bg-center'
+        style={{
+          backgroundImage: `url('/images/Cookies/cookie.png')`
+        }}
+      >
+        <div className='absolute inset-0 bg-black/50 z-0'></div>
+        <div className='relative h-full flex flex-col items-center justify-center text-center text-white z-10'>
+          <h1 className='text-3xl md:text-5xl font-semibold mb-4'>
+            Cookies Policy
+          </h1>
+          <p className='text-base md:text-lg font-medium'>
+            <Link href="/" className="hover:text-[#40433F]  transition-colors">Home</Link>
+            <span className="mx-2">/</span>
+            <span>Cookies Policy</span>
+          </p>
+        </div>
+      </div>
 
       {/* Content Section */}
-      <div className="px-4 py-16">
+      <div className="">
         <div className="bg-white container rounded-lg p-8 md:p-12">
           {/* Personal Statement Section */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-[#40433F] mb-4">Personal Statement</h2>
-            <p className="text-gray-700 leading-relaxed">
-              This Cookies Policy explains what Cookies are and how We use them. You should read this policy so You can understand what type of cookies We use, or the information We collect using Cookies and how that information is used. Cookies do not typically contain any information that personally identifies a user, but personal information that we store about You may be linked to the information stored in and obtained from Cookies. For further information on how We use, store and keep your personal data secure, see our Privacy Policy. We do not store sensitive personal information, such as mailing addresses, account passwords, etc. in the Cookies We use.
-            </p>
+          <section className="mb-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#40433F]">Personal Statement</h2>
+            </div>
+            <div className="md:col-span-3">
+              <p className="leading-relaxed">
+                This Cookies Policy explains what Cookies are and how We use them. You should read this policy so You can understand what type of cookies We use, or the information We collect using Cookies and how that information is used.Cookies do not typically contain any information that personally identifies a user, but personal information that we store about You may be linked to the information stored in and obtained from Cookies. For further information on how We use, store and keep your personal data secure, see our Privacy Policy.We do not store sensitive personal information, such as mailing addresses, account passwords, etc. in the Cookies We use.Interpretation and Definitions Interpretation.The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+              </p>
+            </div>
           </section>
 
           {/* Purposes Section */}
-          <section className="mb-12">
+           <section className="mb-12 grid grid-cols-1 md:grid-cols-4 gap-8">
             <h2 className="text-2xl font-bold text-[#40433F] mb-4">Purposes of this Cookies Policy:</h2>
-            <div className="space-y-4">
-              <p className="text-gray-700 leading-relaxed">
+            <div className="md:col-span-3">
+
+            <div>
+              <p className="leading-relaxed">
                 Company (referred to as either "the Company", "We", "Us" or "Our" in this Cookies Policy) refers to E2 Visa LLC, 3928 Pin Oaks St, Sarasota, FL 34232.
               </p>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="leading-relaxed">
                 Cookies means small files that are placed on Your computer, mobile device or any other device by a website, containing details of your browsing history on that website among its many uses.
               </p>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="leading-relaxed">
                 Website refers to E2 Visa, accessible from https://e2visa.com/
               </p>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="leading-relaxed">
                 You means the individual accessing or using the Website, or a company, or any legal entity on behalf of which such individual is accessing or using the Website, as applicable.
               </p>
+            </div>
             </div>
           </section>
 
           {/* Types of Cookies Section */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-[#40433F] mb-4">Type of Cookies We Use:</h2>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close your web browser. We use both session and persistent Cookies for the purposes set out below:
-            </p>
-            <div className="space-y-6">
-              {cookieTypes.map((cookie, index) => (
-                <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="font-bold text-[#40433F] mb-2">{cookie.title}</h3>
-                  <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">Type:</span> {cookie.type}</p>
-                    <p><span className="font-medium">Administered by:</span> {cookie.admin}</p>
-                    <p><span className="font-medium">Purpose:</span> {cookie.purpose}</p>
+           <section className="mb-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#40433F]">Type of Cookies We Use:</h2>
+            </div>
+            <div className="md:col-span-3">
+              <p className="leading-relaxed mb-6">
+                Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close your web browser. We use both session and persistent Cookies for the purposes set out below:
+              </p>
+              <div className="space-y-6">
+                {cookieTypes.map((cookie, index) => (
+                  <div key={index} className="rounded-lg">
+                    <h3 className="font-bold text-[#40433F] mb-2">{cookie.title}</h3>
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-medium">Type:</span> {cookie.type}</p>
+                      <p><span className="font-medium">Administered by:</span> {cookie.admin}</p>
+                      <p><span className="font-medium">Purpose:</span> {cookie.purpose}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="mt-8">
+                <h3 className="font-bold text-[#40433F] mb-4">Your Choices Regarding Cookies</h3>
+                <p className="leading-relaxed">
+                  If You prefer to avoid the use of Cookies on the Website, first You must disable the use of Cookies in your browser and then delete the Cookies saved in your browser associated with this website. You may use this option for preventing the use of Cookies at any time. If You do not accept Our Cookies, You may experience some inconvenience in your use of the Website and some features may not function properly. If You'd like to delete Cookies or instruct your web browser to delete or refuse Cookies, please visit the help pages of your web browser.
+                </p>
+              </div>
+            </div>
+           </section>
+
+           <section className="mb-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#40433F]">Browser</h2>
+            </div>
+            <div className="md:col-span-3">
+              <div className="">
+                <p className="leading-relaxed">
+                  For the Chrome web browser, please visit this page from Google:
+                  <a href="https://support.google.com/accounts/answer/32050" target="_blank" rel="noopener noreferrer" className="text-[#40433F] hover:underline break-words">
+                    https://support.google.com/accounts/answer/32050
+                  </a>
+                </p>
+                <p className="leading-relaxed">
+                  For the Internet Explorer web browser, please visit this page from Microsoft:{' '}
+                  <a href="http://support.microsoft.com/kb/278835" target="_blank" rel="noopener noreferrer" className="text-[#40433F] hover:underline">
+                    http://support.microsoft.com/kb/278835
+                  </a>
+                </p>
+                <p className="leading-relaxed">
+                  For the Firefox web browser, please visit this page from Mozilla:{' '}
+                  <a href="https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored" target="_blank" rel="noopener noreferrer" className="text-[#40433F] hover:underline">
+                    https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored
+                  </a>
+                </p>
+                <p className="leading-relaxed">
+                  For the Safari web browser, please visit this page from Apple:{' '}
+                  <a href="https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac" target="_blank" rel="noopener noreferrer" className="text-[#40433F] hover:underline">
+                    https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac
+                  </a>
+                </p>
+                <p className="leading-relaxed">
+                  For any other web browser, please visit your web browser's official web pages.
+                </p>
+              </div>
+
+              <div className="mt-8">
+                <h3 className="font-bold text-[#40433F] mb-4">More Information about Cookies</h3>
+                <p className="leading-relaxed">
+                  You can learn more about cookies here:{' '}
+                  <a href="https://www.termsfeed.com/blog/cookies/" target="_blank" rel="noopener noreferrer" className="text-[#40433F] hover:underline">
+                    All About Cookies by TermsFeed
+                  </a>
+                </p>
+              </div>
             </div>
           </section>
 
-          {/* Browser Instructions Section */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-[#40433F] mb-4">Browsing:</h2>
-            <div className="space-y-4">
-              {browsers.map((browser, index) => (
-                <p key={index} className="text-gray-700">
-                  For the {browser.name} web browser, please visit this page from {browser.provider}:{' '}
-                  <a href={browser.url} target="_blank" rel="noopener noreferrer" className="text-[#2EC4B6] hover:underline">
-                    {browser.url}
-                  </a>
-                </p>
-              ))}
-              <p className="text-gray-700">
-                For any other web browser, please visit your web browser's official web pages.
+          {/* Contact Section */}
+          <section className="mb-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#40433F]">Contact Us</h2>
+            </div>
+            <div className="md:col-span-3">
+            <p className="text-base text-[#40433F]">
+              If you have any questions about this Cookies Policy, You can contact us: <br /> By email:  info@e2visa.com By visiting this page on our website: <a href="https://e2visa.com/" target="_blank" rel="noopener noreferrer">https://e2visa.com/</a>
               </p>
             </div>
           </section>
 
-          {/* More Information Section */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-[#40433F] mb-4">More Information about Cookies</h2>
-            <p className="text-gray-700">
-              You can learn more about cookies here:{' '}
-              <a 
-                href="https://www.termsfeed.com/blog/cookies/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-[#2EC4B6] hover:underline"
-              >
-                All About Cookies by TermsFeed
-              </a>
-            </p>
-          </section>
-
-          {/* Contact Section */}
-          <section>
-            <h2 className="text-2xl font-bold text-[#40433F] mb-4">Contact Us</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              If you have any questions about this Cookies Policy, You can contact us:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
-              <li>By email: <a href="mailto:info@e2visa.com" className="text-[#2EC4B6] hover:underline">info@e2visa.com</a></li>
-              <li>By visiting this page on our website: <a href="https://e2visa.com/" className="text-[#2EC4B6] hover:underline">https://e2visa.com/</a></li>
-            </ul>
-          </section>
         </div>
       </div>
     </div>
