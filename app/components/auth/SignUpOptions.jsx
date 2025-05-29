@@ -41,7 +41,7 @@ const SignUpOptions = () => {
             <button
               key={type.id}
               onClick={() => handleUserTypeSelect(type.id)}
-              className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 aspect-square"
+              className="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 "
             >
               <div className="w-12 h-12 mb-4">
                 <Image

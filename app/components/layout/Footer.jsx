@@ -14,8 +14,8 @@ const Footer = () => {
   const usefulLinks = [
     { name: "Cookies Policy", href: "/cookies-policy" },
     { name: "Terms & Conditions", href: "/terms-conditions" },
-    { name: "Disclaimer", href: "/disclaimer" },
     { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Disclaimer", href: "/disclaimer" },
   ];
 
   const quickLinks = [

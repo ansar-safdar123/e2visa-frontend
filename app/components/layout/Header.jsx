@@ -27,6 +27,8 @@ const Header = () => {
     { href: '/professionals', label: 'Find A Professional' },
     { href: '/forum', label: 'Forum' },
     { href: '/articles', label: 'Articles' },
+    { href: '/contact', label: 'Contact Us' },
+
   ];
 
   return (
@@ -61,12 +63,12 @@ const Header = () => {
           <div className="flex items-center xl:gap-4 gap-2">
             {/* Auth Buttons - Always visible */}
             <div className="flex items-center space-x-2 xl:space-x-4 text-[#1B263B] text-[14px] font-medium">
-              <Link 
+              {/* <Link 
                 href="/contact"
                 className="xl:text-base text-xs px-3 md:px-[15px] xl:px-[33.63px] py-2 xl:py-4 text- rounded-lg bg-white hover:bg-gray-100"
               >
                 Contact Us
-              </Link>
+              </Link> */}
               <div className="flex items-center">
                 {user ? (
                   <ProfileDropdown user={user} />

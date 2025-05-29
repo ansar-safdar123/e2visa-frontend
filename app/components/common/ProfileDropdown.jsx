@@ -69,7 +69,7 @@ const ProfileDropdown = ({ user }) => {
             My Profile
           </Link>
           
-          <Link
+          {/* <Link
             href="/settings"
             className="block px-4 py-2 text-sm text-[#1E1E1E] hover:bg-gray-50 cursor-pointer"
           >
@@ -88,7 +88,7 @@ const ProfileDropdown = ({ user }) => {
             className="block px-4 py-2 text-sm text-[#1E1E1E] hover:bg-gray-50 cursor-pointer"
           >
             Saved Searches
-          </Link>
+          </Link> */}
           
           <div className="border-t border-gray-100 mt-2">
             <button
