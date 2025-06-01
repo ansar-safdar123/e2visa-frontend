@@ -25,6 +25,7 @@ const Footer = () => {
     { name: "Find A Professional", href: "/professionals" },
     { name: "Forum", href: "/forum" },
     { name: "Articles", href: "/articles" },
+    { name: "Contact Us", href: "/contact" },
   ];
 
   return (
@@ -79,9 +80,9 @@ const Footer = () => {
 
       <footer className="bg-[#40433F] text-white">
         <div className="container mx-auto py-20 px-4">
-          <div className=" grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {/* Contact Section */}
-            <div className="space-y-4 ">
+            <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
               <h1 className="font-normal text-[24px] xl:text-[40px]">Contact us today</h1>
               <p className="font-medium xl:text-lg text-base">
                 Contact us today to schedule a consultation and discover how we
@@ -89,7 +90,7 @@ const Footer = () => {
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
               <h3 className="text-xl font-bold ">Useful Links</h3>
               <ul className="space-y-3">
                 {usefulLinks.map((item) => (
@@ -108,7 +109,7 @@ const Footer = () => {
             </div>
 
             {/* Quick Links */}
-            <div className="space-y-4">
+            <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
               <h3 className="text-xl font-bold ">Quick Links</h3>
               <ul className="space-y-3">
                 {quickLinks.map((item) => (
@@ -127,7 +128,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter & Contact Info */}
-            <div className="space-y-6">
+            <div className="space-y-6 flex-1 min-w-[250px] max-w-[300px]">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-white rounded-full">
                   <Image
