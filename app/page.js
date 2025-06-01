@@ -9,12 +9,10 @@ export default function Home() {
   return (
     <div className="">
       <HeroSection />
-      {/* <FeaturedSection /> */}
       <WhatSetsUsApart />
       <ListingsTabs />
       <NewListing />
       <FeaturedProfessionals /> 
-    
     </div>
   );
 }

@@ -3,35 +3,42 @@
 import Image from "next/image";
 import React from "react";
 import Slider from "react-slick";
+import { useRouter } from "next/navigation";
 
 const professionals = [
   {
     id: 1,
-    name: "Rebekah Rebekah",
-    title: "Business Broker",
+    name: "Michael Finley",
+    title: "Business Adviser",
     image: "/images/FeaturedProfessionls/img1.png", // Replace with actual image paths
   },
   {
     id: 2,
-    name: "Rebekah Rebekah",
+    name: "Sarah Johnson",
     title: "Business Broker",
     image: "/images/FeaturedProfessionls/img2.png",
   },
   {
     id: 3,
-    name: "Rebekah Rebekah",
+    name: "David Chen",
     title: "Business Broker",
     image: "/images/FeaturedProfessionls/img3.png",
   },
   {
     id: 4,
-    name: "Rebekah Rebekah",
+    name: "Emily Martinez",
     title: "Business Broker",
     image: "/images/FeaturedProfessionls/img4.png",
   },
 ];
 
 const FeaturedProfessionals = () => {
+  const router = useRouter();
+
+  const handleProfessionalClick = (professionalId) => {
+    router.push(`/professional/${professionalId}`);
+  };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -78,7 +85,8 @@ const FeaturedProfessionals = () => {
             {professionals.map((pro, index) => (
               <div
                 key={pro.id}
-                className='w-full rounded-2xl bg-white transition-all px-2' 
+                className='w-full rounded-2xl bg-white transition-all px-2 cursor-pointer hover:shadow-lg'
+                onClick={() => handleProfessionalClick(pro.id)}
               >
                 <div className="w-full h-[376px] relative">
                   <img

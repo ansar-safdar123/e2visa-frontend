@@ -1,128 +1,268 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import Slider from "react-slick";
+import Link from "next/link";
 
-const newListing = [
-    {
-        id: 4,
-        title: "Test Shop Main Street Business",
-        image: "/images/listing/img4.png",
-        status: "Leased",
-        verified: false,
-        rating: 5,
+export const newListings = [
+  {
+    id: 5,
+    title: "Test Shop Main Street",
+    image: "/images/listing/img1.png",
+    status: "New Listing",
+    verified: true,
+    rating: 5,
+    location: 'Silicon Valley',
+    askingPrice: 750000,
+    grossRevenue: 1500000,
+    description: 'Innovative tech startup with proprietary software solutions and growing customer base.',
+    EBITDA: 300000,
+    cashFlow: 350000,
+    inventory: {
+      included: true,
+      value: 5000
     },
-    {
-        id: 3,
-        title: "Test Shop Main Street Business",
-        image: "/images/listing/img3.png",
-        status: "Leased",
-        verified: true,
-        rating: 5,
+    rent: 5200,
+    established: 2020,
+    employees: {
+      fullTime: 8,
+      partTime: 2,
+      contractors: '3',
+      ownerHours: 45
     },
-    {
-        id: 2,
-        title: "Test Shop Main Street Business",
-        image: "/images/listing/img2.png",
-        status: "Leased",
-        verified: true,
-        rating: 5,
+    details: {
+      homeBased: false,
+      franchise: false,
+      relocatable: true,
+      lenderPrequalified: true,
+      sbaPrequalified: true
     },
-    {
-        id: 1,
-        title: "Test Shop Main Street Business",
-        image: "/images/listing/img1.png",
-        status: "Leased",
-        verified: true,
-        rating: 5,
+    reasonForSale: 'Strategic exit to pursue larger venture opportunities.',
+    adjustedEBITDA: 300000,
+  },
+  {
+    id: 6,
+    title: "Test Shop Main Street",
+    image: "/images/listing/img2.png",
+    status: "New Listing",
+    verified: true,
+    rating: 5,
+    location: 'Miami',
+    askingPrice: 385000,
+    grossRevenue: 720000,
+    description: 'State-of-the-art fitness center with premium equipment and established membership base.',
+    EBITDA: 180000,
+    cashFlow: 200000,
+    inventory: {
+      included: true,
+      value: 150000
     },
+    rent: 4800,
+    established: 2019,
+    employees: {
+      fullTime: 3,
+      partTime: 6,
+      contractors: '2',
+      ownerHours: 35
+    },
+    details: {
+      homeBased: false,
+      franchise: false,
+      relocatable: false,
+      lenderPrequalified: true,
+      sbaPrequalified: false
+    },
+    reasonForSale: 'Owner expanding to new market and needs capital.',
+    adjustedEBITDA: 180000,
+  },
+  {
+    id: 7,
+    title: "Test Shop Main Street",
+    image: "/images/listing/img3.png",
+    status: "New Listing",
+    verified: true,
+    rating: 5,
+    location: 'Los Angeles',
+    askingPrice: 290000,
+    grossRevenue: 850000,
+    description: 'Trending online fashion brand with strong social media presence and loyal customer following.',
+    EBITDA: 160000,
+    cashFlow: 180000,
+    inventory: {
+      included: true,
+      value: 75000
+    },
+    rent: 2200,
+    established: 2021,
+    employees: {
+      fullTime: 2,
+      partTime: 3,
+      contractors: '5',
+      ownerHours: 40
+    },
+    details: {
+      homeBased: true,
+      franchise: false,
+      relocatable: true,
+      lenderPrequalified: false,
+      sbaPrequalified: false
+    },
+    reasonForSale: 'Owner pursuing new business opportunities in different industry.',
+    adjustedEBITDA: 160000,
+  },
+  {
+    id: 8,
+    title: "Test Shop Main Street",
+    image: "/images/listing/img4.png",
+    status: "New Listing",
+    verified: false,
+    rating: 5,
+    location: 'Austin',
+    askingPrice: 175000,
+    grossRevenue: 380000,
+    description: 'Popular food truck with prime locations and catering contracts.',
+    EBITDA: 95000,
+    cashFlow: 110000,
+    inventory: {
+      included: true,
+      value: 15000
+    },
+    rent: 800,
+    established: 2022,
+    employees: {
+      fullTime: 2,
+      partTime: 2,
+      contractors: 'N/A',
+      ownerHours: 50
+    },
+    details: {
+      homeBased: false,
+      franchise: false,
+      relocatable: true,
+      lenderPrequalified: false,
+      sbaPrequalified: false
+    },
+    reasonForSale: 'Owner moving to restaurant-based business model.',
+    adjustedEBITDA: 95000,
+  },
 ];
 
-export default function ListingsTabs() {
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        arrows: true,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    arrows: false,
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: false,
-                }
+export default function NewListingsTabs() {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+        }
+      }
+    ]
+  };
+
+  return (
+    <div className="bg-white py-[92px]">
+      <div className="container mx-auto px-4">
+        <h1 className="text-center xl:text-4xl text-2xl text-[#40433F] font-bold mb-20">New Listings</h1>
+
+        <div className="listing-slider relative">
+          <style jsx>{`
+            :global(.slick-prev),
+            :global(.slick-next) {
+              z-index: 10;
+              width: 40px;
+              height: 40px;
             }
-        ]
-    };
-
-    return (
-        <div className="py-[92px] text-[#40433F]">
-            <div className="container mx-auto px-4">
-                <h1 className="text-center xl:text-4xl text-2xl font-bold mb-20">New Listings</h1>
-
-                <div className="listing-slider">
-                    <Slider {...settings}>
-                        {newListing.map((listing) => (
-                            <div key={listing.id} className=" bg-[#1B263B1A]">
-                                <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                                    {listing.verified && (
-                                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                                            Verified
-                                        </div>
-                                    )}
-                                    <div className="relative w-full h-[197px]">
-                                        <Image
-                                            fill
-                                            src={listing.image}
-                                            alt="Listing"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="mt-[15px]">
-                                        <h2 className="text-sm lg:text-2xl leading-6 font-semibold mb-1">
-                                            {listing.title}
-                                        </h2>
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-xs lg:text-base mb-2">{listing.status}</p>
-                                            <div className="flex gap-1">
-                                                {[...Array(listing.rating)].map((_, index) => (
-                                                    <div className="w-[12.84px] h-[12.27px] relative" key={index}>
-                                                        <Image
-                                                            src="/images/listing/star.png"
-                                                            fill
-                                                            alt="rating star"
-                                                            className="object-contain"
-                                                        />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            :global(.slick-prev) {
+              left: -20px;
+            }
+            :global(.slick-next) {
+              right: -20px;
+            }
+            :global(.slick-prev:before),
+            :global(.slick-next:before) {
+              font-size: 40px;
+              opacity: 0.75;
+              color: #40433F;
+            }
+            @media (max-width: 640px) {
+              :global(.slick-prev) {
+                left: 0;
+              }
+              :global(.slick-next) {
+                right: 0;
+              }
+            }
+          `}</style>
+          <Slider {...settings}>
+            {newListings.map((listing) => (
+              <div key={listing.id} className="bg-[#1B263B1A] border border-[#1B263B] !rounded-lg">
+                <Link href={`/buy-business/${listing.id}`}>
+                  <div className="relative w-full pt-[14px] pb-[19px] px-[18px] cursor-pointer transition-transform hover:scale-[1.02]">
+                    {listing.verified && (
+                      <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                        Verified
+                      </div>
+                    )}
+                    <div className="relative w-full h-[197px]">
+                      <Image
+                        fill
+                        src={listing.image}
+                        alt={listing.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="mt-[15px]">
+                      <h2 className="text-sm lg:text-2xl leading-6 font-semibold mb-1">
+                        {listing.title}
+                      </h2>
+                      <div className="flex items-center justify-between">
+                          {/* <p className="text-xs lg:text-base mb-2">{listing.status}</p> */}
+                          <p className="text-xs lg:text-base text-[#40433F]">Leased</p>
+                          {/* <p className="text-xs lg:text-base">{listing.location}</p> */}
+                        <div className="flex gap-1">
+                          {[...Array(listing.rating)].map((_, index) => (
+                            <div className="w-[12.84px] h-[12.27px] relative" key={index}>
+                              <Image
+                                src="/images/listing/star.png"
+                                fill
+                                alt="rating star"
+                                className="object-contain"
+                              />
                             </div>
-                        ))}
-                    </Slider>
-                </div>
-            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </Slider>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

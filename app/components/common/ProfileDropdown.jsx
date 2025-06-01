@@ -24,30 +24,35 @@ const ProfileDropdown = ({ user }) => {
   }, []);
 
   const handleLogout = () => {
+    setIsOpen(false);
     logout();
     router.push('/signin');
+  };
+
+  const handleProfileClick = () => {
+    setIsOpen(false);
   };
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-3 focus:outline-none"
+        className="flex items-center space-x-1 focus:outline-none"
       >
-        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#2EC4B6]">
+        <div className="w-7 h-w-7 rounded-full overflow-hidden ">
           <Image
             src={user?.image || "/images/auth/signin/user2.png"}
             alt="Profile"
             width={40}
             height={40}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover brightness-0 invert"
           />
         </div>
-        <span className="text-[#1E1E1E] font-medium">
+        {/* <span className="text-[#1E1E1E] font-medium">
           {user?.name || 'User Name'}
-        </span>
+        </span> */}
         <Image
-          src="/images/icons/chevron-down.png"
+          src="/images/header/dropdown.png"
           alt="Dropdown"
           width={12}
           height={12}
@@ -64,31 +69,13 @@ const ProfileDropdown = ({ user }) => {
           
           <Link
             href="/profile"
+            onClick={handleProfileClick}
             className="block px-4 py-2 text-sm text-[#1E1E1E] hover:bg-gray-50 cursor-pointer"
           >
             My Profile
           </Link>
           
-          {/* <Link
-            href="/settings"
-            className="block px-4 py-2 text-sm text-[#1E1E1E] hover:bg-gray-50 cursor-pointer"
-          >
-            Settings
-          </Link>
-          
-          <Link
-            href="/my-properties"
-            className="block px-4 py-2 text-sm text-[#1E1E1E] hover:bg-gray-50 cursor-pointer"
-          >
-            My Properties
-          </Link>
-          
-          <Link
-            href="/saved-searches"
-            className="block px-4 py-2 text-sm text-[#1E1E1E] hover:bg-gray-50 cursor-pointer"
-          >
-            Saved Searches
-          </Link> */}
+         
           
           <div className="border-t border-gray-100 mt-2">
             <button

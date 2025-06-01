@@ -24,7 +24,7 @@ export default function Contact() {
             <div className="absolute inset-0 bg-[#1B263B99] z-0" />
             <div className="relative w-[430px]  z-10 p-8">
             <h2 className="text-3xl font-semibold mb-6">Contact Information</h2>
-            <p className=" mb-8">Say something to start a live chat!</p>
+            <p className=" mb-8">Start a journey with us today!</p>
 
             <div className="space-y-6">
               <div className="flex items-center gap-4">

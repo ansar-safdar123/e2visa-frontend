@@ -46,7 +46,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-10 text-sm xl:text-[18px] font-medium">
+          <div className="hidden lg:flex items-center space-x-6 text-sm xl:text-[18px] font-medium">
             {menuItems.map((item) => (
               <Link
                 key={item.href}

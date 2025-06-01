@@ -36,7 +36,7 @@ const FindBusiness = () => {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Listings</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Find a Business</h1>
           <div className="flex items-center justify-center text-white">
             <span>Home</span>
             <span className="mx-2">/</span>

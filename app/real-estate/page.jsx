@@ -68,7 +68,7 @@ const RealEstate = () => {
           />
         </div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Listings</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Find a Real Estate</h1>
           <div className="flex items-center text-white text-lg">
             <Link href="/" className="hover:text-[#2EC4B6]">Home</Link>
             <span className="mx-2">/</span>
