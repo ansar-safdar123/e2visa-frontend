@@ -23,8 +23,8 @@ const Footer = () => {
     { name: "Find A Business", href: "/buy-business" },
     { name: "Find A Real Estate", href: "/real-estate" },
     { name: "Find A Professional", href: "/professionals" },
-    { name: "Articles", href: "/articles" },
     { name: "Forum", href: "/forum" },
+    { name: "Articles", href: "/articles" },
   ];
 
   return (
@@ -148,7 +148,7 @@ const Footer = () => {
                     height={24}
                   />
                 </div>
-                <p className="font-medium">info@c2visa.com</p>
+                <p className="font-medium">info@e2visa.com</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-white rounded-full">

@@ -25,6 +25,8 @@ const SignUp = () => {
     broker: "",
     attorney: "",
     newsletter: "",
+    brokerLicense: "",
+    attorneyLicense: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -237,6 +239,64 @@ const SignUp = () => {
                 Phone no
               </label>
             </div>
+
+            {/* Broker License Input - Only shown for broker user type */}
+            {formData.userType === 'broker' && (
+              <div className="relative">
+                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                  <Image
+                    src="/images/auth/signin/lock.png"
+                    alt="License icon"
+                    width={23}
+                    height={20}
+                  />
+                </div>
+                <input
+                  type="text"
+                  id="brokerLicense"
+                  name="brokerLicense"
+                  value={formData.brokerLicense}
+                  onChange={handleChange}
+                  placeholder="Enter your broker license number"
+                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                />
+                <label
+                  htmlFor="brokerLicense"
+                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  Broker License
+                </label>
+              </div>
+            )}
+
+            {/* Attorney License Input - Only shown for attorney user type */}
+            {formData.userType === 'attorney' && (
+              <div className="relative">
+                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                  <Image
+                    src="/images/auth/signin/lock.png"
+                    alt="License icon"
+                    width={23}
+                    height={20}
+                  />
+                </div>
+                <input
+                  type="text"
+                  id="attorneyLicense"
+                  name="attorneyLicense"
+                  value={formData.attorneyLicense}
+                  onChange={handleChange}
+                  placeholder="Enter your attorney license number"
+                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                />
+                <label
+                  htmlFor="attorneyLicense"
+                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  Attorney License
+                </label>
+              </div>
+            )}
 
             {/* Timeframe Input */}
             <div className="relative">
