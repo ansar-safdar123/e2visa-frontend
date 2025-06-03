@@ -50,7 +50,7 @@ const HeroSection = () => {
               Find A Professional
             </button>
           </div>
-          <SearchBar />
+          <SearchBar activeTab={activeTab} />
         </div>
       </div>
     </section>

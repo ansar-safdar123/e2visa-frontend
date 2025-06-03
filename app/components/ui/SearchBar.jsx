@@ -3,14 +3,21 @@
 import { useState } from 'react';
 import Button from './Button';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-const SearchBar = () => {
+const SearchBar = ({ activeTab }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('All Industries');
+  const router = useRouter();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Handle search logic here
+    // Navigation logic based on activeTab
+    let path = '/';
+    if (activeTab === 'business') path = '/buy-business';
+    else if (activeTab === 'estate') path = '/real-estate';
+    else if (activeTab === 'professional') path = '/professionals';
+    router.push(path);
   };
 
   return (

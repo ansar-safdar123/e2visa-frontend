@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import ProfileDropdown from '../common/ProfileDropdown';
 import { useAuth } from '@/app/context/AuthContext';
@@ -10,6 +10,8 @@ import { useAuth } from '@/app/context/AuthContext';
 const Header = () => {
   const { user } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isProfessionalDropdownOpen, setIsProfessionalDropdownOpen] = useState(false);
+  const professionalDropdownRef = useRef(null);
   const pathname = usePathname();
 
   const toggleSidebar = () => {
@@ -25,11 +27,48 @@ const Header = () => {
     { href: '/buy-business', label: 'Find A Business' },
     { href: '/real-estate', label: 'Find A Real Estate' },
     { href: '/professionals', label: 'Find A Professional' },
-    { href: '/forum', label: 'Forum' },
+    // { href: '/forum', label: 'Forum' },
     { href: '/articles', label: 'Articles' },
     { href: '/contact', label: 'Contact Us' },
 
   ];
+
+  const professionalDropdownItems = [
+    { href: '/professionals', label: 'Find Business Broker' },
+    { href: '/professionals/attorney', label: 'Find Attorney - Immigration/Real Estate/Business' },
+    { href: '/professionals/real-estate-agent', label: 'Find Real Estate Agent' },
+    { href: '/professionals/commercial-real-estate-agent', label: 'Find Commercial Real Estate Agent' },
+    { href: '/professionals/immigration-consultant', label: 'Find Immigration Consultant' },
+    { href: '/professionals/cpa-accountant', label: 'Find CPA/Accountant' },
+    { href: '/professionals/appraiser', label: 'Find Appraiser, Business/Real Estate' },
+    { href: '/professionals/affiliate-services', label: 'Find Affiliate Services' },
+    { href: '/professionals/lender-loan-officer', label: 'Find Lender/Loan Officer' },
+    { href: '/professionals/home-inspector', label: 'Find Home Inspector' },
+    { href: '/professionals/insurance', label: 'Find Insurance' },
+    { href: '/professionals/financial-advisor', label: 'Find Financial Advisor' },
+    { href: '/professionals/consultant-general', label: 'Find Consultant - General' },
+    { href: '/professionals/title-company', label: 'Find Title Company' },
+  ];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        professionalDropdownRef.current &&
+        !professionalDropdownRef.current.contains(event.target)
+      ) {
+        setIsProfessionalDropdownOpen(false);
+      }
+    }
+    if (isProfessionalDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isProfessionalDropdownOpen]);
 
   return (
     <header className="bg-[#40433F] text-white py-[17px] relative">
@@ -46,18 +85,53 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-7 text-sm xl:text-[18px] font-medium">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`hover:text-gray-300 transition-colors ${
-                  isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="hidden lg:flex items-center space-x-10 text-sm xl:text-[18px] font-medium">
+            {menuItems.map((item) => {
+              if (item.label === 'Find A Professional') {
+                return (
+                  <div
+                    key={item.href}
+                    className="relative"
+                    ref={professionalDropdownRef}
+                  >
+                    <button
+                      type="button"
+                      className="flex items-center cursor-pointer hover:text-gray-300 transition-colors focus:outline-none"
+                      onClick={() => setIsProfessionalDropdownOpen((open) => !open)}
+                    >
+                      <span className={`${isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''}`}>{item.label}</span>
+                      <svg className={`ml-1 w-4 h-4 transition-transform ${isProfessionalDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div className={`absolute w-fit left-0 mt-2  bg-white text-[#40433F] rounded-lg shadow-lg z-50 transition-opacity duration-200 ${isProfessionalDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                      <ul className="py-2">
+                        {professionalDropdownItems.map((subitem) => (
+                          <li key={subitem.href}>
+                            <Link 
+                              href={subitem.href} 
+                              className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap w-fit text-[15px]"
+                              onClick={() => setIsProfessionalDropdownOpen(false)}
+                            >
+                              {subitem.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`hover:text-gray-300 transition-colors ${
+                    isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="flex items-center xl:gap-4 gap-2">

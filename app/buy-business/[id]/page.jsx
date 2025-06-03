@@ -204,7 +204,7 @@ const BusinessDetail = ({ params }) => {
                   </label>
                 </div>
 
-                <div className="flex ">
+                {/* <div className="flex ">
                   <input
                     type="checkbox"
                     id="newsletter"
@@ -216,7 +216,7 @@ const BusinessDetail = ({ params }) => {
                   <label htmlFor="newsletter" className="ml-2 text-sm text-[#9E9E9E]">
                     Yes, send me the Buyer Newsletter for popular businesses, tips, & email promotions.
                   </label>
-                </div>
+                </div> */}
 
                 <button
                   type="submit"

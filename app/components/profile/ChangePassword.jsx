@@ -158,7 +158,7 @@ const ChangePassword = () => {
 
         <button
           type="submit"
-          className="w-full bg-[#d2e4fa] max-w-[540px] text-white py-4 rounded-lg hover:bg-[#25a093] transition-colors text-lg font-medium"
+          className="w-full bg-[#0A3161] max-w-[540px] text-white py-4 rounded-lg hover:bg-[#0d294c] transition-colors text-lg font-medium"
         >
           Update Password
         </button>
