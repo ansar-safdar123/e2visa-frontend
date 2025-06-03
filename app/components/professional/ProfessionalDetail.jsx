@@ -43,13 +43,13 @@ const ProfessionalDetail = ({ professional }) => {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Column - Professional Details */}
         <div className="lg:w-1/2">
-          <div className="flex gap-6">
+          <div className="flex flex-col sm:flex-row gap-6">
             {/* Profile Image */}
-            <div className="w-48 h-48 flex-shrink-0">
+            <div className="w-full sm:w-48 sm:h-48 h-72 flex-shrink-0">
               <img
                 src={professional.image}
                 alt={professional.name}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover object-top rounded-lg"
               />
             </div>
             {/* Title and Contact Info */}
@@ -84,7 +84,7 @@ const ProfessionalDetail = ({ professional }) => {
 
         {/* Right Column - Contact Form */}
         <div className="lg:w-1/2">
-          <div className="bg-[#A4B5D53D] p-8 rounded-lg">
+          <div className="bg-[#A4B5D53D] p-4 sm:p-8 rounded-lg">
             <h2 className="text-2xl font-semibold text-[#40433F] mb-6">Contact Form</h2>
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="relative">

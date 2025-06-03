@@ -80,7 +80,7 @@ const Footer = () => {
 
       <footer className="bg-[#40433F] text-white">
         <div className="container mx-auto py-20 px-4">
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="flex flex-wrap  gap-8">
             {/* Contact Section */}
             <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
               <h1 className="font-normal text-[24px] xl:text-[40px]">Contact us today</h1>

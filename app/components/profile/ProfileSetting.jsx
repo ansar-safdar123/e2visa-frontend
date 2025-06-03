@@ -62,7 +62,7 @@ const ProfileSetting = () => {
             value={formData.firstName}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="firstName" 
@@ -88,7 +88,7 @@ const ProfileSetting = () => {
             value={formData.lastName}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="lastName" 
@@ -114,7 +114,7 @@ const ProfileSetting = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="email" 
@@ -140,7 +140,7 @@ const ProfileSetting = () => {
             value={formData.phone}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="phone" 

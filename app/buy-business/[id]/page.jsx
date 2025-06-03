@@ -105,7 +105,7 @@ const BusinessDetail = ({ params }) => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-[#A4B5D53D] p-8 rounded-lg">
+            <div className="bg-[#A4B5D53D] p-4 sm:p-8 rounded-lg">
               <h2 className="text-2xl font-semibold text-[#40433F] mb-6">Contact Form</h2>
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="relative">
@@ -244,7 +244,7 @@ const BusinessDetail = ({ params }) => {
           </div>
 
           {/* Right Column - Business Information */}
-          <div className="bg-white p-8 rounded-lg shadow-sm">
+          <div className="bg-white p-4 sm:p-8 rounded-lg shadow-sm">
             <div className="mb-8">
               <h1 className="text-2xl xl:text-4xl font-semibold text-[#40433F] mb-2">{business.title} - {business.id}</h1>
               <p className="text-gray-600">{business.location}</p>

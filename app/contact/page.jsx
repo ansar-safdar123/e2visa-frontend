@@ -78,7 +78,7 @@ export default function Contact() {
 
           {/* Right Side - Contact Form */}
           <div className="p-8 flex flex-col items-center justify-center">
-            <div className="w-[540px]">
+            <div className="w-full max-w-[540px]">
                 
             <h2 className="text-3xl font-semibold mb-8">Get in Touch</h2>
             <form className="space-y-6">
@@ -98,8 +98,8 @@ export default function Contact() {
                 name="fullName"
                 value={formData.fullName}
                 // onChange={handleChange}
-                // placeholder="Enter your full name"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                placeholder="Enter your name"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="fullName"
@@ -125,8 +125,8 @@ export default function Contact() {
                 name="email"
                 value={formData.email}
                 // onChange={handleChange}
-                // placeholder="email@gmail.com"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                placeholder="Enter your email"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="email"
@@ -151,8 +151,8 @@ export default function Contact() {
                 name="email"
                 value={formData.subject}
                 // onChange={handleChange}
-                // placeholder="email@gmail.com"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                placeholder="Enter your subject"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="email"
@@ -178,7 +178,7 @@ export default function Contact() {
                 value={formData.message}
                 // onChange={handleChange}
                 // placeholder="email@gmail.com"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="email"
