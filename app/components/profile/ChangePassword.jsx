@@ -42,7 +42,7 @@ const ChangePassword = () => {
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Change Password</h2>
       
       <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="relative">
+        <div className="relative w-full max-w-[540px]">
           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
             <Image
               src="/images/auth/signin/lock.png"
@@ -57,8 +57,8 @@ const ChangePassword = () => {
             name="currentPassword"
             value={formData.currentPassword}
             onChange={handleChange}
-            placeholder=" "
-            className="pl-12 w-full pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            placeholder=""
+            className="pl-12 w-full max-w-[540px] pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <button
             type="button"
@@ -80,7 +80,7 @@ const ChangePassword = () => {
           </label>
         </div>
 
-        <div className="relative">
+        <div className="relative w-full max-w-[540px]">
           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
             <Image
               src="/images/auth/signin/lock.png"
@@ -95,7 +95,7 @@ const ChangePassword = () => {
             name="newPassword"
             value={formData.newPassword}
             onChange={handleChange}
-            placeholder=" "
+            placeholder=""
             className="pl-12 w-full pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <button
@@ -118,7 +118,7 @@ const ChangePassword = () => {
           </label>
         </div>
 
-        <div className="relative">
+        <div className="relative w-full max-w-[540px]">
           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
             <Image
               src="/images/auth/signin/lock.png"
@@ -133,8 +133,8 @@ const ChangePassword = () => {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            placeholder=" "
-            className="pl-12 w-full pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            placeholder=""
+            className="pl-12 w-full max-w-[540px] pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <button
             type="button"
@@ -158,7 +158,7 @@ const ChangePassword = () => {
 
         <button
           type="submit"
-          className="w-full bg-[#0A3161] text-white py-4 rounded-lg hover:bg-[#25a093] transition-colors text-lg font-medium"
+          className="w-full bg-[#d2e4fa] max-w-[540px] text-white py-4 rounded-lg hover:bg-[#25a093] transition-colors text-lg font-medium"
         >
           Update Password
         </button>

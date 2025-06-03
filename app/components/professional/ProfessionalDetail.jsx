@@ -102,7 +102,7 @@ const ProfessionalDetail = ({ professional }) => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  placeholder="Faiqa Murtaza"
+                  placeholder="Enter your name"
                   className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
@@ -128,7 +128,7 @@ const ProfessionalDetail = ({ professional }) => {
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
-                  placeholder="03**********"
+                  placeholder="Enter your phone no."
                   className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
@@ -154,7 +154,7 @@ const ProfessionalDetail = ({ professional }) => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="email@gmail.com"
+                  placeholder="Enter you email"
                   className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
@@ -172,7 +172,7 @@ const ProfessionalDetail = ({ professional }) => {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={4}
-                  placeholder="Write your message..."
+                  placeholder="Write your message here"
                   className="w-full px-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none resize-none"
                 />
                 <label

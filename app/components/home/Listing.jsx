@@ -16,7 +16,12 @@ export const topListings = [
     location: 'California',
     askingPrice: 449000,
     grossRevenue: 1000000,
-    description: 'This Northern California based Pizza Franchise is a Sub-Chapter S Corporation and has been in operation for the past 30 years and under current ownership for the past 2 ½ years.',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 200000,
     cashFlow: 250000,
     inventory: {
@@ -43,7 +48,7 @@ export const topListings = [
   },
   {
     id: 2,
-    title: "Family Restaurant for Sale",
+    title: "Test Shop Main Street Business",
     image: "/images/listing/img2.png",
     status: "Available",
     verified: true,
@@ -51,7 +56,12 @@ export const topListings = [
     location: 'New York',
     askingPrice: 550000,
     grossRevenue: 1200000,
-    description: 'Well-established family restaurant with loyal customer base...',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 300000,
     cashFlow: 280000,
     inventory: {
@@ -78,7 +88,7 @@ export const topListings = [
   },
   {
     id: 3,
-    title: "Profitable Coffee Shop",
+    title: "Test Shop Main Street Business",
     image: "/images/listing/img3.png",
     status: "Available",
     verified: true,
@@ -86,7 +96,12 @@ export const topListings = [
     location: 'Texas',
     askingPrice: 350000,
     grossRevenue: 800000,
-    description: 'Prime location coffee shop with steady revenue stream...',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 150000,
     cashFlow: 180000,
     inventory: {
@@ -113,7 +128,7 @@ export const topListings = [
   },
   {
     id: 4,
-    title: "Retail Store Opportunity",
+    title: "Test Shop Main Street Business",
     image: "/images/listing/img4.png",
     status: "Under Offer",
     verified: false,
@@ -121,7 +136,12 @@ export const topListings = [
     location: 'Florida',
     askingPrice: 275000,
     grossRevenue: 600000,
-    description: 'Established retail store in high-traffic shopping center...',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 120000,
     cashFlow: 140000,
     inventory: {

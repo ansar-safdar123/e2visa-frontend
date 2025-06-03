@@ -15,7 +15,12 @@ export const newListings = [
     location: 'Silicon Valley',
     askingPrice: 750000,
     grossRevenue: 1500000,
-    description: 'Innovative tech startup with proprietary software solutions and growing customer base.',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 300000,
     cashFlow: 350000,
     inventory: {
@@ -50,7 +55,12 @@ export const newListings = [
     location: 'Miami',
     askingPrice: 385000,
     grossRevenue: 720000,
-    description: 'State-of-the-art fitness center with premium equipment and established membership base.',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 180000,
     cashFlow: 200000,
     inventory: {
@@ -85,7 +95,12 @@ export const newListings = [
     location: 'Los Angeles',
     askingPrice: 290000,
     grossRevenue: 850000,
-    description: 'Trending online fashion brand with strong social media presence and loyal customer following.',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 160000,
     cashFlow: 180000,
     inventory: {
@@ -120,7 +135,12 @@ export const newListings = [
     location: 'Austin',
     askingPrice: 175000,
     grossRevenue: 380000,
-    description: 'Popular food truck with prime locations and catering contracts.',
+    description: `Michael Finley stands out as a business broker for his comprehensive understanding of the entrepreneurial landscape, enhanced by his academic achievements and practical experience. His professionalism, coupled with a genuine commitment to client success, makes him an invaluable partner for those looking to buy or sell a business.
+
+    Michael Finley is a proud Marine Corps and Operation Iraqi Freedom (OIF) veteran with a robust foundation in leadership and strategic planning. Although originally from Chicago, Michael has found his paradise in Southwest Florida, where he enjoys life with his wife and two young children. Michael's professional path is underpinned by an impressive array of entrepreneurial ventures, signaling not just a career but a calling to innovate, develop, and lead successful businesses.
+    
+    Michael's entrepreneurial journey is characterized by the successful founding and development of several businesses. This hands-on experience, combined with an MBA, equips him with a profound understanding of business strategy, financial acumen, and operational excellence. His deep-rooted passion for entrepreneurship is matched by his commitment to lifelong learning and professional development.`,
+       
     EBITDA: 95000,
     cashFlow: 110000,
     inventory: {

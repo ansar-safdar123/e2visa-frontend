@@ -95,7 +95,7 @@ const SignUp = () => {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                placeholder="Enter your full name"
+                placeholder="Enter your name"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
@@ -122,7 +122,7 @@ const SignUp = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="email@gmail.com"
+                placeholder="Enter your email"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
@@ -314,7 +314,7 @@ const SignUp = () => {
                 name="timeframe"
                 value={formData.timeframe}
                 onChange={handleChange}
-                placeholder="Enter timeframe"
+                placeholder="Enter your timeframe"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
@@ -401,7 +401,7 @@ const SignUp = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  placeholder="Enter State"
+                  placeholder="Enter your State"
                   className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
@@ -418,7 +418,7 @@ const SignUp = () => {
                   name="zipcode"
                   value={formData.zipcode}
                   onChange={handleChange}
-                  placeholder="Enter Zipcode"
+                  placeholder="Enter country Zipcode"
                   className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label

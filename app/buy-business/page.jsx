@@ -68,7 +68,7 @@ const BuyBusiness = () => {
           />
         </div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Listings</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Find a Business</h1>
           <div className="flex items-center text-white text-lg">
             <Link href="/" className="hover:text-[#2EC4B6]">Home</Link>
             <span className="mx-2">/</span>
@@ -81,7 +81,7 @@ const BuyBusiness = () => {
       <div className="container mx-auto px-4 mt-8">
         <div className="">
           {/* Search Bar */}
-          <div className="flex items-center gap-4 justify-center mb-10">
+          {/* <div className="flex items-center gap-4 justify-center mb-10">
             <div className="flex items-center justify-center flex-wrap gap-4">
             <div className="relative min-w-[300px] lg:min-w-[556px]">
               <input
@@ -106,10 +106,10 @@ const BuyBusiness = () => {
               Search Now
             </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-4 lg:mb-44 mb-16">
+          <div className="flex flex-wrap justify-center gap-4 ">
             <div className=" min-w-full sm:min-w-[222px] relative">
               <select
                 value={selectedCategory}
@@ -179,9 +179,17 @@ const BuyBusiness = () => {
               </div>
             </div>
           </div>
+          <div className="flex items-center justify-center w-full">
+
+          <button
+              className="bg-[#0A3161] w-[197px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
+              >
+              Search Now
+            </button>
+              </div>
         </div>
 
-        <h1 className="text-2xl md:text-[40px] xl:mb-16 font-bold text-[#40433F] text-center mb-12">Featured Listing</h1>
+        <h1 className="text-2xl md:text-[40px] xl:mb-16 font-bold text-[#40433F] text-center lg:mt-40 mt-16 mb-12">Featured Listing</h1>
 
 
         <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
