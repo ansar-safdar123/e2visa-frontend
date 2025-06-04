@@ -38,7 +38,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg lg:px-6">
+    <div className="bg-white rounded-lg px-3 lg:px-6">
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Change Password</h2>
       
       <form onSubmit={handleSubmit} className="space-y-8">
