@@ -190,7 +190,7 @@ export default function ListingsTabs() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-    arrows: false,
+    arrows: true,
 
         }
       },
@@ -199,7 +199,7 @@ export default function ListingsTabs() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-    arrows: false,
+    arrows: true,
 
         }
       }

@@ -59,7 +59,7 @@ const FeaturedProfessionals = () => {
             settings: {
                 slidesToShow: 2,
                 slidesToScroll: 1,
-                arrows: false,
+                arrows: true,
             }
         },
         {
@@ -67,18 +67,18 @@ const FeaturedProfessionals = () => {
             settings: {
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                arrows: false,
+                arrows: true,
             }
         }
     ]
 };
 
   return (
-    <div className="py-[92px] bg-white">
+    <div className="xl:py-[92px] py-10 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-[40px] text-center font-bold text-[#1C2533] mb-10">
+      <h1 className="text-center xl:text-4xl text-2xl font-bold mb-20">
           Featured Professionals
-        </h2>
+        </h1>
 
         <div className="listing-slider">
           <Slider {...settings}>

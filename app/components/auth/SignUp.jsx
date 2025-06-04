@@ -69,8 +69,8 @@ const SignUp = () => {
 
   return (
     <div className="min-h-[700px] flex items-center justify-center px-4 bg-[url('/images/auth/signin/signinImg.png')] bg-cover bg-center relative">
-      <div className="signin-bg rounded-2xl shadow-lg px-12 py-20 w-full my-[50px] max-w-[927px]">
-        <h1 className="text-[32px] 2xl:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">
+      <div className="signin-bg rounded-2xl shadow-lg px-4 md:px-12 py-10 md:py-20 w-full my-[50px] max-w-[927px]">
+        <h1 className="text-xl 2xl:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">
         Create Your Free Account
 
         </h1>
@@ -96,7 +96,7 @@ const SignUp = () => {
                 value={formData.fullName}
                 onChange={handleChange}
                 placeholder="Enter your name"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="fullName"
@@ -123,7 +123,7 @@ const SignUp = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="email"
@@ -150,7 +150,7 @@ const SignUp = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="password"
@@ -189,7 +189,7 @@ const SignUp = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirm your password"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="confirmPassword"
@@ -230,7 +230,7 @@ const SignUp = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="Enter your phone no"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="phone"
@@ -258,7 +258,7 @@ const SignUp = () => {
                   value={formData.brokerLicense}
                   onChange={handleChange}
                   placeholder="Enter your broker license number"
-                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
                   htmlFor="brokerLicense"
@@ -287,7 +287,7 @@ const SignUp = () => {
                   value={formData.attorneyLicense}
                   onChange={handleChange}
                   placeholder="Enter your attorney license number"
-                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
                   htmlFor="attorneyLicense"
@@ -315,13 +315,13 @@ const SignUp = () => {
                 value={formData.timeframe}
                 onChange={handleChange}
                 placeholder="Enter your timeframe"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="timeframe"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Time frame for immigrating to the US?
+                Time frame for immigrating?
               </label>
             </div>
 
@@ -342,7 +342,7 @@ const SignUp = () => {
                 value={formData.address}
                 onChange={handleChange}
                 placeholder="Enter your address"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="address"
@@ -360,7 +360,7 @@ const SignUp = () => {
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
-                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 >
                   <option value="">Select Country</option>
                   {/* Add country options */}
@@ -378,7 +378,7 @@ const SignUp = () => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 >
                   <option value="">Select City</option>
                   {/* Add city options */}
@@ -402,7 +402,7 @@ const SignUp = () => {
                   value={formData.state}
                   onChange={handleChange}
                   placeholder="Enter your State"
-                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
                   htmlFor="state"
@@ -419,7 +419,7 @@ const SignUp = () => {
                   value={formData.zipcode}
                   onChange={handleChange}
                   placeholder="Enter country Zipcode"
-                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 />
                 <label
                   htmlFor="zipcode"
@@ -437,7 +437,7 @@ const SignUp = () => {
                 name="broker"
                 value={formData.broker}
                 onChange={handleChange}
-                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               >
                 <option value="">Select</option>
                 <option value="yes">Yes</option>
@@ -458,7 +458,7 @@ const SignUp = () => {
                 name="attorney"
                 value={formData.attorney}
                 onChange={handleChange}
-                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               >
                 <option value="">Select</option>
                 <option value="yes">Yes</option>
@@ -479,7 +479,7 @@ const SignUp = () => {
                 name="newsletter"
                 value={formData.newsletter}
                 onChange={handleChange}
-                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  xl:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               >
                 <option value="">Select</option>
                 <option value="yes">Yes</option>

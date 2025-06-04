@@ -13,9 +13,13 @@ const Header = () => {
   const [isProfessionalDropdownOpen, setIsProfessionalDropdownOpen] = useState(false);
   const professionalDropdownRef = useRef(null);
   const pathname = usePathname();
+  const [isMobileProfessionalDropdownOpen, setIsMobileProfessionalDropdownOpen] = useState(false);
+  const mobileProfessionalDropdownRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    // Close mobile professional dropdown when sidebar is toggled
+    setIsMobileProfessionalDropdownOpen(false);
   };
 
   const isActive = (path) => {
@@ -59,8 +63,15 @@ const Header = () => {
       ) {
         setIsProfessionalDropdownOpen(false);
       }
+      if (
+        mobileProfessionalDropdownRef.current &&
+        !mobileProfessionalDropdownRef.current.contains(event.target) &&
+        isMobileProfessionalDropdownOpen
+      ) {
+        setIsMobileProfessionalDropdownOpen(false);
+      }
     }
-    if (isProfessionalDropdownOpen) {
+    if (isProfessionalDropdownOpen || isMobileProfessionalDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -68,7 +79,7 @@ const Header = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isProfessionalDropdownOpen]);
+  }, [isProfessionalDropdownOpen, isMobileProfessionalDropdownOpen]);
 
   return (
     <header className="bg-[#40433F] text-white py-[17px] relative">
@@ -108,7 +119,7 @@ const Header = () => {
                           <li key={subitem.href}>
                             <Link 
                               href={subitem.href} 
-                              className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap w-fit text-[15px]"
+                              className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap w-fit text-sm font-medium"
                               onClick={() => setIsProfessionalDropdownOpen(false)}
                             >
                               {subitem.label}
@@ -180,7 +191,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className={`fixed top-0 right-0 h-full w-64 bg-white/10 backdrop-blur-md transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden z-50`}>
+      <div className={`fixed top-0 left-0 overflow-y-auto w-full h-screen bg-white/10 backdrop-blur-md transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-y-0' : '-translate-y-full'} lg:hidden z-50`}>
         <div className="p-4">
           <button
             className="text-white p-2 float-right"
@@ -200,19 +211,60 @@ const Header = () => {
             </svg>
           </button>
         </div>
-        <div className="flex flex-col space-y-4 p-4 mt-8">
-          {menuItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-white hover:text-gray-300 transition-colors ${
-                isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''
-              }`}
-              onClick={toggleSidebar}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="flex flex-col p-4 mt-8">
+          {menuItems.map((item) => {
+            if (item.label === 'Find A Professional') {
+              return (
+                <div
+                  key={item.href}
+                  className="relative mb-4"
+                  ref={mobileProfessionalDropdownRef}
+                >
+                  <button
+                    type="button"
+                    className="flex items-center text-white cursor-pointer hover:text-gray-300 transition-colors focus:outline-none w-full ext-sm font-medium"
+                    onClick={() => setIsMobileProfessionalDropdownOpen((open) => !open)}
+                  >
+                    <span className={`${isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''}`}>{item.label}</span>
+                    <svg className={`ml-1 w-4 h-4 transition-transform ${isMobileProfessionalDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </button>
+                  <div className={`text-white rounded-lg z-50 transition-all duration-200 ${isMobileProfessionalDropdownOpen ? 'opacity-100 max-h-screen mt-2 pointer-events-auto' : 'opacity-0 max-h-0 overflow-hidden pointer-events-none'}`}>
+                    <ul className={`py-2 transition-all duration-200 ${isMobileProfessionalDropdownOpen ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
+                      {professionalDropdownItems.map((subitem) => (
+                        <li key={subitem.href}>
+                          <Link 
+                            href={subitem.href} 
+                            className="block py-2 hover:text-gray-300 transition-colors whitespace-nowrap w-fit text-sm font-medium"
+                            onClick={() => {
+                              setIsMobileProfessionalDropdownOpen(false);
+                              toggleSidebar(); // Close the sidebar when a subitem is clicked
+                            }}
+                          >
+                            {subitem.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-white hover:text-gray-300 transition-colors text-sm font-medium mb-4 ${
+                  isActive(item.href) ? 'text-[#2EC4B6] font-bold' : ''
+                }`}
+                onClick={() => {
+                  toggleSidebar(); // Close the sidebar when a menu item is clicked
+                  setIsMobileProfessionalDropdownOpen(false); // Ensure mobile dropdown is closed
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
 

@@ -188,10 +188,10 @@ body {
 /* Ensure arrows are visible on mobile */
 @media (max-width: 768px) {
   .listing-slider .slick-prev {
-    left: -30px;
+    left: 0;
   }
   
   .listing-slider .slick-next {
-    right: -30px;
+    right: 0;
   }
 }

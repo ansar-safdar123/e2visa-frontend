@@ -36,7 +36,7 @@ const SignUpOptions = () => {
           Select User Type
         </h1>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {userTypes.map((type) => (
             <button
               key={type.id}

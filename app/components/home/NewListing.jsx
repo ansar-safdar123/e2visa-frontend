@@ -188,7 +188,7 @@ export default function NewListingsTabs() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          arrows: false,
+          arrows: true,
         }
       },
       {
@@ -196,7 +196,7 @@ export default function NewListingsTabs() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: false,
+          arrows: true,
         }
       }
     ]
