@@ -96,7 +96,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-10 text-sm xl:text-[18px] font-medium">
+          <div className="hidden lg:flex items-center space-x-14 text-sm xl:text-[17px] font-medium">
             {menuItems.map((item) => {
               if (item.label === 'Find A Professional') {
                 return (

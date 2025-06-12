@@ -16,7 +16,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg px-3 lg:px-6">
+    <div className="bg-white rounded-xl px-3 lg:px-6">
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Dashboard</h2>
       <div className="grid grid-cols-1 gap-6">
         {/* Profile Type Input */}
@@ -37,7 +37,7 @@ const Dashboard = () => {
             onChange={handleChange}
             placeholder=""
             disabled
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="profileType" 
@@ -65,7 +65,7 @@ const Dashboard = () => {
             onChange={handleChange}
             placeholder=" "
             disabled
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="businessListings" 

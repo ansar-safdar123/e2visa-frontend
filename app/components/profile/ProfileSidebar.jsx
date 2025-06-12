@@ -3,14 +3,36 @@
 import Image from 'next/image';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const router = useRouter();
   const { logout, user } = useAuth();
+  const [newImage, setNewImage] = useState(null);
+
+  useEffect(() => {
+    const storedImage = localStorage.getItem('profileImage');
+    if (storedImage) {
+      setNewImage(storedImage);
+    }
+  }, []);
 
   const handleLogout = () => {
     logout();
     router.push('/signin');
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewImage(reader.result);
+        localStorage.setItem('profileImage', reader.result);
+        console.log('Selected image saved to localStorage:', reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const menuItems = [
@@ -34,15 +56,43 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   return (
     <div className="bg-white rounded-lg p-6">
       <div className="flex items-center mb-6 gap-4 border-b">
-        <div className="w-24 h-24 rounded-full overflow-hidden border border-[#2EC4B6] mb-4 flex-shrink-0">
+        <label htmlFor="profile-image-upload" className="relative w-24 h-24 rounded-full overflow-hidden border border-[#2EC4B6] mb-4 flex-shrink-0 cursor-pointer group">
           <Image
-            src={user?.image || "/images/auth/signin/user2.png"}
+            src={newImage || user?.image || "/images/auth/signin/user2.png"}
             alt="Profile"
             width={96}
             height={96}
             className="w-full h-full object-cover"
           />
-        </div>
+          <input
+            id="profile-image-upload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+          {/* bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity  */}
+          <div className="absolute inset-0 cursor-pointer flex items-end justify-end p-2">
+            <div className='bg-[#2EC4B6] rounded-full p-1 border-2 border-white flex items-center justify-center'>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                />
+              </svg>
+            </div>
+          </div>
+          
+        </label>
         <div className="min-w-0 flex-1">
           <h3 className="text-lg font-semibold truncate">{user?.name || 'User Name'}</h3>
           <p className="text-gray-500 text-sm truncate">{user?.email || 'user@example.com'}</p>

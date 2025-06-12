@@ -42,7 +42,7 @@ const ProfileSetting = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg px-3 lg:px-6">
+    <div className="bg-white rounded-xl px-3 lg:px-6">
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Profile Setting</h2>
       
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -62,7 +62,7 @@ const ProfileSetting = () => {
             value={formData.firstName}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="firstName" 
@@ -88,7 +88,7 @@ const ProfileSetting = () => {
             value={formData.lastName}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="lastName" 
@@ -114,7 +114,7 @@ const ProfileSetting = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="email" 
@@ -140,7 +140,7 @@ const ProfileSetting = () => {
             value={formData.phone}
             onChange={handleChange}
             placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
             htmlFor="phone" 
@@ -152,7 +152,7 @@ const ProfileSetting = () => {
 
         <button
           type="submit"
-          className="w-full bg-[#0A3161] max-w-[540px] text-white py-4 rounded-lg hover:bg-[#0d294c] transition-colors text-lg font-medium"
+          className="w-full bg-[#0A3161] max-w-[540px] text-white py-4 rounded-xl hover:bg-[#0d294c] transition-colors text-lg font-medium"
         >
           Update
         </button>

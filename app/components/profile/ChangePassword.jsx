@@ -38,7 +38,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg px-3 lg:px-6">
+    <div className="bg-white rounded-xl px-3 lg:px-6">
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Change Password</h2>
       
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -58,7 +58,7 @@ const ChangePassword = () => {
             value={formData.currentPassword}
             onChange={handleChange}
             placeholder=""
-            className="pl-12 w-full max-w-[540px] pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-12 py-4 rounded-xl border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <button
             type="button"
@@ -96,7 +96,7 @@ const ChangePassword = () => {
             value={formData.newPassword}
             onChange={handleChange}
             placeholder=""
-            className="pl-12 w-full pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full pr-12 py-4 rounded-xl border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <button
             type="button"
@@ -134,7 +134,7 @@ const ChangePassword = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder=""
-            className="pl-12 w-full max-w-[540px] pr-12 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            className="pl-12 w-full max-w-[540px] pr-12 py-4 rounded-xl border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <button
             type="button"
@@ -158,7 +158,7 @@ const ChangePassword = () => {
 
         <button
           type="submit"
-          className="w-full bg-[#0A3161] max-w-[540px] text-white py-4 rounded-lg hover:bg-[#0d294c] transition-colors text-lg font-medium"
+          className="w-full bg-[#0A3161] max-w-[540px] text-white py-4 rounded-xl hover:bg-[#0d294c] transition-colors text-lg font-medium"
         >
           Update Password
         </button>
