@@ -97,7 +97,7 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-base font-bold hover:text-gray-300 transition-colors ${
+                      className={`text-base font-bold hover:text-gray-300 uppercase transition-colors ${
                         isActive(item.href) ? 'text-[#2EC4B6]' : ''
                       }`}
                     >
@@ -116,7 +116,7 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-base font-bold hover:text-gray-300 transition-colors ${
+                      className={`text-base uppercase font-bold hover:text-gray-300 transition-colors ${
                         isActive(item.href) ? 'text-[#2EC4B6]' : ''
                       }`}
                     >

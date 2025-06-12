@@ -149,140 +149,56 @@ export default function BlogDetail({ params }) {
           <p>941.518.7138</p>
           <p>Mike@InfinityBusinessBrokers.com</p>
         </div>
-          <h2 className="text-2xl font-semibold text-[#40433F] mb-6">Leave the First Comment</h2>
-          <form onSubmit={handleSubmit} className="space-y-8 mb-20 md:px-20">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/user.png"
-                  alt="User icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
+
+        {/* Contact Form */}
+        <div className="mt-12 p-8 bg-gray-100 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Send Us Your Questions</h2>
+          <form className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
+                Name
+              </label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                placeholder="Ener your name"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                id="name"
+                name="name"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-[#2EC4B6]"
+                placeholder="Your Name"
               />
-              <label
-                htmlFor="fullName"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Full Name
-              </label>
             </div>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/mail.png"
-                  alt="Email icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
+            <div>
+              <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-[#2EC4B6]"
+                placeholder="Your Email"
               />
-              <label
-                htmlFor="email"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Email
-              </label>
             </div>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/mail.png"
-
-                  alt="Phone icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
-              <input
-                type="tel"
-                id="website"
-                name="website"
-                value={formData.website}
-                onChange={handleInputChange}
-                placeholder="WWW"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              />
-              <label
-                htmlFor="website"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Website
+            <div>
+              <label htmlFor="message" className="block text-gray-700 text-sm font-bold mb-2">
+                Message
               </label>
-            </div>
-
-
-
-            <div className="relative">
-            <div className="absolute top-5 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/blog/Group.png"
-                  alt="Email icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
               <textarea
                 id="message"
                 name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                rows={4}
-                placeholder="Write your message here"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none resize-none"
-              />
-              <label
-                htmlFor="website"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Message
-              </label>
+                rows="5"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-[#2EC4B6]"
+                placeholder="Your Message"
+              ></textarea>
             </div>
-
-            {/* <div className="flex ">
-                  <input
-                    type="checkbox"
-                    id="newsletter"
-                    name="newsletter"
-                    checked={formData.newsletter}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 mt-1 text-[#2EC4B6] focus:ring-[#2EC4B6] border-gray-300 rounded"
-                  />
-                  <label htmlFor="newsletter" className="ml-2 text-sm text-[#9E9E9E]">
-                    Yes, send me the Buyer Newsletter for popular businesses, tips, & email promotions.
-                  </label>
-                </div> */}
-
             <button
               type="submit"
-              className="w-full bg-[#0A3161] text-white py-4 rounded-lg hover:bg-[#102742] transition-colors font-medium text-lg"
+              className="bg-[#0A3161] hover:bg-[#102742] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors w-full"
             >
-              Submit Comment
+              Submit Question
             </button>
-
-
           </form>
         </div>
-
+      </div>
     </div>
   );
 } 
