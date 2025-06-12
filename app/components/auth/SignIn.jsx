@@ -30,11 +30,11 @@ const SignIn = () => {
   return (
     <div className="min-h-[700px] flex items-center justify-center px-4 bg-[url('/images/auth/signin/signinImg.png')] bg-cover bg-center relative">
         {/* <div className="absolute inset-0 bg-[#1B263B]/80 z-0" /> */}
-        <div className="signin-bg rounded-2xl shadow-lg px-12 py-20 w-full my-[50px] max-w-[927px]">
-        <h1 className="text-[32px] 2xl:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">Login to Your Account</h1>
+        <div className="signin-bg rounded-2xl shadow-lg md:px-12 py-10 md:py-20 w-full md:my-[50px] max-w-[927px]">
+        <h1 className="text-[18px] lg:text-[48px] font-bold text-center mb-8 2xl:mb-16 text-[#424242]">Login to Your Account</h1>
         <div className="flex items-center justify-center w-full">
 
-        <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-[540px]">
+        <form onSubmit={handleSubmit} className="space-y-6 w-full px-5 sm:max-w-[540px]">
           {/* Email Input */}
           <div className="space-y-8">
            
@@ -53,7 +53,7 @@ const SignIn = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base md:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
                 <label htmlFor="email" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Email</label>
 
@@ -78,7 +78,7 @@ const SignIn = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base md:text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
 
               />
                 <label htmlFor="password" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Password</label>
@@ -102,7 +102,7 @@ const SignIn = () => {
           <div className="text-right mb-15 2xl:mb-20">
             <Link
               href="/forgot-password"
-              className="text-[#0A3161] hover:text-[#102742] text-xl font-semibold"
+              className="text-[#0A3161] hover:text-[#102742] text-md md:text-xl font-semibold"
             >
               Forgot Password?
             </Link>
@@ -111,13 +111,13 @@ const SignIn = () => {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-[#0A3161] !mt-20 text-white  py-4 2xl:py-5 rounded-lg hover:bg-[#102742] transition-colors font-semibold text-2xl"
+            className="w-full bg-[#0A3161] !mt-10 md:!mt-20 text-white  py-4 2xl:py-5 rounded-lg hover:bg-[#102742] transition-colors font-semibold text-md md:text-2xl"
           >
             Submit
           </button>
 
           {/* Register Link */}
-          <div className="text-center text-[18px] font-medium mt-10 2xl:mt-10 text-[#1E1E1E]">
+          <div className="text-center text-md md:text-[18px] font-medium mt-5 2xl:mt-10 text-[#1E1E1E]">
             If you don't have an account?{' '}
             <Link href="/signup-options" className="text-[#0A3161] font-medium hover:underline">
               Register here
