@@ -39,14 +39,14 @@ export default function Professionals() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative h-[300px] flex items-center justify-center">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-[1]">
         <Image
             src="/images/findABusiness/bg.png"
             alt="Listings Header"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/50 z-[5]"></div>
         </div>
         <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl text-white mb-4 max-w-3xl mx-auto leading-tight">Search for a Professional to Help You Find a Business</h1>
