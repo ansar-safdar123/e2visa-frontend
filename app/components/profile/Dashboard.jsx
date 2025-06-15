@@ -16,7 +16,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl px-3 lg:px-6">
+    <div className="bg-white rounded-xl px-3 py-3 text-[#40433F] lg:px-6">
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Dashboard</h2>
       <div className="grid grid-cols-1 gap-6">
         {/* Profile Type Input */}
