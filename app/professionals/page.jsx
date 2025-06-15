@@ -27,8 +27,8 @@ const BrokerCard = ({ broker, featured = false }) => (
         height={60}
       />
       <div>
-        <h3 className="font-semibold text-lg text-gray-800">{broker.name}</h3>
-        <p className="text-sm text-gray-600">{broker.address}</p>
+        <h3 className="font-semibold lg:text-lg text-sm text-gray-800">{broker.name}</h3>
+        <p className="lg:text-sm text-xs text-gray-600">{broker.address}</p>
       </div>
     </div>
   </div>
