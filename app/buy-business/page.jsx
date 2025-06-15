@@ -80,7 +80,7 @@ const BuyBusiness = () => {
       </div>
 
       {/* Search Section */}
-      <div className="container mx-auto px-4 mt-8">
+      <div className="container text-xs text-[#40433F] lg:text-sm mx-auto px-4 mt-8">
         <div className="">
           {/* Search Bar */}
           {/* <div className="flex items-center gap-4 justify-center mb-10">
@@ -191,7 +191,7 @@ const BuyBusiness = () => {
               </div>
         </div>
 
-        <h1 className="text-2xl md:text-[40px] xl:mb-16 font-bold text-[#40433F] text-center lg:mt-40 mt-16 mb-12">Featured Listing</h1>
+        <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center lg:mt-40 mt-16 mb-12">Featured Listing</h1>
 
 
         <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
@@ -212,11 +212,11 @@ const BuyBusiness = () => {
                   />
                 </div>
                 <div className="mt-[15px]">
-                  <h2 className="text-sm lg:text-2xl leading-6 font-semibold mb-1">
+                  <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
                     {listing.title}
                   </h2>
                   <div className="flex items-center justify-between">
-                    <p className="text-xs lg:text-base mb-2">{listing.status}</p>
+                    <p className="text-xs lg:text-sm mb-2">{listing.status}</p>
                     <div className="flex gap-1">
                       {[...Array(listing.rating)].map((_, index) => (
                         <div className="w-[12.84px] h-[12.27px] relative" key={index}>
