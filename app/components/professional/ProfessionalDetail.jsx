@@ -39,7 +39,7 @@ const ProfessionalDetail = ({ professional }) => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto text-[#40433F] px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Column - Professional Details */}
         <div className="lg:w-1/2">
@@ -54,15 +54,15 @@ const ProfessionalDetail = ({ professional }) => {
             </div>
             {/* Title and Contact Info */}
             <div className="flex-grow">
-              <h1 className="text-[32px] font-bold text-gray-900 mb-4">{professional.title}</h1>
+              <h1 className="text-[32px] font-bold text-[#40433F] mb-4">{professional.title}</h1>
               <div className="space-y-2">
-                <p className="flex items-center text-gray-700">
+                <p className="flex items-center text-[#40433F]">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   {professional.phone}
                 </p>
-                <p className="flex items-center text-gray-700">
+                <p className="flex items-center text-[#40433F]">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -107,7 +107,7 @@ const ProfessionalDetail = ({ professional }) => {
                 />
                 <label
                   htmlFor="fullName"
-                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
                 >
                   Full Name
                 </label>
@@ -133,7 +133,7 @@ const ProfessionalDetail = ({ professional }) => {
                 />
                 <label
                   htmlFor="phoneNumber"
-                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
                 >
                   Phone Number
                 </label>
@@ -159,7 +159,7 @@ const ProfessionalDetail = ({ professional }) => {
                 />
                 <label
                   htmlFor="email"
-                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
                 >
                   Email
                 </label>
@@ -177,7 +177,7 @@ const ProfessionalDetail = ({ professional }) => {
                 />
                 <label
                   htmlFor="message"
-                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
                 >
                   Message
                 </label>

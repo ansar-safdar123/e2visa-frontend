@@ -32,7 +32,7 @@ const SignUpOptions = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-[url('/images/auth/signin/signinImg.png')] bg-cover bg-center">
       <div className="signin-bg rounded-2xl shadow-lg px-8 py-12 w-full max-w-[1200px]">
-        <h1 className="text-[32px] 2xl:text-[48px] font-bold text-center mb-12 text-[#424242]">
+        <h1 className="text-2xl lg:text-3xl font-bold text-center mb-12 text-[#424242]">
           Select User Type
         </h1>
         
@@ -51,7 +51,7 @@ const SignUpOptions = () => {
                   height={48}
                 />
               </div>
-              <span className="text-[#1E1E1E] text-center font-medium text-lg">
+            <span className="text-[#1E1E1E] text-center font-medium text-xs lg:text-sm">
                 {type.title}
               </span>
             </button>

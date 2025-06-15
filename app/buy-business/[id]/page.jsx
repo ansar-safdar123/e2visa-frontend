@@ -246,7 +246,7 @@ const BusinessDetail = ({ params }) => {
           {/* Right Column - Business Information */}
           <div className="bg-white p-4 sm:p-8 rounded-lg shadow-sm">
             <div className="mb-8">
-              <h1 className="text-2xl xl:text-4xl font-semibold text-[#40433F] mb-2">{business.title} - {business.id}</h1>
+              <h1 className="text-2xl xl:text-3xl font-semibold text-[#40433F] mb-2">{business.title} - {business.id}</h1>
               <p className="text-gray-600">{business.location}</p>
             </div>
 
