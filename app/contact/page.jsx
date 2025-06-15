@@ -10,7 +10,15 @@ export default function Contact() {
         email: '',
         subject: '',
         message: ''
-      });
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
   return (
     <div className="">
@@ -97,9 +105,9 @@ export default function Contact() {
                 id="fullName"
                 name="fullName"
                 value={formData.fullName}
-                // onChange={handleChange}
+                onChange={handleChange}
                 placeholder="Enter your name"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="fullName"
@@ -124,9 +132,9 @@ export default function Contact() {
                 id="email"
                 name="email"
                 value={formData.email}
-                // onChange={handleChange}
+                onChange={handleChange}
                 placeholder="Enter your email"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="email"
@@ -146,16 +154,16 @@ export default function Contact() {
                 />
               </div>
               <input
-                type="email"
-                id="email"
-                name="email"
+                type="text"
+                id="subject"
+                name="subject"
                 value={formData.subject}
-                // onChange={handleChange}
+                onChange={handleChange}
                 placeholder="Enter your subject"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
-                htmlFor="email"
+                htmlFor="subject"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
                 Subject
@@ -172,16 +180,15 @@ export default function Contact() {
                 />
               </div>
               <textarea
-                type="email"
-                id="email"
-                name="email"
+                id="message"
+                name="message"
                 value={formData.message}
-                // onChange={handleChange}
-                // placeholder="email@gmail.com"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                onChange={handleChange}
+                placeholder="Enter your message"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
-                htmlFor="email"
+                htmlFor="message"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
                 Message

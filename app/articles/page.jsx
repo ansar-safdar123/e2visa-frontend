@@ -121,7 +121,7 @@ export default function Articles() {
             </button>
             </div>
           </div>
-        <h1 className="text-2xl md:text-[40px] xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Blog List</h1>
+        <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Blog List</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {blogs.map((blog) => (
             <BlogCard key={blog.id} blog={blog} />
