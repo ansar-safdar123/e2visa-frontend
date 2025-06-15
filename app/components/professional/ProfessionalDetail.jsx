@@ -75,7 +75,7 @@ const ProfessionalDetail = ({ professional }) => {
           {/* About Section */}
           <div className="mt-8">
             <h2 className="text-base font-medium  mb-4 border-b text-[#40433F] border-black pb-1 w-fit ">About</h2>
-            <div className="space-y-4">
+            <div className="space-y-4 text-[#40433F]">
               {formatAboutText(professional.about)}
             </div>
           </div>
