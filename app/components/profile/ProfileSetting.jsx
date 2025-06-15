@@ -42,7 +42,7 @@ const ProfileSetting = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl py-3 px-3 lg:px-6">
+    <div className="bg-white rounded-xl py-4 px-3 lg:px-6">
       <h2 className="text-2xl lg:text-4xl text-[#40433F] font-semibold mb-6">Profile Setting</h2>
       
       <form onSubmit={handleSubmit} className="space-y-8">
