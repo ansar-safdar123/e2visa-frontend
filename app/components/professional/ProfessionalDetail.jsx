@@ -74,7 +74,7 @@ const ProfessionalDetail = ({ professional }) => {
 
           {/* About Section */}
           <div className="mt-8">
-            <h2 className="text-base font-medium  mb-4 border-b border-black pb-1 w-fit ">About</h2>
+            <h2 className="text-base font-medium  mb-4 border-b text-[#40433F] border-black pb-1 w-fit ">About</h2>
             <div className="space-y-4">
               {formatAboutText(professional.about)}
             </div>
@@ -85,7 +85,7 @@ const ProfessionalDetail = ({ professional }) => {
         {/* Right Column - Contact Form */}
         <div className="lg:w-1/2">
           <div className="bg-[#A4B5D53D] p-4 sm:p-8 rounded-lg">
-            <h2 className="text-2xl font-semibold text-[#40433F] mb-6">Contact Form</h2>
+            <h2 className="text-2xl font-semibold text-black mb-6">Contact Form</h2>
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="relative">
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
