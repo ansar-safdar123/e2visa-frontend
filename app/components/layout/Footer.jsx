@@ -84,20 +84,20 @@ const Footer = () => {
             {/* Contact Section */}
             <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
               <h1 className="font-normal text-[24px] xl:text-[40px]">Contact us today</h1>
-              <p className="font-medium xl:text-lg text-base">
+            <p className="font-medium xl:text-base text-sm">
                 Contact us today to schedule a consultation and discover how we
                 can help your business thrive.
               </p>
             </div>
 
             <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
-              <h3 className="text-xl font-bold ">Useful Links</h3>
+              <h3 className="text-base font-bold ">Useful Links</h3>
               <ul className="space-y-3">
                 {usefulLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-base font-bold hover:text-gray-300 uppercase transition-colors ${
+                      className={`text-sm font-bold hover:text-gray-300 uppercase transition-colors ${
                         isActive(item.href) ? 'text-[#2EC4B6]' : ''
                       }`}
                     >
@@ -110,13 +110,13 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
-              <h3 className="text-xl font-bold ">Quick Links</h3>
+              <h3 className="text-base font-bold ">Quick Links</h3>
               <ul className="space-y-3">
                 {quickLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-base uppercase font-bold hover:text-gray-300 transition-colors ${
+                      className={`text-sm uppercase font-bold hover:text-gray-300 transition-colors ${
                         isActive(item.href) ? 'text-[#2EC4B6]' : ''
                       }`}
                     >
@@ -128,7 +128,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter & Contact Info */}
-            <div className="space-y-6 flex-1 min-w-[250px] max-w-[300px]">
+            <div className="space-y-6 flex-1 min-w-[250px] text-sm max-w-[300px]">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-white rounded-full">
                   <Image

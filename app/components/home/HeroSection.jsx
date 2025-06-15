@@ -21,7 +21,7 @@ const HeroSection = () => {
         </p>
 
         <div className="flex items-center flex-col justify-center">
-          <div className="flex items-center xl:text-2xl sm:text-base text-xs xl:mb-20 mb-10 rounded-lg bg-white/20 backdrop-blur-md justify-center w-fit gap-4">
+          <div className="flex items-center xl:text-xl sm:text-base text-xs xl:mb-20 mb-10 rounded-lg bg-white/20 backdrop-blur-md justify-center w-fit gap-4">
             <button
               onClick={() => setActiveTab('business')}
               className={`xl:px-6 px-3 py-3 rounded-lg text-white font-medium transition-all ${activeTab === 'business'

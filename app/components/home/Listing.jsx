@@ -207,10 +207,10 @@ export default function ListingsTabs() {
   };
 
   return (
-    <div className="bg-[#40433F] py-[92px] text-white">
+    <div className="bg-[#40433F] py-[52px] text-white">
       <div className="container mx-auto px-4">
        
-        <h1 className="text-center xl:text-4xl text-2xl text-white font-bold mb-20">Top Listings</h1>
+        <h1 className="text-center xl:text-3xl text-2xl text-white font-bold mb-20">Top Listings</h1>
 
         <div className="listing-slider relative">
           <style jsx>{`
@@ -259,11 +259,11 @@ export default function ListingsTabs() {
                       />
                     </div>
                     <div className="mt-[15px]">
-                      <h2 className="text-sm lg:text-2xl leading-6 font-semibold mb-1">
+                      <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
                         {listing.title}
                       </h2>
                       <div className="flex items-center justify-between">
-                          <p className="text-xs lg:text-base ">Leased</p>
+                        <p className="text-xs lg:text-sm ">Leased</p>
                         <div className="flex gap-1">
                           {[...Array(listing.rating)].map((_, index) => (
                             <div className="w-[12.84px] h-[12.27px] relative" key={index}>

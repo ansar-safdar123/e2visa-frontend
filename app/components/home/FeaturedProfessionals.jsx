@@ -76,7 +76,7 @@ const FeaturedProfessionals = () => {
   return (
     <div className="xl:py-[92px] py-10 bg-white">
       <div className="container mx-auto px-4">
-      <h1 className="text-center xl:text-4xl text-2xl font-bold mb-20">
+      <h1 className="text-center xl:text-3xl text-2xl font-bold mb-20">
           Featured Professionals
         </h1>
 

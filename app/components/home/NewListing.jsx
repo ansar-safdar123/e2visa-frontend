@@ -205,7 +205,7 @@ export default function NewListingsTabs() {
   return (
     <div className="bg-white py-[92px]">
       <div className="container mx-auto px-4">
-        <h1 className="text-center xl:text-4xl text-2xl text-[#40433F] font-bold mb-20">New Listings</h1>
+        <h1 className="text-center xl:text-3xl text-2xl text-[#40433F] font-bold mb-20">New Listings</h1>
 
         <div className="listing-slider relative">
           <style jsx>{`
@@ -255,12 +255,12 @@ export default function NewListingsTabs() {
                       />
                     </div>
                     <div className="mt-[15px]">
-                      <h2 className="text-sm lg:text-2xl leading-6 font-semibold mb-1">
+                      <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
                         {listing.title}
                       </h2>
                       <div className="flex items-center justify-between">
                           {/* <p className="text-xs lg:text-base mb-2">{listing.status}</p> */}
-                          <p className="text-xs lg:text-base text-[#40433F]">Leased</p>
+                        <p className="text-xs lg:text-sm text-[#40433F]">Leased</p>
                           {/* <p className="text-xs lg:text-base">{listing.location}</p> */}
                         <div className="flex gap-1">
                           {[...Array(listing.rating)].map((_, index) => (
