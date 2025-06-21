@@ -31,7 +31,7 @@ const Header = () => {
     { href: '/buy-business', label: 'Find A Business' },
     { href: '/real-estate', label: 'Find A Real Estate' },
     { href: '/professionals', label: 'Find A Professional' },
-    // { href: '/forum', label: 'Forum' },
+    { href: '/forum', label: 'Forum' },
     { href: '/articles', label: 'Articles' },
     { href: '/contact', label: 'Contact Us' },
 
