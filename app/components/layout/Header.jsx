@@ -96,7 +96,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-14 text-xs xl:text-sm font-medium">
+          <div className="hidden xl:flex items-center space-x-14 text-xs xl:text-sm font-medium">
             {menuItems.map((item) => {
               if (item.label === 'Find A Professional') {
                 return (
@@ -170,7 +170,7 @@ const Header = () => {
 
             {/* Burger Menu for Mobile */}
             <button
-              className="lg:hidden text-white p-2 pr-0"
+              className="xl:hidden text-white p-2 pr-0"
               onClick={toggleSidebar}
               aria-label="Toggle Menu"
             >
@@ -191,7 +191,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className={`fixed top-0 left-0 overflow-y-auto w-full h-screen bg-white/10 backdrop-blur-md transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-y-0' : '-translate-y-full'} lg:hidden z-50`}>
+      <div className={`fixed top-0 left-0 overflow-y-auto w-full h-screen bg-white/10 backdrop-blur-md transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-y-0' : '-translate-y-full'} xl:hidden z-50`}>
         <div className="p-4">
           <button
             className="text-white p-2 float-right"
@@ -271,7 +271,7 @@ const Header = () => {
       {/* Overlay */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 xl:hidden"
           onClick={toggleSidebar}
         ></div>
       )}
