@@ -23,7 +23,7 @@ const Footer = () => {
     { name: "Find A Business", href: "/buy-business" },
     { name: "Find A Real Estate", href: "/real-estate" },
     { name: "Find A Professional", href: "/professionals" },
-    // { name: "Forum", href: "/forum" },
+    { name: "Forum", href: "/forum" },
     { name: "Articles", href: "/articles" },
     { name: "Contact Us", href: "/contact" },
   ];

@@ -34,7 +34,7 @@ export default function Forum() {
       },
       time: '4 days ago',
       question: '',
-      answer: 'An investment of at least $80,000 to $120,000 is considered substantial. However, it is not fixed and there are consulates who may accept as low as $80,000, while a few demand as much as $500,000. If the investment becomes equal or greater than $500,000, you may be eligible to petition for a permanent immigration status “Green Card” via an EB-5 Visa application.',
+      answer: 'An investment of at least $80,000 to $120,000 is considered substantial. However, it is not fixed and there are consulates who may accept as low as $80,000, while a few demand as much as $500,000. If the investment becomes equal or greater than $500,000, you may be eligible to petition for a permanent immigration status "Green Card" via an EB-5 Visa application.',
       replies: 12,
     },
     {
@@ -71,8 +71,32 @@ export default function Forum() {
           </div>
         </div>
       </div>
+     
       {/* Forum Content Section */}
       <div className="container mx-auto px-4 py-8">
+         {/* What's your Question Input */}
+      <div className="relative border rounded-md mb-8 mt-4 min-h-[110px]">
+        {/* Floating label */}
+        <label htmlFor="question-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
+          What's your Question?
+        </label>
+        <span className="absolute left-4 top-8 text-gray-400">
+          <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 12h4M12 16v-4" />
+          </svg>
+        </span>
+        <textarea
+          id="question-input"
+          placeholder="Write your question...."
+          className="pl-10 pr-36 pt-8 pb-8 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[90px] resize-none bg-transparent"
+          style={{ minHeight: '90px' }}
+        />
+        <div className="absolute right-4 bottom-4 flex gap-2">
+          <button className="px-4 py-1 rounded bg-gray-200 text-gray-700 text-sm">Cancel</button>
+          <button className="px-4 py-1 rounded bg-[#40433F] text-white text-sm">Post</button>
+        </div>
+      </div>
         {ForumsData.map((post, idx) => (
           <Link href={`/forum/${idx}`} key={idx} className="block">
             <div className="bg-white rounded-lg border border-black p-6 mb-6">
