@@ -6,11 +6,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from '../../context/AuthContext';
 
+const COUNTRIES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/countries/list';
+const STATES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/states/list';
+const COUNTIES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/counties/list';
+const REGISTER_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/register';
+
 const SignUp = () => {
   const router = useRouter();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     userType: '',
+    userTypeId: '',
     fullName: "",
     email: "",
     password: "",
@@ -19,7 +25,7 @@ const SignUp = () => {
     timeframe: "",
     address: "",
     country: "",
-    city: "",
+    county: "",
     state: "",
     zipcode: "",
     broker: "",
@@ -30,21 +36,135 @@ const SignUp = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [countriesLoading, setCountriesLoading] = useState(true);
+  const [countriesError, setCountriesError] = useState(null);
+  const [states, setStates] = useState([]);
+  const [statesLoading, setStatesLoading] = useState(false);
+  const [statesError, setStatesError] = useState(null);
+  const [counties, setCounties] = useState([]);
+  const [countiesLoading, setCountiesLoading] = useState(false);
+  const [countiesError, setCountiesError] = useState(null);
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [registerError, setRegisterError] = useState(null);
+  const [registerSuccess, setRegisterSuccess] = useState(null);
 
   useEffect(() => {
-    // Get the user type from URL in client-side
+    // Get the user type and id from URL in client-side
     const params = new URLSearchParams(window.location.search);
     const type = params.get('type');
-    
+    const typeId = params.get('typeId');
     if (!type) {
       router.push('/signup-options');
     } else {
       setFormData(prev => ({
         ...prev,
-        userType: type
+        userType: type,
+        userTypeId: typeId || '',
       }));
     }
   }, [router]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      setCountriesLoading(true);
+      setCountriesError(null);
+      try {
+        const res = await fetch(COUNTRIES_API_URL);
+        if (!res.ok) throw new Error('Failed to fetch countries');
+        const data = await res.json();
+        if (data.result && Array.isArray(data.result)) {
+          setCountries(data.result);
+        } else {
+          setCountries([]);
+        }
+      } catch (err) {
+        setCountriesError('Failed to load countries.');
+        setCountries([]);
+      } finally {
+        setCountriesLoading(false);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    const fetchStates = async () => {
+      if (!formData.country) {
+        setStates([]);
+        return;
+      }
+
+      // Find the selected country to get its ID
+      const selectedCountry = countries.find(country => country.name === formData.country);
+      if (!selectedCountry) {
+        setStates([]);
+        return;
+      }
+
+      setStatesLoading(true);
+      setStatesError(null);
+      try {
+        const formDataObj = new FormData();
+        formDataObj.append('country_id', selectedCountry.id);
+
+        const res = await fetch(STATES_API_URL, {
+          method: 'POST',
+          body: formDataObj,
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch states');
+        const data = await res.json();
+        if (data.result && Array.isArray(data.result)) {
+          setStates(data.result);
+        } else {
+          setStates([]);
+        }
+      } catch (err) {
+        setStatesError('Failed to load states.');
+        setStates([]);
+      } finally {
+        setStatesLoading(false);
+      }
+    };
+
+    fetchStates();
+  }, [formData.country, countries]);
+
+  useEffect(() => {
+    const fetchCounties = async () => {
+      if (!formData.state) {
+        setCounties([]);
+        return;
+      }
+      // Find the selected state to get its ID
+      const selectedState = states.find(state => state.name === formData.state);
+      if (!selectedState) {
+        setCounties([]);
+        return;
+      }
+      setCountiesLoading(true);
+      setCountiesError(null);
+      try {
+        const res = await fetch(`${COUNTIES_API_URL}?state_id=${selectedState.id}`, {
+          method: 'POST',
+        });
+        if (!res.ok) throw new Error('Failed to fetch counties');
+        const data = await res.json();
+        if (data.result && Array.isArray(data.result)) {
+          setCounties(data.result);
+        } else {
+          setCounties([]);
+        }
+      } catch (err) {
+        setCountiesError('Failed to load counties.');
+        setCounties([]);
+      } finally {
+        setCountiesLoading(false);
+      }
+    };
+    fetchCounties();
+  }, [formData.state, states]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,17 +174,58 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically make an API call to register the user
-    // For now, we'll simulate a successful registration
-    const userData = {
-      name: formData.fullName,
-      email: formData.email,
-      image: '/images/auth/signin/user2.png'
-    };
-    login(userData);
-    router.push('/');
+    setRegisterLoading(true);
+    setRegisterError(null);
+    setRegisterSuccess(null);
+    try {
+      const form = new FormData();
+      form.append('name', formData.fullName);
+      form.append('email', formData.email);
+      form.append('password', formData.password);
+      form.append('password_confirmation', formData.confirmPassword);
+      form.append('role_id', formData.userTypeId);
+      form.append('phone_number', formData.phone);
+      form.append('time_frame_for_immigration', formData.timeframe);
+      if (formData.address) form.append('address', formData.address);
+
+      // Find selected country and state objects
+      const selectedCountry = countries.find(c => c.name === formData.country);
+      const selectedState = states.find(s => s.name === formData.state);
+
+      if (selectedCountry) form.append('country_id', selectedCountry.id);
+      if (selectedState) form.append('state_id', selectedState.id);
+      if (formData.newsletter) {
+        form.append(
+          'subscribe_for_newsletter',
+          formData.newsletter === 'yes' ? '1' : '0'
+        );
+      }
+
+      if (formData.county) form.append('county', formData.county);
+      if (formData.zipcode) form.append('zipcode', formData.zipcode);
+      if (formData.broker) form.append('broker', formData.broker);
+      if (formData.attorney) form.append('attorney', formData.attorney);
+      if (formData.brokerLicense) form.append('broker_license', formData.brokerLicense);
+      if (formData.attorneyLicense) form.append('attorney_license', formData.attorneyLicense);
+
+      const res = await fetch(REGISTER_API_URL, {
+        method: 'POST',
+        body: form,
+      });
+      const data = await res.json();
+      if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
+        setRegisterSuccess(data.message);
+        // Optionally redirect or clear form
+      } else {
+        setRegisterError(data.message || 'Registration failed.');
+      }
+    } catch (err) {
+      setRegisterError('Registration failed.');
+    } finally {
+      setRegisterLoading(false);
+    }
   };
 
   return (
@@ -79,6 +240,12 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             className="space-y-6 w-full max-w-[540px]"
           >
+            {registerError && (
+              <div className="text-red-500 text-center mb-2">{registerError}</div>
+            )}
+            {registerSuccess && (
+              <div className="text-green-600 text-center mb-2">{registerSuccess}</div>
+            )}
             {/* Full Name Input */}
             <div className="relative">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -363,7 +530,11 @@ const SignUp = () => {
                   className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 >
                   <option value="">Select Country</option>
-                  {/* Add country options */}
+                  {countriesLoading && <option disabled>Loading...</option>}
+                  {countriesError && <option disabled>{countriesError}</option>}
+                  {!countriesLoading && !countriesError && countries.map((country) => (
+                    <option key={country.id} value={country.name}>{country.name}</option>
+                  ))}
                 </select>
                 <label
                   htmlFor="country"
@@ -374,41 +545,51 @@ const SignUp = () => {
               </div>
               <div className="relative">
                 <select
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                >
-                  <option value="">Select City</option>
-                  {/* Add city options */}
-                </select>
-                <label
-                  htmlFor="city"
-                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-                >
-                  City
-                </label>
-              </div>
-            </div>
-
-            {/* State and Zipcode */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <input
-                  type="text"
                   id="state"
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  placeholder="Enter your State"
                   className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                />
+                >
+                  <option value="">Select State</option>
+                  {statesLoading && <option disabled>Loading...</option>}
+                  {statesError && <option disabled>{statesError}</option>}
+                  {!statesLoading && !statesError && states.map((state) => (
+                    <option key={state.id} value={state.name}>{state.name}</option>
+                  ))}
+                </select>
                 <label
                   htmlFor="state"
                   className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
                   State
+                </label>
+              </div>
+             
+            </div>
+
+            {/* State and Zipcode */}
+            <div className="grid grid-cols-2 gap-4">
+            <div className="relative">
+                <select
+                  id="county"
+                  name="county"
+                  value={formData.county || ''}
+                  onChange={handleChange}
+                  className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                >
+                  <option value="">Select County</option>
+                  {countiesLoading && <option disabled>Loading...</option>}
+                  {countiesError && <option disabled>{countiesError}</option>}
+                  {!countiesLoading && !countiesError && counties.map((county) => (
+                    <option key={county.id} value={county.name}>{county.name}</option>
+                  ))}
+                </select>
+                <label
+                  htmlFor="county"
+                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                >
+                  County
                 </label>
               </div>
               <div className="relative">
@@ -497,8 +678,9 @@ const SignUp = () => {
             <button
               type="submit"
               className="w-full bg-[#0A3161] text-white !mt-14 py-4 2xl:py-5 rounded-lg hover:bg-bg-[#102742] transition-colors font-semibold text-xs lg:text-sm"
+              disabled={registerLoading}
             >
-              Submit
+              {registerLoading ? 'Registering...' : 'Submit'}
             </button>
 
             {/* Login Link */}

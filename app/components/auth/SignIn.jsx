@@ -6,25 +6,46 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 
+const LOGIN_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/login';
+
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically make an API call to verify credentials
-    // For now, we'll simulate a successful login
-    const userData = {
-      name: 'John Doe',
-      email: email,
-      image: '/images/auth/signin/user2.png'
-    };
-    
-    login(userData);
-    router.push('/');
+    setLoginLoading(true);
+    setLoginError(null);
+    try {
+      const form = new FormData();
+      form.append('email', email);
+      form.append('password', password);
+      const res = await fetch(LOGIN_API_URL, {
+        method: 'POST',
+        body: form,
+      });
+      const data = await res.json();
+      if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
+        // You may want to adjust userData based on your API response
+        const userData = {
+          email: email,
+          // Add more fields if needed from data.result
+        };
+        login(userData);
+        router.push('/');
+      } else {
+        setLoginError(data.message || 'Login failed.');
+      }
+    } catch (err) {
+      setLoginError('Login failed.');
+    } finally {
+      setLoginLoading(false);
+    }
   };
 
   return (
@@ -35,6 +56,9 @@ const SignIn = () => {
         <div className="flex items-center justify-center w-full">
 
         <form onSubmit={handleSubmit} className="space-y-6 w-full px-5 sm:max-w-[540px]">
+          {loginError && (
+            <div className="text-red-500 text-center mb-2">{loginError}</div>
+          )}
           {/* Email Input */}
           <div className="space-y-8">
            
@@ -112,8 +136,9 @@ const SignIn = () => {
           <button
             type="submit"
             className="w-full bg-[#0A3161] !mt-10 md:!mt-20 text-white  py-4 2xl:py-5 rounded-lg hover:bg-[#102742] transition-colors font-semibold text-xs md:text-sm"
+            disabled={loginLoading}
           >
-            Submit
+            {loginLoading ? 'Logging in...' : 'Submit'}
           </button>
 
           {/* Register Link */}
