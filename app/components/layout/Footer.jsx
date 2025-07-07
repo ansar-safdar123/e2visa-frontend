@@ -3,12 +3,47 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const Footer = () => {
   const pathname = usePathname();
+  const [subscriberEmail, setSubscriberEmail] = useState('');
 
   const isActive = (path) => {
     return pathname === path;
+  };
+
+  const validateEmail = (email) => {
+    if (!email.trim()) return "Email is required.";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return "Enter a valid email address.";
+    return null;
+  };
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    const error = validateEmail(subscriberEmail);
+    if (error) {
+      toast.error(error, { position: 'top-right' });
+      return;
+    }
+    try {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/subscriber', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: subscriberEmail }),
+      });
+      const data = await res.json();
+      if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
+        toast.success(data.message, { position: 'top-right' });
+        setSubscriberEmail('');
+      } else {
+        toast.error(data.message || 'Subscription failed.', { position: 'top-right' });
+      }
+    } catch {
+      toast.error('Subscription failed.', { position: 'top-right' });
+    }
   };
 
   const usefulLinks = [
@@ -42,36 +77,44 @@ const Footer = () => {
               />
               <p className="xl:text-2xl text-base font-medium">E2VISA</p>
             </div>
-          
-             <div className="space-y-4">
+
+            <div className="space-y-4">
               <h3 className="xl:text-xl text-base font-bold ">Subscribe To Our Newsletter</h3>
               <div className="flex flex-col sm:flex-row gap-3">
+                  <form onSubmit={handleSubscribe}>
+                    <div className="flex flex-col sm:flex-row items-center gap-2">
                 <div className="relative">
                   <Image
                     src="/images/footer/email.png"
                     alt="Search"
                     width={24}
                     height={24}
-                    className="absolute top-1/2 -translate-y-1/2 left-6"
+                    className="absolute top-1/2 -translate-y-1/2 left-3"
                   />
-                  <input
-                    type="email"
-                    placeholder="Enter your email to get started"
-                    className="rounded-lg px-6 py-4 pl-14 bg-[#FFFFFF] font-medium text-[#64748B] outline-none text-sm w-[304px]"
-                  />
-                </div>
-                <button className="bg-[#2EC4B6] text-left rounded-lg pl-5 cursor-pointer relative text-white sm:py-2 py-4 sm:w-[196px] font-bold text-base ">
-                  GET STARTED
-                  <span className="w-[44px] h-[44px] flex items-center justify-center absolute top-1/2 p-4 -translate-y-1/2 right-2 bg-white rounded-lg">
-                    <Image
-                      src="/images/footer/upArrow.png"
-                      alt="E2Visa Logo"
-                      width={24}
-                      height={24}
-                      className=""
+                    <input
+                      type="email"
+                      value={subscriberEmail}
+                      onChange={e => setSubscriberEmail(e.target.value)}
+                      placeholder="Enter your email to get started"
+                      className="rounded-lg  px-6 py-4 pl-12 bg-[#FFFFFF] font-medium text-[#64748B] outline-none text-sm w-[304px]"
                     />
-                  </span>
-                </button>
+                    </div>
+
+                    <button type="submit" className="bg-[#2EC4B6] text-left rounded-lg pl-5 cursor-pointer relative text-white py-4 w-full sm:w-[196px] font-bold text-base ">
+                      GET STARTED
+                      <span className="w-[44px] h-[44px] flex items-center justify-center absolute top-1/2 p-4 -translate-y-1/2 right-2 bg-white rounded-lg">
+                        <Image
+                          src="/images/footer/upArrow.png"
+                          alt="E2Visa Logo"
+                          width={24}
+                          height={24}
+                          className=""
+                        />
+                      </span>
+                    </button>
+                    </div>
+                  </form>
+                  <ToastContainer />
               </div>
             </div>
           </div>
@@ -84,7 +127,7 @@ const Footer = () => {
             {/* Contact Section */}
             <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
               <h1 className="font-normal text-[24px] xl:text-[40px]">Contact us today</h1>
-            <p className="font-medium xl:text-base text-sm">
+              <p className="font-medium xl:text-base text-sm">
                 Contact us today to schedule a consultation and discover how we
                 can help your business thrive.
               </p>
@@ -97,9 +140,8 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-sm font-bold hover:text-gray-300 uppercase transition-colors ${
-                        isActive(item.href) ? 'text-[#2EC4B6]' : ''
-                      }`}
+                      className={`text-sm font-bold hover:text-gray-300 uppercase transition-colors ${isActive(item.href) ? 'text-[#2EC4B6]' : ''
+                        }`}
                     >
                       {item.name}
                     </Link>
@@ -116,9 +158,8 @@ const Footer = () => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className={`text-sm uppercase font-bold hover:text-gray-300 transition-colors ${
-                        isActive(item.href) ? 'text-[#2EC4B6]' : ''
-                      }`}
+                      className={`text-sm uppercase font-bold hover:text-gray-300 transition-colors ${isActive(item.href) ? 'text-[#2EC4B6]' : ''
+                        }`}
                     >
                       {item.name}
                     </Link>

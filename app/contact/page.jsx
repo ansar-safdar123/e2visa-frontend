@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -12,12 +14,76 @@ export default function Contact() {
         message: ''
     });
 
+    const [errors, setErrors] = useState({});
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
             [name]: value
         }));
+    };
+
+    const handleBlur = (e) => {
+      const { name } = e.target;
+      const fieldError = validateContact({ ...formData, [name]: formData[name] });
+      setErrors(prev => ({ ...prev, [name]: fieldError[name] }));
+    };
+
+    const validateContact = (data) => {
+      const errors = {};
+      if (!data.fullName.trim()) errors.fullName = "Name is required.";
+      if (!data.email.trim()) errors.email = "Email is required.";
+      else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) errors.email = "Enter a valid email address.";
+      if (!data.subject.trim()) errors.subject = "Subject is required.";
+      if (!data.message.trim()) errors.message = "Message is required.";
+      return errors;
+    };
+
+    const CONTACT_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/contact';
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const validationErrors = validateContact(formData);
+      setErrors(validationErrors);
+
+      if (Object.keys(validationErrors).length > 0) {
+        // Show only the first error as a toast (optional)
+        toast.error("Please fix the errors above.", { position: 'top-right' });
+        return;
+      }
+
+      // Map frontend keys to backend keys
+      const payload = {
+        name: formData.fullName,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      };
+
+      try {
+        const res = await fetch(CONTACT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
+          toast.success(data.message, { position: 'top-right', autoClose: 3000 }); // 3 seconds
+          setFormData({ fullName: '', email: '', subject: '', message: '' });
+          setErrors({});
+        } else {
+          // Show backend error(s)
+          if (data.errors) {
+            // If errors is an object or array, show each as toast
+            Object.values(data.errors).forEach(msg => toast.error(msg, { position: 'top-right' }));
+          } else {
+            toast.error(data.message || 'Submission failed.', { position: 'top-right' });
+          }
+        }
+      } catch {
+        toast.error('Submission failed.', { position: 'top-right' });
+      }
     };
 
   return (
@@ -89,7 +155,7 @@ export default function Contact() {
             <div className="w-full max-w-[540px]">
                 
             <h2 className="text-3xl font-semibold mb-8">Get in Touch</h2>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
              {/* Full Name Input */}
              <div className="relative">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -106,6 +172,7 @@ export default function Contact() {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Enter your name"
                 className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
@@ -115,6 +182,9 @@ export default function Contact() {
               >
                 Full Name
               </label>
+              {errors.fullName && (
+                <p className="text-red-500 text-xs mt-1 ml-2">{errors.fullName}</p>
+              )}
             </div>
 
             {/* Email Input */}
@@ -133,6 +203,7 @@ export default function Contact() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Enter your email"
                 className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
@@ -142,6 +213,9 @@ export default function Contact() {
               >
                 Email
               </label>
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1 ml-2">{errors.email}</p>
+              )}
             </div>
 
             <div className="relative">
@@ -159,6 +233,7 @@ export default function Contact() {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Enter your subject"
                 className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
@@ -168,6 +243,9 @@ export default function Contact() {
               >
                 Subject
               </label>
+              {errors.subject && (
+                <p className="text-red-500 text-xs mt-1 ml-2">{errors.subject}</p>
+              )}
             </div>
 
             <div className="relative">
@@ -184,6 +262,7 @@ export default function Contact() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Enter your message"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
@@ -193,6 +272,9 @@ export default function Contact() {
               >
                 Message
               </label>
+              {errors.message && (
+                <p className="text-red-500 text-xs mt-1 ml-2">{errors.message}</p>
+              )}
             </div>
 
             <button
@@ -207,6 +289,7 @@ export default function Contact() {
           </div>
         </div>
       </div>
+      <ToastContainer autoClose={3000} />  {/* 3 seconds */}
     </div>
   );
 } 
