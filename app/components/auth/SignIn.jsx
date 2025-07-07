@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LOGIN_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/login';
 
@@ -16,9 +18,29 @@ const SignIn = () => {
   const { login } = useAuth();
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState(null);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (loginError) {
+      toast.error(loginError, { position: 'top-right' });
+    }
+  }, [loginError]);
+
+  const validate = () => {
+    const newErrors = {};
+    if (!email.trim()) newErrors.email = 'Email is required.';
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) newErrors.email = 'Enter a valid email address.';
+    if (!password) newErrors.password = 'Password is required.';
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
     setLoginLoading(true);
     setLoginError(null);
     try {
@@ -31,15 +53,18 @@ const SignIn = () => {
       });
       const data = await res.json();
       if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
-        // You may want to adjust userData based on your API response
         const userData = {
           email: email,
-          // Add more fields if needed from data.result
         };
         login(userData);
+        toast.success(data.message, { position: 'top-right' });
         router.push('/');
       } else {
-        setLoginError(data.message || 'Login failed.');
+        let errorMsg = data.message || 'Login failed.';
+        if (errorMsg.toLowerCase().includes('authfailed')) {
+          errorMsg = 'Invalid email or password.';
+        }
+        setLoginError(errorMsg);
       }
     } catch (err) {
       setLoginError('Login failed.');
@@ -56,9 +81,9 @@ const SignIn = () => {
         <div className="flex items-center justify-center w-full">
 
         <form onSubmit={handleSubmit} className="space-y-6 w-full px-5 sm:max-w-[540px]">
-          {loginError && (
+          {/* {loginError && (
             <div className="text-red-500 text-center mb-2">{loginError}</div>
-          )}
+          )} */}
           {/* Email Input */}
           <div className="space-y-8">
            
@@ -75,12 +100,19 @@ const SignIn = () => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setErrors(prev => ({ ...prev, email: undefined }));
+                }}
+                onBlur={() => {
+                  const validationErrors = validate();
+                  setErrors(prev => ({ ...prev, email: validationErrors.email }));
+                }}
                 placeholder="Enter your email"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
                 <label htmlFor="email" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Email</label>
-
+                {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
             </div>
           </div>
 
@@ -100,13 +132,20 @@ const SignIn = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrors(prev => ({ ...prev, password: undefined }));
+                }}
+                onBlur={() => {
+                  const validationErrors = validate();
+                  setErrors(prev => ({ ...prev, password: validationErrors.password }));
+                }}
                 placeholder="Enter your password"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
 
               />
                 <label htmlFor="password" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Password</label>
-
+                {errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -149,6 +188,7 @@ const SignIn = () => {
             </Link>
           </div>
         </form>
+        <ToastContainer />
         </div>
       </div>
 

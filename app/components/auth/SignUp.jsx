@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from '../../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const COUNTRIES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/countries/list';
 const STATES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/states/list';
@@ -23,6 +25,7 @@ const SignUp = () => {
     confirmPassword: "",
     phone: "",
     timeframe: "",
+    city: "",
     address: "",
     country: "",
     county: "",
@@ -48,6 +51,7 @@ const SignUp = () => {
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerError, setRegisterError] = useState(null);
   const [registerSuccess, setRegisterSuccess] = useState(null);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     // Get the user type and id from URL in client-side
@@ -166,16 +170,63 @@ const SignUp = () => {
     fetchCounties();
   }, [formData.state, states]);
 
+  useEffect(() => {
+    if (registerError) {
+      toast.error(registerError, { position: 'top-right' });
+    }
+  }, [registerError]);
+
+  useEffect(() => {
+    if (registerSuccess) {
+      toast.success(registerSuccess, { position: 'top-right' });
+    }
+  }, [registerSuccess]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+    setErrors(prev => ({ ...prev, [name]: undefined })); // Clear error on change
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required.";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address.";
+    }
+    if (!formData.password) newErrors.password = "Password is required.";
+    if (!formData.confirmPassword) newErrors.confirmPassword = "Confirm your password.";
+    if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required.";
+    if (!formData.userTypeId) newErrors.userTypeId = "User type is required.";
+    if (!formData.country) newErrors.country = "Country is required.";
+    if (!formData.state) newErrors.state = "State is required.";
+    if (!formData.county) newErrors.county = "County is required.";
+    if (!formData.city.trim()) newErrors.city = "City is required.";
+    if (!formData.zipcode.trim()) newErrors.zipcode = "Zipcode is required.";
+    if (formData.userType === 'broker' && !formData.brokerLicense) newErrors.brokerLicense = "Broker license is required.";
+    if (formData.userType === 'attorney' && !formData.attorneyLicense) newErrors.attorneyLicense = "Attorney license is required.";
+    if (formData.userType === 'broker' && formData.broker === 'yes' && !formData.brokerLicense) newErrors.brokerLicense = "Broker license is required.";
+    if (formData.userType === 'attorney' && formData.attorney === 'yes' && !formData.attorneyLicense) newErrors.attorneyLicense = "Attorney license is required.";
+
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      return; // Don't submit if there are errors
+    }
     setRegisterLoading(true);
     setRegisterError(null);
     setRegisterSuccess(null);
@@ -188,6 +239,7 @@ const SignUp = () => {
       form.append('role_id', formData.userTypeId);
       form.append('phone_number', formData.phone);
       form.append('time_frame_for_immigration', formData.timeframe);
+      if (formData.city) form.append('city', formData.city);
       if (formData.address) form.append('address', formData.address);
 
       // Find selected country and state objects
@@ -205,8 +257,8 @@ const SignUp = () => {
 
       if (formData.county) form.append('county', formData.county);
       if (formData.zipcode) form.append('zipcode', formData.zipcode);
-      if (formData.broker) form.append('broker', formData.broker);
-      if (formData.attorney) form.append('attorney', formData.attorney);
+      form.append('have_broker', formData.broker === 'yes' ? '1' : '0');
+      form.append('have_attorney', formData.attorney === 'yes' ? '1' : '0');
       if (formData.brokerLicense) form.append('broker_license', formData.brokerLicense);
       if (formData.attorneyLicense) form.append('attorney_license', formData.attorneyLicense);
 
@@ -217,6 +269,7 @@ const SignUp = () => {
       const data = await res.json();
       if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
         setRegisterSuccess(data.message);
+        toast.success(data.message, { position: 'top-right' });
         // Optionally redirect or clear form
       } else {
         setRegisterError(data.message || 'Registration failed.');
@@ -240,12 +293,12 @@ const SignUp = () => {
             onSubmit={handleSubmit}
             className="space-y-6 w-full max-w-[540px]"
           >
-            {registerError && (
+            {/* {registerError && (
               <div className="text-red-500 text-center mb-2">{registerError}</div>
             )}
             {registerSuccess && (
               <div className="text-green-600 text-center mb-2">{registerSuccess}</div>
-            )}
+            )} */}
             {/* Full Name Input */}
             <div className="relative">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -271,6 +324,7 @@ const SignUp = () => {
               >
                 Full Name
               </label>
+              {errors.fullName && <div className="text-red-500 text-xs mt-1">{errors.fullName}</div>}
             </div>
 
             {/* Email Input */}
@@ -289,6 +343,10 @@ const SignUp = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={() => {
+                  const validationErrors = validate();
+                  setErrors(prev => ({ ...prev, email: validationErrors.email }));
+                }}
                 placeholder="Enter your email"
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
@@ -298,6 +356,7 @@ const SignUp = () => {
               >
                 Email
               </label>
+              {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
             </div>
 
             {/* Password Input */}
@@ -337,6 +396,7 @@ const SignUp = () => {
                   height={20}
                 />
               </button>
+              {errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
             </div>
 
             {/* Confirm Password Input */}
@@ -378,6 +438,7 @@ const SignUp = () => {
                   height={20}
                 />
               </button>
+              {errors.confirmPassword && <div className="text-red-500 text-xs mt-1">{errors.confirmPassword}</div>}
             </div>
 
             {/* Phone Input */}
@@ -405,6 +466,7 @@ const SignUp = () => {
               >
                 Phone no
               </label>
+              {errors.phone && <div className="text-red-500 text-xs mt-1">{errors.phone}</div>}
             </div>
 
             {/* Broker License Input - Only shown for broker user type */}
@@ -433,6 +495,7 @@ const SignUp = () => {
                 >
                   Broker License
                 </label>
+                {errors.brokerLicense && <div className="text-red-500 text-xs mt-1">{errors.brokerLicense}</div>}
               </div>
             )}
 
@@ -462,6 +525,7 @@ const SignUp = () => {
                 >
                   Attorney License
                 </label>
+                {errors.attorneyLicense && <div className="text-red-500 text-xs mt-1">{errors.attorneyLicense}</div>}
               </div>
             )}
 
@@ -490,6 +554,34 @@ const SignUp = () => {
               >
                 Time frame for immigrating?
               </label>
+            </div>
+
+            {/* City Input */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Image
+                  src="/images/auth/signin/location.png"
+                  alt="City icon"
+                  width={23}
+                  height={20}
+                />
+              </div>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="Enter your city"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+              />
+              <label
+                htmlFor="city"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                City
+              </label>
+              {errors.city && <div className="text-red-500 text-xs mt-1">{errors.city}</div>}
             </div>
 
             {/* Address Input */}
@@ -542,6 +634,7 @@ const SignUp = () => {
                 >
                   Country
                 </label>
+                {errors.country && <div className="text-red-500 text-xs mt-1">{errors.country}</div>}
               </div>
               <div className="relative">
                 <select
@@ -564,6 +657,7 @@ const SignUp = () => {
                 >
                   State
                 </label>
+                {errors.state && <div className="text-red-500 text-xs mt-1">{errors.state}</div>}
               </div>
              
             </div>
@@ -591,6 +685,7 @@ const SignUp = () => {
                 >
                   County
                 </label>
+                {errors.county && <div className="text-red-500 text-xs mt-1">{errors.county}</div>}
               </div>
               <div className="relative">
                 <input
@@ -608,6 +703,7 @@ const SignUp = () => {
                 >
                   Zipcode
                 </label>
+                {errors.zipcode && <div className="text-red-500 text-xs mt-1">{errors.zipcode}</div>}
               </div>
             </div>
 
@@ -694,6 +790,7 @@ const SignUp = () => {
               </Link>
             </div>
           </form>
+          <ToastContainer />
         </div>
       </div>
     </div>
