@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -15,6 +14,7 @@ export default function Contact() {
     });
 
     const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,17 +48,17 @@ export default function Contact() {
       setErrors(validationErrors);
 
       if (Object.keys(validationErrors).length > 0) {
-        // Show only the first error as a toast (optional)
-        toast.error("Please fix the errors above.", { position: 'top-right' });
         return;
       }
 
+      setIsSubmitting(true);
       // Map frontend keys to backend keys
       const payload = {
         name: formData.fullName,
         email: formData.email,
         subject: formData.subject,
         message: formData.message,
+        userType: formData.userType
       };
 
       try {
@@ -69,20 +69,29 @@ export default function Contact() {
         });
         const data = await res.json();
         if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
-          toast.success(data.message, { position: 'top-right', autoClose: 3000 }); // 3 seconds
           setFormData({ fullName: '', email: '', subject: '', message: '' });
           setErrors({});
+          toast.success(data.message, { position: 'top-right' });
         } else {
           // Show backend error(s)
           if (data.errors) {
-            // If errors is an object or array, show each as toast
-            Object.values(data.errors).forEach(msg => toast.error(msg, { position: 'top-right' }));
+            if (Array.isArray(data.errors)) {
+              data.errors.forEach(err => toast.error(err, { position: 'top-right' }));
+            } else if (typeof data.errors === 'object') {
+              Object.values(data.errors).flat().forEach(err => toast.error(err, { position: 'top-right' }));
+            } else if (typeof data.errors === 'string') {
+              toast.error(data.errors, { position: 'top-right' });
+            }
+          } else if (data.message) {
+            toast.error(data.message, { position: 'top-right' });
           } else {
-            toast.error(data.message || 'Submission failed.', { position: 'top-right' });
+            toast.error('Failed to send message.', { position: 'top-right' });
           }
         }
       } catch {
-        toast.error('Submission failed.', { position: 'top-right' });
+        toast.error('Failed to send message.', { position: 'top-right' });
+      } finally {
+        setIsSubmitting(false);
       }
     };
 
@@ -180,7 +189,7 @@ export default function Contact() {
                 htmlFor="fullName"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Full Name
+                Full Name <span className="text-red-500">*</span>
               </label>
               {errors.fullName && (
                 <p className="text-red-500 text-xs mt-1 ml-2">{errors.fullName}</p>
@@ -211,7 +220,7 @@ export default function Contact() {
                 htmlFor="email"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Email
+                Email <span className="text-red-500">*</span>
               </label>
               {errors.email && (
                 <p className="text-red-500 text-xs mt-1 ml-2">{errors.email}</p>
@@ -241,7 +250,7 @@ export default function Contact() {
                 htmlFor="subject"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Subject
+                Subject <span className="text-red-500">*</span>
               </label>
               {errors.subject && (
                 <p className="text-red-500 text-xs mt-1 ml-2">{errors.subject}</p>
@@ -270,7 +279,7 @@ export default function Contact() {
                 htmlFor="message"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Message
+                Message <span className="text-red-500">*</span>
               </label>
               {errors.message && (
                 <p className="text-red-500 text-xs mt-1 ml-2">{errors.message}</p>
@@ -280,16 +289,15 @@ export default function Contact() {
             <button
               type="submit"
               className="w-full bg-[#0A3161] text-white !mt-14 py-4 2xl:py-5 rounded-lg hover:bg-bg-[#102742] transition-colors font-semibold text-sm md:text-base"
-            lassName="w-full  text-white py-3 px-6 rounded-lg hover:bg-opacity-90 transition-colors"
-              >
-                Send Message
-              </button>
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
             </form>
             </div>
           </div>
         </div>
       </div>
-      <ToastContainer autoClose={3000} />  {/* 3 seconds */}
     </div>
   );
 } 

@@ -43,6 +43,14 @@
   }
 }
 
+html, body {
+  font-family: 'Hurme Geometric Sans 4', sans-serif !important;
+}
+
+* {
+  font-family: inherit;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['Hurme Geometric Sans 4', 'sans-serif'],
         lato: ['var(--font-lato)', 'sans-serif'],
       },
     },

@@ -10,6 +10,9 @@ import { ToastContainer } from 'react-toastify';
 const Footer = () => {
   const pathname = usePathname();
   const [subscriberEmail, setSubscriberEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+  const [subscribeSuccess, setSubscribeSuccess] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
 
   const isActive = (path) => {
     return pathname === path;
@@ -25,9 +28,13 @@ const Footer = () => {
     e.preventDefault();
     const error = validateEmail(subscriberEmail);
     if (error) {
+      setSubscribeError(error);
       toast.error(error, { position: 'top-right' });
       return;
     }
+    setSubscribeError('');
+    setSubscribing(true);
+    setSubscribeSuccess(false);
     try {
       const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/subscriber', {
         method: 'POST',
@@ -36,14 +43,20 @@ const Footer = () => {
       });
       const data = await res.json();
       if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
-        toast.success(data.message, { position: 'top-right' });
+        toast.success("Thanks for subscribing!", { position: 'top-right' });
         setSubscriberEmail('');
+        setSubscribeSuccess(true);
+        setTimeout(() => setSubscribeSuccess(false), 4000);
+        setSubscribeError('');
       } else {
         toast.error(data.message || 'Subscription failed.', { position: 'top-right' });
+        setSubscribeError(data.message || 'Subscription failed.');
       }
     } catch {
       toast.error('Subscription failed.', { position: 'top-right' });
+      setSubscribeError('Subscription failed.');
     }
+    setSubscribing(false);
   };
 
   const usefulLinks = [
@@ -80,10 +93,14 @@ const Footer = () => {
 
             <div className="space-y-4">
               <h3 className="xl:text-xl text-base font-bold ">Subscribe To Our Newsletter</h3>
+              {subscribeSuccess && (
+                    <div className="text-green-600 font-semibold mb-2z-10">Thanks for subscribing!</div>
+                  )}
               <div className="flex flex-col sm:flex-row gap-3">
                   <form onSubmit={handleSubscribe}>
                     <div className="flex flex-col sm:flex-row items-center gap-2">
                 <div className="relative">
+                 
                   <Image
                     src="/images/footer/email.png"
                     alt="Search"
@@ -95,13 +112,19 @@ const Footer = () => {
                       type="email"
                       value={subscriberEmail}
                       onChange={e => setSubscriberEmail(e.target.value)}
+                      onFocus={() => setSubscribeError('')}
                       placeholder="Enter your email to get started"
-                      className="rounded-lg  px-6 py-4 pl-12 bg-[#FFFFFF] font-medium text-[#64748B] outline-none text-sm w-[304px]"
+                      className={`rounded-lg  px-6 py-4 pl-12 bg-[#FFFFFF] font-medium text-[#64748B] outline-none text-sm w-[304px] ${subscribeError ? 'border-red-500' : ''}`}
                     />
+                    {subscribeError && (
+                      <div className="text-red-500 text-xs absolute left-0 w-full mt-1 pl-2 text-left z-20">{subscribeError}</div>
+                    )}
                     </div>
 
-                    <button type="submit" className="bg-[#2EC4B6] text-left rounded-lg pl-5 cursor-pointer relative text-white py-4 w-full sm:w-[196px] font-bold text-base ">
-                      GET STARTED
+                    <button type="submit" className="bg-[#2EC4B6] text-left rounded-lg pl-5 cursor-pointer relative text-white py-4 w-full sm:w-[196px] font-bold text-base "
+                      disabled={subscribing}
+                    >
+                      {subscribing ? 'Please wait...' : 'GET STARTED'}
                       <span className="w-[44px] h-[44px] flex items-center justify-center absolute top-1/2 p-4 -translate-y-1/2 right-2 bg-white rounded-lg">
                         <Image
                           src="/images/footer/upArrow.png"
@@ -112,9 +135,8 @@ const Footer = () => {
                         />
                       </span>
                     </button>
-                    </div>
+                  </div>
                   </form>
-                  <ToastContainer />
               </div>
             </div>
           </div>

@@ -31,10 +31,11 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = (userData) => {
+  const login = (userData,token) => {
     try {
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', token);
     } catch (error) {
       console.error('Error saving to localStorage:', error);
     }
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setUser(null);
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     } catch (error) {
       console.error('Error removing from localStorage:', error);
     }

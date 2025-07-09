@@ -5,8 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from '../../context/AuthContext';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const COUNTRIES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/countries/list';
 const STATES_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/states/list';
@@ -212,10 +211,13 @@ const SignUp = () => {
     if (!formData.county) newErrors.county = "County is required.";
     if (!formData.city.trim()) newErrors.city = "City is required.";
     if (!formData.zipcode.trim()) newErrors.zipcode = "Zipcode is required.";
-    if (formData.userType === 'broker' && !formData.brokerLicense) newErrors.brokerLicense = "Broker license is required.";
-    if (formData.userType === 'attorney' && !formData.attorneyLicense) newErrors.attorneyLicense = "Attorney license is required.";
-    if (formData.userType === 'broker' && formData.broker === 'yes' && !formData.brokerLicense) newErrors.brokerLicense = "Broker license is required.";
-    if (formData.userType === 'attorney' && formData.attorney === 'yes' && !formData.attorneyLicense) newErrors.attorneyLicense = "Attorney license is required.";
+    if (formData.userType === 'Broker' && !formData.brokerLicense) newErrors.brokerLicense = "Broker license is required.";
+    if (formData.userType === 'Attorney' && !formData.attorneyLicense) newErrors.attorneyLicense = "Attorney license is required.";
+    if (formData.userType === 'Broker' && formData.broker === 'yes' && !formData.brokerLicense) newErrors.brokerLicense = "Broker license is required.";
+    if (formData.userType === 'Attorney' && formData.attorney === 'yes' && !formData.attorneyLicense) newErrors.attorneyLicense = "Attorney license is required.";
+    if (formData.userType === 'Buyer' && !formData.broker) newErrors.broker = "Please select if you have a broker.";
+    if (formData.userType === 'Buyer' && !formData.attorney) newErrors.attorney = "Please select if you have an attorney.";
+    if (!formData.newsletter) newErrors.newsletter = "Please select if you want to register for newsletters.";
 
     return newErrors;
   };
@@ -273,6 +275,9 @@ const SignUp = () => {
         // Optionally redirect or clear form
       } else {
         setRegisterError(data.message || 'Registration failed.');
+        if (data.errors) {
+          setErrors(prev => ({ ...prev, ...data.errors }));
+        }
       }
     } catch (err) {
       setRegisterError('Registration failed.');
@@ -285,7 +290,7 @@ const SignUp = () => {
     <div className="min-h-[700px] flex items-center justify-center px-4 bg-[url('/images/auth/signin/signinImg.png')] bg-cover bg-center relative">
       <div className="signin-bg rounded-2xl shadow-lg px-4 md:px-12 py-10 md:py-20 w-full my-[50px] max-w-[927px]">
         <h1 className="text-2xl lg:text-3xl font-bold text-center mb-8 2xl:mb-16 text-[#424242]">
-        Create Your Free Account
+          Create Your Free Account
 
         </h1>
         <div className="flex items-center justify-center w-full">
@@ -322,7 +327,7 @@ const SignUp = () => {
                 htmlFor="fullName"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Full Name
+                Full Name <span className="text-red-500">*</span>
               </label>
               {errors.fullName && <div className="text-red-500 text-xs mt-1">{errors.fullName}</div>}
             </div>
@@ -354,7 +359,7 @@ const SignUp = () => {
                 htmlFor="email"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Email
+                Email <span className="text-red-500">*</span>
               </label>
               {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
             </div>
@@ -382,7 +387,7 @@ const SignUp = () => {
                 htmlFor="password"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Password
+                Password <span className="text-red-500">*</span>
               </label>
               <button
                 type="button"
@@ -422,7 +427,7 @@ const SignUp = () => {
                 htmlFor="confirmPassword"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Confirm Password
+                Confirm Password <span className="text-red-500">*</span>
               </label>
               <button
                 type="button"
@@ -430,9 +435,8 @@ const SignUp = () => {
                 className="absolute inset-y-0 right-4 flex items-center"
               >
                 <Image
-                  src={`/images/auth/${
-                    showConfirmPassword ? "eye-off" : "eye"
-                  }.svg`}
+                  src={`/images/auth/${showConfirmPassword ? "eye-off" : "eye"
+                    }.svg`}
                   alt={showConfirmPassword ? "Hide password" : "Show password"}
                   width={20}
                   height={20}
@@ -464,13 +468,14 @@ const SignUp = () => {
                 htmlFor="phone"
                 className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Phone no
+                Phone no <span className="text-red-500">*</span>
               </label>
               {errors.phone && <div className="text-red-500 text-xs mt-1">{errors.phone}</div>}
+              {errors.phone_number && <div className="text-red-500 text-xs mt-1">{errors.phone_number}</div>}
             </div>
 
             {/* Broker License Input - Only shown for broker user type */}
-            {formData.userType === 'broker' && (
+            {formData.userType === 'Broker' && (
               <div className="relative">
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                   <Image
@@ -493,14 +498,14 @@ const SignUp = () => {
                   htmlFor="brokerLicense"
                   className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  Broker License
+                  Broker License <span className="text-red-500">*</span>
                 </label>
                 {errors.brokerLicense && <div className="text-red-500 text-xs mt-1">{errors.brokerLicense}</div>}
               </div>
             )}
 
             {/* Attorney License Input - Only shown for attorney user type */}
-            {formData.userType === 'attorney' && (
+            {formData.userType === 'Attorney' && (
               <div className="relative">
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                   <Image
@@ -523,7 +528,7 @@ const SignUp = () => {
                   htmlFor="attorneyLicense"
                   className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  Attorney License
+                  Attorney License <span className="text-red-500">*</span>
                 </label>
                 {errors.attorneyLicense && <div className="text-red-500 text-xs mt-1">{errors.attorneyLicense}</div>}
               </div>
@@ -556,33 +561,7 @@ const SignUp = () => {
               </label>
             </div>
 
-            {/* City Input */}
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/location.png"
-                  alt="City icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                placeholder="Enter your city"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              />
-              <label
-                htmlFor="city"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                City
-              </label>
-              {errors.city && <div className="text-red-500 text-xs mt-1">{errors.city}</div>}
-            </div>
+
 
             {/* Address Input */}
             <div className="relative">
@@ -611,6 +590,34 @@ const SignUp = () => {
               </label>
             </div>
 
+            {/* City Input */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Image
+                  src="/images/auth/signin/location.png"
+                  alt="City icon"
+                  width={23}
+                  height={20}
+                />
+              </div>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="Enter your city"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+              />
+              <label
+                htmlFor="city"
+                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+              >
+                City <span className="text-red-500">*</span>
+              </label>
+              {errors.city && <div className="text-red-500 text-xs mt-1">{errors.city}</div>}
+            </div>
+
             {/* Country and City Selection */}
             <div className="grid grid-cols-2 gap-4">
               <div className="relative">
@@ -632,7 +639,7 @@ const SignUp = () => {
                   htmlFor="country"
                   className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  Country
+                  Country <span className="text-red-500">*</span>
                 </label>
                 {errors.country && <div className="text-red-500 text-xs mt-1">{errors.country}</div>}
               </div>
@@ -655,16 +662,16 @@ const SignUp = () => {
                   htmlFor="state"
                   className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  State
+                  State <span className="text-red-500">*</span>
                 </label>
                 {errors.state && <div className="text-red-500 text-xs mt-1">{errors.state}</div>}
               </div>
-             
+
             </div>
 
             {/* State and Zipcode */}
             <div className="grid grid-cols-2 gap-4">
-            <div className="relative">
+              <div className="relative">
                 <select
                   id="county"
                   name="county"
@@ -683,7 +690,7 @@ const SignUp = () => {
                   htmlFor="county"
                   className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  County
+                  County <span className="text-red-500">*</span>
                 </label>
                 {errors.county && <div className="text-red-500 text-xs mt-1">{errors.county}</div>}
               </div>
@@ -701,53 +708,60 @@ const SignUp = () => {
                   htmlFor="zipcode"
                   className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  Zipcode
+                  Zipcode <span className="text-red-500">*</span>
                 </label>
                 {errors.zipcode && <div className="text-red-500 text-xs mt-1">{errors.zipcode}</div>}
               </div>
             </div>
 
-            {/* Broker Selection */}
-            <div className="relative">
-              <select
-                id="broker"
-                name="broker"
-                value={formData.broker}
-                onChange={handleChange}
-                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              >
-                <option value="">Select</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-              <label
-                htmlFor="broker"
-                className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Do you have a Broker?
-              </label>
-            </div>
+            {formData.userType === 'Buyer' && (
+              <>
+                {/* Broker Selection */}
+                <div className="relative">
+                  <select
+                    id="broker"
+                    name="broker"
+                    value={formData.broker}
+                    onChange={handleChange}
+                    className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  >
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                  <label
+                    htmlFor="broker"
+                    className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                  >
+                    Do you have a Broker? <span className="text-red-500">*</span>
+                  </label>
+                  {errors.broker && <div className="text-red-500 text-xs mt-1">{errors.broker}</div>}
+                </div>
 
-            {/* Attorney Selection */}
-            <div className="relative">
-              <select
-                id="attorney"
-                name="attorney"
-                value={formData.attorney}
-                onChange={handleChange}
-                className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              >
-                <option value="">Select</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-              <label
-                htmlFor="attorney"
-                className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Do you have an Attorney?
-              </label>
-            </div>
+                {/* Attorney Selection */}
+                <div className="relative">
+                  <select
+                    id="attorney"
+                    name="attorney"
+                    value={formData.attorney}
+                    onChange={handleChange}
+                    className="w-full pl-4 pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                  >
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                  <label
+                    htmlFor="attorney"
+                    className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
+                  >
+                    Do you have an Attorney? <span className="text-red-500">*</span>
+                  </label>
+                  {errors.attorney && <div className="text-red-500 text-xs mt-1">{errors.attorney}</div>}
+                </div>
+              </>
+            )}
+
 
             {/* Newsletter Selection */}
             <div className="relative">
@@ -766,8 +780,9 @@ const SignUp = () => {
                 htmlFor="newsletter"
                 className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
               >
-                Register for newsletters?
+                Register for newsletters? <span className="text-red-500">*</span>
               </label>
+              {errors.newsletter && <div className="text-red-500 text-xs mt-1">{errors.newsletter}</div>}
             </div>
 
             {/* Create Account Button */}
@@ -790,7 +805,6 @@ const SignUp = () => {
               </Link>
             </div>
           </form>
-          <ToastContainer />
         </div>
       </div>
     </div>

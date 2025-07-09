@@ -5,8 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const LOGIN_API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/login';
 
@@ -56,7 +55,7 @@ const SignIn = () => {
         const userData = {
           email: email,
         };
-        login(userData);
+        login(userData,data.result.token);
         toast.success(data.message, { position: 'top-right' });
         router.push('/');
       } else {
@@ -188,7 +187,6 @@ const SignIn = () => {
             </Link>
           </div>
         </form>
-        <ToastContainer />
         </div>
       </div>
 
