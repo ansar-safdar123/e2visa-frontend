@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 export default function Forum() {
   const [forums, setForums] = useState([]);
@@ -82,7 +83,7 @@ export default function Forum() {
         </div>
       </div> */}
 
-        {loading && <div className="text-center py-8">Loading forums...</div>}
+        {loading && <LoadingSpinner />}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
         {!loading && !error && forums.length === 0 && <div className="text-center py-8">No forums found.</div>}
         {!loading && !error && forums.map((forum) => (

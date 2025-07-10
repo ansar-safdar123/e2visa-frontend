@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
+import LoadingSpinner from '../common/LoadingSpinner';
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/roles/list';
@@ -77,7 +77,7 @@ const SignUpOptions = () => {
 
 
         {loading ? (
-          <div className="text-center text-gray-500">Loading...</div>
+          <LoadingSpinner />
         ) : error ? (
           <div className="text-center text-red-500">{error}</div>
         ) : (
