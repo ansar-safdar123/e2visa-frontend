@@ -60,8 +60,7 @@ export default function Forum() {
       {/* Forum Content Section */}
       <div className="container mx-auto px-4 py-8">
          {/* What's your Question Input */}
-      <div className="relative border rounded-md mb-8 mt-4 min-h-[110px]">
-        {/* Floating label */}
+      {/* <div className="relative border rounded-md mb-8 mt-4 min-h-[110px]">
         <label htmlFor="question-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
           What's your Question?
         </label>
@@ -81,7 +80,8 @@ export default function Forum() {
           <button className="px-4 py-1 rounded bg-gray-200 text-gray-700 text-sm">Cancel</button>
           <button className="px-4 py-1 rounded bg-[#40433F] text-white text-sm">Post</button>
         </div>
-      </div>
+      </div> */}
+
         {loading && <div className="text-center py-8">Loading forums...</div>}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
         {!loading && !error && forums.length === 0 && <div className="text-center py-8">No forums found.</div>}

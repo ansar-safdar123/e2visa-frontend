@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 export default function ForumPostPage({ params }) {
   const id = params?.id;
@@ -11,6 +12,13 @@ export default function ForumPostPage({ params }) {
   const [commentText, setCommentText] = useState("");
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState("");
+  const [commentError, setCommentError] = useState("");
+  const [replyError, setReplyError] = useState("");
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -41,6 +49,94 @@ export default function ForumPostPage({ params }) {
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
   if (!forum) return <div className="p-8">Forum not found.</div>;
 
+  const handleAddComment = async () => {
+    if (!commentText.trim()) {
+      setCommentError("Please enter a comment before submitting.");
+      return;
+    }
+    setCommentError("");
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forum/comment/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          forum_id: id,
+          content: commentText,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.result) {
+        toast.success('Comment added!', { position: 'top-right' });
+        setCommentText("");
+        setCommentError("");
+        // Refresh forum data to show new comment
+        const forumRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forum/forum-detail/${id}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const forumData = await forumRes.json();
+        if (forumRes.ok && forumData.result) {
+          setForum(forumData.result);
+        }
+      } else {
+        setCommentError(data.message || 'Failed to add comment.');
+        toast.error(data.message || 'Failed to add comment.', { position: 'top-right' });
+      }
+    } catch (err) {
+      setCommentError('Failed to add comment.');
+      toast.error('Failed to add comment.', { position: 'top-right' });
+    }
+  };
+
+  const handleAddReply = async (commentId) => {
+    if (!replyText.trim()) {
+      setReplyError("Please enter a reply before submitting.");
+      return;
+    }
+    setReplyError("");
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forum/reply/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          forum_id: id,
+          comment_id: commentId,
+          content: replyText,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.result) {
+        toast.success( 'Reply added!', { position: 'top-right' });
+        setReplyText("");
+        setReplyError("");
+        setReplyingTo(null);
+        // Refresh forum data to show new reply
+        const forumRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forum/forum-detail/${id}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const forumData = await forumRes.json();
+        if (forumRes.ok && forumData.result) {
+          setForum(forumData.result);
+        }
+      } else {
+        setReplyError(data.message || 'Failed to add reply.');
+        toast.error(data.message || 'Failed to add reply.', { position: 'top-right' });
+      }
+    } catch (err) {
+      setReplyError('Failed to add reply.');
+      toast.error('Failed to add reply.', { position: 'top-right' });
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white rounded-lg border border-black p-6 mb-6">
@@ -58,31 +154,33 @@ export default function ForumPostPage({ params }) {
       </div>
 
       {/* Comment input area */}
-      <div className="mb-4">
-        <div className="font-semibold mb-2 text-[#40433F]">Write your comment...</div>
-        <textarea
-          className="w-full border rounded-md p-2 mb-2"
-          rows={2}
-          placeholder="Write your comment..."
-          value={commentText}
-          onChange={e => setCommentText(e.target.value)}
-        />
-        <div className="flex gap-2 justify-end">
-          <button
-            className="px-4 py-1 rounded bg-gray-200 text-gray-700"
-            onClick={() => setCommentText("")}
-          >
-            Cancel
-          </button>
-          <button
-            className="px-4 py-1 rounded bg-[#40433F] text-white"
-            onClick={() => setCommentText("")}
-            disabled={!commentText.trim()}
-          >
-            Comment
-          </button>
+      {token && (
+        <div className="mb-4">
+          <div className="font-semibold mb-2 text-[#40433F]">Write your comment...</div>
+          <textarea
+            className="w-full border rounded-md p-2 mb-2"
+            rows={2}
+            placeholder="Write your comment..."
+            value={commentText}
+            onChange={e => { setCommentText(e.target.value); if (commentError) setCommentError(""); }}
+          />
+          {commentError && <div className="text-red-500 text-xs mb-2">{commentError}</div>}
+          <div className="flex gap-2 justify-end">
+            <button
+              className="px-4 py-1 rounded bg-gray-200 text-gray-700"
+              onClick={() => setCommentText("")}
+            >
+              Cancel
+            </button>
+            <button
+              className="px-4 py-1 rounded bg-[#40433F] text-white"
+              onClick={handleAddComment}
+            >
+              Comment
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="mt-6">
         <div className="font-semibold mb-2 text-[#40433F]">Comments:</div>
@@ -94,27 +192,29 @@ export default function ForumPostPage({ params }) {
                 <div className="flex-1">
                   <div className="font-semibold text-[#0A3161] text-xs">{c.created_by_name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
                   <div className="text-[#40433F] text-xs">{c.content}</div>
-                  <button className="text-[#2EC4B6] text-xs mt-1" onClick={() => setReplyingTo(c.id)}>Reply</button>
-                  {replyingTo === c.id && (
+                  {token && (
+                    <button className="text-[#2EC4B6] text-xs mt-1" onClick={() => setReplyingTo(c.id)}>Reply</button>
+                  )}
+                  {token && replyingTo === c.id && (
                     <div className="mt-2">
                       <textarea
                         className="w-full border rounded-md p-2 mb-2"
                         rows={1}
                         placeholder="Write your reply..."
                         value={replyText}
-                        onChange={e => setReplyText(e.target.value)}
+                        onChange={e => { setReplyText(e.target.value); if (replyError) setReplyError(""); }}
                       />
+                      {replyError && <div className="text-red-500 text-xs mb-2">{replyError}</div>}
                       <div className="flex gap-2 justify-end">
                         <button
                           className="px-4 py-1 rounded bg-gray-200 text-gray-700"
-                          onClick={() => { setReplyingTo(null); setReplyText(""); }}
+                          onClick={() => { setReplyingTo(null); setReplyText(""); setReplyError(""); }}
                         >
                           Cancel
                         </button>
                         <button
                           className="px-4 py-1 rounded bg-[#40433F] text-white"
-                          onClick={() => { setReplyingTo(null); setReplyText(""); }}
-                          disabled={!replyText.trim()}
+                          onClick={() => handleAddReply(c.id)}
                         >
                           Reply
                         </button>
