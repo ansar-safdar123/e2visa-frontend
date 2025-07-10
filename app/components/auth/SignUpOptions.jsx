@@ -4,26 +4,10 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-// const userTypes = [
-//   { id: '1', title: 'Buyer' },
-//   { id: '2', title: 'Seller' },
-//   { id: '3', title: 'Broker' },
-//   { id: '4', title: 'Attorney' },
-//   { id: '5', title: 'Real Estate Agents' },
-//   { id: '6', title: 'Commercial Real Estate Agents' },
-//   { id: '7', title: 'Immigartion Consulatnt' },
-//   { id: '8', title: 'CPA/Accountant' },
-//   { id: '9', title: 'Appraiser' },
-//   { id: '10', title: 'Affiliate Services' },
-//   { id: '11', title: 'Lender' },
-//   { id: '12', title: 'Home Inspector' },
-//   { id: '13', title: 'Insurance' },
-//   { id: '14', title: 'Financial Advisor' },
-//   { id: '15', title: 'Consultant' },
-//   { id: '16', title: 'Title Company' },
-// ];
+
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + '/api/roles/list';
+const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
 
 const SignUpOptions = () => {
   const router = useRouter();
@@ -106,7 +90,11 @@ const SignUpOptions = () => {
               >
                 <div className="w-12 h-12 mb-4">
                   <Image
-                    src="/images/auth/signin/user2.png"
+                    src={
+                      type.badge && type.badge.icon && BACKEND_STORAGE_URL
+                        ? `${BACKEND_STORAGE_URL}/${type.badge.icon}`
+                        : "/images/auth/signin/user2.png"
+                    }
                     alt={type.name}
                     width={48}
                     height={48}
