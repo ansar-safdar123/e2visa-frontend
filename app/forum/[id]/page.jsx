@@ -158,7 +158,7 @@ export default function ForumPostPage({ params }) {
         <div className="mb-4">
           <div className="font-semibold mb-2 text-[#40433F]">Write your comment...</div>
           <textarea
-            className="w-full border rounded-md p-2 mb-2"
+            className="w-full border rounded-md p-2 mb-2 text-[#40433F]"
             rows={2}
             placeholder="Write your comment..."
             value={commentText}
@@ -198,7 +198,7 @@ export default function ForumPostPage({ params }) {
                   {token && replyingTo === c.id && (
                     <div className="mt-2">
                       <textarea
-                        className="w-full border rounded-md p-2 mb-2"
+                        className="w-full border rounded-md p-2 mb-2 text-[#40433F]"
                         rows={1}
                         placeholder="Write your reply..."
                         value={replyText}

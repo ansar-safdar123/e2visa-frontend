@@ -183,7 +183,7 @@ export default function Contact() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Enter your name"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="fullName"
@@ -214,7 +214,7 @@ export default function Contact() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Enter your email"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="email"
@@ -244,7 +244,7 @@ export default function Contact() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Enter your subject"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="subject"
@@ -273,7 +273,7 @@ export default function Contact() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Enter your message"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
               <label
                 htmlFor="message"

@@ -98,6 +98,7 @@ const SignIn = () => {
               <input
                 type="email"
                 id="email"
+                name="email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -108,7 +109,7 @@ const SignIn = () => {
                   setErrors(prev => ({ ...prev, email: validationErrors.email }));
                 }}
                 placeholder="Enter your email"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
                 <label htmlFor="email" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Email</label>
                 {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
@@ -130,6 +131,7 @@ const SignIn = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
+                name="password"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -140,7 +142,7 @@ const SignIn = () => {
                   setErrors(prev => ({ ...prev, password: validationErrors.password }));
                 }}
                 placeholder="Enter your password"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
 
               />
                 <label htmlFor="password" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Password</label>
