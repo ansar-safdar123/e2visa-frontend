@@ -3,54 +3,24 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import LoadingSpinner from '@/app/components/common/LoadingSpinner';
+// import LoadingSpinner from '../components/common/LoadingSpinner';
 
-const blogs = [
-  {
-    id: 1,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/1.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 2,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/2.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 3,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/3.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 4,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/1.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 5,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/2.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 6,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/3.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-];
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  });
+}
 
 export default function BlogDetail({ params }) {
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     website: '',
@@ -58,9 +28,32 @@ export default function BlogDetail({ params }) {
     message: '',
     newsletter: false
   });
-  const blog = blogs.find((b) => b.id === parseInt(params.id));
 
-  if (!blog) {
+  useEffect(() => {
+    const fetchBlog = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/${params.id}`);
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setBlog(data.result);
+        } else {
+          setError(data.message || 'Blog not found');
+        }
+      } catch (err) {
+        setError('Failed to fetch blog');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlog();
+  }, [params.id]);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+  if (error || !blog) {
     notFound();
   }
 
@@ -81,7 +74,7 @@ export default function BlogDetail({ params }) {
       {/* Hero Section with Background Image */}
       <div className="relative h-[300px] ">
         <div className="absolute inset-0 z-[1]">
-          <Image
+        <Image
             src="/images/blog/1.png"
             alt="Listings Header"
             fill
@@ -104,19 +97,19 @@ export default function BlogDetail({ params }) {
 
       <div className="container mx-auto px-4 mt-8">
 
-        <p className='text-[#40433F] text-lg lg:text-2xl mb-8'>
-          There are many industries that take an enormous amount of energy and drive from a business owner if the business is to be successful but sometimes there is a limit to how much energy and drive a business owner can muster, especially over a long period of time. If you own a business that qualifies you for the E2 Visa and you feel like you are at the end of your rope, you should know that there are options available.
-        </p>
         <div className="relative w-full h-96 mb-8">
           <Image
-            src={blog.image}
+            src={blog.banner || "/images/blog/placeholder.png"}
             alt={blog.title}
             fill
             className="object-cover rounded-lg"
           />
         </div>
-        <p className="text-gray-700 text-lg leading-relaxed mb-4">{blog.description}</p>
-        <p className="text-sm text-gray-500 mb-8">Published on {blog.date}</p>
+        <div className="mb-4">
+          <div className="text-2xl font-bold text-[#40433F] mb-2">{blog.title}</div>
+          <div className="text-sm text-gray-500 mb-2">Published on {formatDate(blog.active_date)}{blog.user ? ` by ${blog.user.name}` : ''}</div>
+        </div>
+        <div className="text-gray-700 text-lg leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: blog.content }} />
 
         <p className="text-gray-700 leading-relaxed mb-4">
           If you are ready to get rid of your business and move on, but not yet ready to leave the United States, one option might be to find a new business to buy in a different industry and sell the one you currently own.

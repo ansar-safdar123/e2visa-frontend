@@ -1,15 +1,61 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const BuyBusiness = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All Categories');
-  const [selectedSubCategory, setSelectedSubCategory] = useState('Sub Category');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [subCategories, setSubCategories] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('All');
   const [selectedListingType, setSelectedListingType] = useState('All Listings');
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/categories');
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setCategories(data.result);
+        } else {
+          setCategories([]);
+        }
+      } catch {
+        setCategories([]);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCategory) {
+      setSubCategories([]);
+      setSelectedSubCategory('');
+      return;
+    }
+    const fetchSubCategories = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('category_id', selectedCategory);
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/sub-categories', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setSubCategories(data.result);
+        } else {
+          setSubCategories([]);
+        }
+      } catch {
+        setSubCategories([]);
+      }
+    };
+    fetchSubCategories();
+  }, [selectedCategory]);
 
   const handleSearch = () => {
     // Implement search functionality
@@ -113,71 +159,90 @@ const BuyBusiness = () => {
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-4 ">
             <div className=" min-w-full sm:min-w-[222px] relative">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
-              >
-                <option>All Categories</option>
-                <option>Business</option>
-                <option>Real Estate</option>
-                <option>Services</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              <label htmlFor="category-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Category</label>
+              <div className="relative">
+                <select
+                  id="category-dropdown"
+                  value={selectedCategory}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    setSelectedSubCategory('');
+                  }}
+                  className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
+                >
+                  <option value="">All Categories</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
             <div className=" min-w-full sm:min-w-[222px] relative">
-              <select
-                value={selectedSubCategory}
-                onChange={(e) => setSelectedSubCategory(e.target.value)}
-                className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
-              >
-                <option>Sub Category</option>
-                <option>Option 1</option>
-                <option>Option 2</option>
-                <option>Option 3</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              <label htmlFor="subcategory-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Sub Category</label>
+              <div className="relative">
+                <select
+                  id="subcategory-dropdown"
+                  value={selectedSubCategory}
+                  onChange={(e) => setSelectedSubCategory(e.target.value)}
+                  className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
+                >
+                  <option value="">Sub Category</option>
+                  {subCategories.map((sub) => (
+                    <option key={sub.id} value={sub.id}>{sub.name}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
             <div className=" min-w-full sm:min-w-[222px] relative">
-              <select
-                value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
-              >
-                <option>All</option>
-                <option>New York</option>
-                <option>Los Angeles</option>
-                <option>Chicago</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              <label htmlFor="location-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Business Type</label>
+              <div className="relative">
+                <select
+                  id="location-dropdown"
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
+                >
+                  <option>All Business Type</option>
+                  <option>For Sale</option>
+                  <option>For Lease</option>
+                  <option>For Rent</option>
+                </select>
+                <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
             <div className=" min-w-full sm:min-w-[222px] relative">
-              <select
-                value={selectedListingType}
-                onChange={(e) => setSelectedListingType(e.target.value)}
-                className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
-              >
-                <option>All Listings</option>
-                <option>Featured</option>
-                <option>New</option>
-                <option>Popular</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              <label htmlFor="listing-type-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Listing Type</label>
+              <div className="relative">
+                <select
+                  id="listing-type-dropdown"
+                  value={selectedListingType}
+                  onChange={(e) => setSelectedListingType(e.target.value)}
+                  className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
+                >
+                  <option>All Listings</option>
+                  <option>Featured</option>
+                  <option>New</option>
+                  <option>Popular</option>
+                </select>
+                <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>

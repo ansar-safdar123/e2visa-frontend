@@ -2,58 +2,24 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import LoadingSpinner from '@/app/components/common/LoadingSpinner';
 
-const blogs = [
-  {
-    id: 1,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/1.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 2,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/2.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 3,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/3.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 4,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/1.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 5,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/2.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-  {
-    id: 6,
-    title: "Buying a Business in the US? Start Here: The E2 Visa Process",
-    image: "/images/blog/3.png",
-    description: "If you are thinking about buying a business in the United States using the E2 Visa, start here with our step-by-step.....",
-    date: "August 04, 2024",
-  },
-];
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  });
+}
 
 const BlogCard = ({ blog }) => (
     <Link href={`/articles/${blog.id}`} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="relative w-full h-48">
         <Image
-          src={blog.image}
+          src={blog.banner || "/images/blog/placeholder.png"}
           alt={blog.title}
           fill
           className="object-cover"
@@ -61,14 +27,42 @@ const BlogCard = ({ blog }) => (
       </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{blog.title}</h3>
-        <p className="text-sm text-gray-600 mb-4">{blog.description}</p>
-        <p className="text-xs text-gray-500">{blog.date}</p>
+        <p className="text-sm text-gray-600 mb-4">{blog.content ? blog.content.replace(/<[^>]+>/g, '').slice(0, 100) + (blog.content.length > 100 ? '...' : '') : ''}</p>
+        <p className="text-xs text-gray-500">{formatDate(blog.active_date)}</p>
+        {blog.user && (
+          <p className="text-xs text-gray-400 mt-2">By {blog.user.name}</p>
+        )}
       </div>
     </Link>
   );
 
 export default function Articles() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/blogs-list');
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setBlogs(data.result);
+        } else {
+          setError(data.message || 'Failed to fetch blogs');
+        }
+      } catch (err) {
+        setError('Failed to fetch blogs');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
   return (
     <div>
        {/* Hero Section with Background Image */}
@@ -122,11 +116,17 @@ export default function Articles() {
             </div>
           </div>
         <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Blog List</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {blogs.map((blog) => (
-            <BlogCard key={blog.id} blog={blog} />
-          ))}
-        </div>
+        {loading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          <div className="text-center text-red-500 mb-8">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {blogs.map((blog) => (
+              <BlogCard key={blog.id} blog={blog} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
