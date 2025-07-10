@@ -221,3 +221,19 @@ body {
     right: 0;
   }
 }
+
+.custom-toast {
+  background: #40433F !important;
+  color: #fff !important;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18), 0 1.5px 4px 0 rgba(0,0,0,0.15);
+}
+
+/* Error toast: red border */
+.custom-toast.Toastify__toast--error {
+  border-left: 6px solid #e3342f; /* Tailwind's red-600 */
+}
+
+/* Success toast: green border (optional) */
+.custom-toast.Toastify__toast--success {
+  border-left: 6px solid #22c55e;
+}
