@@ -244,7 +244,7 @@ export default function ListingsTabs() {
             {topListings.map((listing) => (
               <div key={listing.id} className="">
                 <Link href={`/buy-business/${listing.id}`}>
-                  <div className="relative listing-card-border w-full pt-[14px] pb-[19px] px-[18px] cursor-pointer">
+                  <div className="relative listing-card-border !rounded-xl w-full pt-[14px] pb-[19px] px-[18px] cursor-pointer">
                     {listing.verified && (
                       <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
                         Verified

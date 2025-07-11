@@ -238,7 +238,7 @@ export default function NewListingsTabs() {
           `}</style>
           <Slider {...settings}>
             {newListings.map((listing) => (
-              <div key={listing.id} className="bg-[#1B263B1A] border border-[#1B263B] !rounded-lg">
+              <div key={listing.id} className="bg-[#1B263B1A] border border-[#1B263B] !rounded-xl">
                 <Link href={`/buy-business/${listing.id}`}>
                   <div className="relative w-full pt-[14px] pb-[19px] px-[18px] cursor-pointer transition-transform hover:scale-[1.02]">
                     {listing.verified && (

@@ -85,14 +85,14 @@ const FeaturedProfessionals = () => {
             {professionals.map((pro, index) => (
               <div
                 key={pro.id}
-                className='w-full rounded-2xl bg-white transition-all px-2 cursor-pointer hover:shadow-lg'
+                className='w-full bg-white transition-all px-2 cursor-pointer hover:shadow-lg'
                 onClick={() => handleProfessionalClick(pro.id)}
               >
                 <div className="w-full h-[376px] relative">
                   <img
                     src={pro.image}
                     alt={pro.name}
-                    className="w-full h-full object-cover rounded-[22px]"
+                    className="w-full h-full object-cover rounded-xl"
                   />
                   <div className="text-center absolute left-1/2 -translate-x-1/2 w-full bottom-5 text-[15.25px] p-3">
                     <div className="professional-name-tags w-full px-4 py-2 rounded-lg inline-block font-semibold">

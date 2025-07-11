@@ -144,7 +144,7 @@ export default function BlogDetail({ params }) {
         </div>
 
         {/* Contact Form */}
-        <div className="mt-12 p-8 bg-gray-100 rounded-lg shadow-md">
+        <div className="my-12 p-8 bg-gray-100 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Send Us Your Questions</h2>
           <form className="space-y-4">
             <div>
@@ -183,12 +183,15 @@ export default function BlogDetail({ params }) {
                 placeholder="Your Message"
               ></textarea>
             </div>
+            <div className="flex justify-center w-full">
+
             <button
               type="submit"
-              className="bg-[#0A3161] hover:bg-[#102742] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors w-full"
+              className="bg-[#0A3161] hover:bg-[#102742] text-white font-bold py-2 px-4 rounded w-fit focus:outline-none focus:shadow-outline transition-colors "
             >
               Submit Question
             </button>
+            </div>
           </form>
         </div>
       </div>
