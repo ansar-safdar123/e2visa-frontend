@@ -111,15 +111,15 @@ export default function BlogDetail({ params }) {
         </div>
         <div className="text-gray-700 text-lg leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: blog.content }} />
 
-        <p className="text-gray-700 leading-relaxed mb-4">
+        {/* <p className="text-gray-700 leading-relaxed mb-4">
           If you are ready to get rid of your business and move on, but not yet ready to leave the United States, one option might be to find a new business to buy in a different industry and sell the one you currently own.
           <br /><br />
           You will need to speak with your immigration attorney about the timing of such a switch, but buying another business that qualifies for the E2 is one way of staying in the U.S., or even staying in your current local area. Since you've already been through the E2 Visa process once before, you know that not all businesses will qualify for the E2, but many do.
           <br /><br />
           You will need to speak with your business broker about why you feel burned out and if your goals for business ownership have changed, as this information will be pivotal in determining what businesses to look for. Ask yourself why you've reached a point where you are considering moving on from your business.
-        </p>
+        </p> */}
 
-        <p className="text-gray-700 leading-relaxed mb-2 font-bold">Do you work too many hours?</p>
+        {/* <p className="text-gray-700 leading-relaxed mb-2 font-bold">Do you work too many hours?</p>
         <p className="text-gray-700 leading-relaxed mb-2 font-bold">Is the work itself too intense or too much physical labor?</p>
         <p className="text-gray-700 leading-relaxed mb-4 font-bold">Are there things about your business that continually frustrate you to the point of wanting out?</p>
 
@@ -141,7 +141,7 @@ export default function BlogDetail({ params }) {
           <p className="font-bold">Michael Monnot</p>
           <p>941.518.7138</p>
           <p>Mike@InfinityBusinessBrokers.com</p>
-        </div>
+        </div> */}
 
         {/* Contact Form */}
         <div className="my-12 p-8 bg-gray-100 rounded-lg shadow-md">

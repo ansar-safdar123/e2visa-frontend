@@ -26,7 +26,7 @@ const BlogCard = ({ blog }) => (
         />
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">{blog.title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{blog.title.length > 45 ? blog.title.slice(0, 45) + '...' : blog.title}</h3>
         <p className="text-sm text-gray-600 mb-4">{blog.content ? blog.content.replace(/<[^>]+>/g, '').slice(0, 100) + (blog.content.length > 100 ? '...' : '') : ''}</p>
         <p className="text-xs text-gray-500">{formatDate(blog.active_date)}</p>
         {blog.user && (
