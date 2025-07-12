@@ -16,7 +16,7 @@ function formatDate(dateString) {
 }
 
 const BlogCard = ({ blog }) => (
-    <Link href={`/articles/${blog.id}`} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <Link href={`/articles/${blog.title}`} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="relative w-full h-48">
         <Image
           src={blog.banner || "/images/blog/placeholder.png"}
