@@ -26,8 +26,9 @@ const SearchBar = ({ activeTab }) => {
         <div className="relative flex items-center">
           <input
             type="text"
-            placeholder="Search city, country or state"
-            className="w-full py-2 xl:py-4 bg-white/10 backdrop-blur-md text-[#FFFFFF] rounded-lg pl-12 xl:pl-14 pr-44 xl:pr-[200px] outline-none focus:ring-2 font-[300] focus:ring-white/30"
+            placeholder="Search country"
+            // pr-44 xl:pr-[200px] 
+            className="w-full py-2 xl:py-4 bg-white/10 backdrop-blur-md text-[#FFFFFF] rounded-lg px-12 xl:px-14 outline-none focus:ring-2 font-[300] focus:ring-white/30"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -42,7 +43,7 @@ const SearchBar = ({ activeTab }) => {
           </div>
           
           {/* Industries dropdown positioned inside the search input */}
-          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+          {/* <div className="absolute right-3 top-1/2 -translate-y-1/2">
             <div className="relative">
               <select
                 value={selectedIndustry}
@@ -62,7 +63,7 @@ const SearchBar = ({ activeTab }) => {
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <button className="px-[15px] mt-2 md:mt-0 xl:px-[33.63px] xl:text-base text-xs xl:py-4 py-2 rounded-lg text-[#1B263B] bg-white hover:bg-gray-100 "

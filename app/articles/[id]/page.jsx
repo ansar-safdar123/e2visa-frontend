@@ -144,7 +144,7 @@ export default function BlogDetail({ params }) {
         </div> */}
 
         {/* Contact Form */}
-        <div className="my-12 p-8 bg-gray-100 rounded-lg shadow-md">
+        {/* <div className="my-12 p-8 bg-gray-100 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Send Us Your Questions</h2>
           <form className="space-y-4">
             <div>
@@ -193,7 +193,8 @@ export default function BlogDetail({ params }) {
             </button>
             </div>
           </form>
-        </div>
+        </div> */}
+        
       </div>
     </div>
   );

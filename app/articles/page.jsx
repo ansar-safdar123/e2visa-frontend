@@ -120,6 +120,11 @@ export default function Articles() {
           <LoadingSpinner />
         ) : error ? (
           <div className="text-center text-red-500 mb-8">{error}</div>
+        ) : blogs.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-lg text-gray-600 mb-4">No Blogs Found</p>
+            <p className="text-sm text-gray-500">Check back later for new content!</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {blogs.map((blog) => (
