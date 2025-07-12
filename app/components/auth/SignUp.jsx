@@ -175,12 +175,6 @@ const SignUp = () => {
     }
   }, [registerError]);
 
-  useEffect(() => {
-    if (registerSuccess) {
-      toast.success(registerSuccess, { position: 'top-right' });
-    }
-  }, [registerSuccess]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -272,7 +266,10 @@ const SignUp = () => {
       if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
         setRegisterSuccess(data.message);
         toast.success(data.message, { position: 'top-right' });
-        // Optionally redirect or clear form
+        setTimeout(() => {
+          router.push('/signin');
+        }, 1500); // 1.5 seconds delay for user to see the toast
+        // Optionally clear form
       } else {
         setRegisterError(data.message || 'Registration failed.');
         if (data.errors) {
