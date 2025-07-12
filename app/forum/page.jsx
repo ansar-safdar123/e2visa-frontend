@@ -5,6 +5,15 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { toast } from 'react-toastify';
+import { useRef } from 'react';
+
+// Helper to get token (adjust as needed for your auth setup)
+const getToken = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('token');
+  }
+  return null;
+};
 
 export default function Forum() {
   const [forums, setForums] = useState([]);
@@ -20,14 +29,20 @@ export default function Forum() {
   const forumsPerPage = 6;
   const totalPages = Math.ceil(forums.length / forumsPerPage);
   const paginatedForums = forums.slice((currentPage - 1) * forumsPerPage, currentPage * forumsPerPage);
+  const [token, setToken] = useState(null);
 
-  // Helper to get token (adjust as needed for your auth setup)
-  const getToken = () => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('token');
+  const didFetch = useRef(false);
+
+  useEffect(() => {
+    setToken(getToken());
+  }, []);
+
+  useEffect(() => {
+    if (!didFetch.current) {
+      fetchForums();
+      didFetch.current = true;
     }
-    return null;
-  };
+  }, []);
 
   const fetchForums = async () => {
     setLoading(true);
@@ -119,73 +134,77 @@ export default function Forum() {
      
       {/* Forum Content Section */}
       <div className="container mx-auto px-4 py-8">
-         {/* Title Input */}
-        <div className="relative border rounded-md mb-4 min-h-[60px]">
-          <label htmlFor="title-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
-            Title
-          </label>
-          {/* Title Icon */}
-          <span className="absolute left-4 top-6 text-gray-400">
-            {/* Pencil SVG icon */}
-            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M16.862 3.487a2.06 2.06 0 0 1 2.915 2.914l-9.193 9.193a2 2 0 0 1-.707.464l-4.243 1.415a.5.5 0 0 1-.632-.632l1.415-4.243a2 2 0 0 1 .464-.707l9.193-9.193z" />
-            </svg>
-          </span>
-          <input
-            id="title-input"
-            type="text"
-            placeholder="Enter forum title..."
-            className="pl-10 pr-4 pt-6 pb-2 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[40px] bg-transparent"
-            value={title}
-            onChange={e => {
-              setTitle(e.target.value);
-              if (titleError) setTitleError('');
-            }}
-            maxLength={100}
-          />
-          {titleError && <div className="text-red-500 text-xs mt-1 ml-2">{titleError}</div>}
-        </div>
-         {/* What's your Question Input */}
-      <div className="relative border rounded-md mb-8 mt-4 min-h-[110px]">
-        <label htmlFor="question-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
-          What's your Question?
-        </label>
-        <span className="absolute left-4 top-8 text-gray-400">
-          <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M8 12h4M12 16v-4" />
-          </svg>
-        </span>
-        <textarea
-          id="question-input"
-          placeholder="Write your question...."
-          className="pl-10 pr-36 pt-8 pb-8 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[90px] resize-none bg-transparent"
-          style={{ minHeight: '90px' }}
-          value={content}
-          onChange={e => {
-            setContent(e.target.value);
-            if (contentError) setContentError('');
-          }}
-        />
-        {contentError && <div className="text-red-500 text-xs mt-1 ml-2">{contentError}</div>}
-        <div className="absolute right-4 bottom-4 flex gap-2">
-          <button
-            className="px-4 py-1 rounded bg-gray-200 text-gray-700 text-sm"
-            onClick={() => { setTitle(''); setContent(''); setPostError(null); }}
-            disabled={posting}
-          >
-            Cancel
-          </button>
-          <button
-            className="px-4 py-1 rounded bg-[#40433F] cursor-pointer text-white text-sm"
-            onClick={handlePost}
-            disabled={posting}
-          >
-            {posting ? 'Posting...' : 'Post'}
-          </button>
-        </div>
-        {postError && <div className="text-red-500 text-sm mt-2 ml-2">{postError}</div>}
+         {token && (
+  <>
+    {/* Title Input */}
+    <div className="relative border rounded-md mb-4 min-h-[60px]">
+      <label htmlFor="title-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
+        Title
+      </label>
+      {/* Title Icon */}
+      <span className="absolute left-4 top-6 text-gray-400">
+        {/* Pencil SVG icon */}
+        <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path d="M16.862 3.487a2.06 2.06 0 0 1 2.915 2.914l-9.193 9.193a2 2 0 0 1-.707.464l-4.243 1.415a.5.5 0 0 1-.632-.632l1.415-4.243a2 2 0 0 1 .464-.707l9.193-9.193z" />
+        </svg>
+      </span>
+      <input
+        id="title-input"
+        type="text"
+        placeholder="Enter forum title..."
+        className="pl-10 pr-4 pt-6 pb-2 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[40px] bg-transparent"
+        value={title}
+        onChange={e => {
+          setTitle(e.target.value);
+          if (titleError) setTitleError('');
+        }}
+        maxLength={100}
+      />
+      {titleError && <div className="text-red-500 text-xs mt-1 ml-2">{titleError}</div>}
+    </div>
+    {/* What's your Question Input */}
+    <div className="relative border rounded-md mb-8 mt-4 min-h-[110px]">
+      <label htmlFor="question-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
+        What's your Question?
+      </label>
+      <span className="absolute left-4 top-8 text-gray-400">
+        <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M8 12h4M12 16v-4" />
+        </svg>
+      </span>
+      <textarea
+        id="question-input"
+        placeholder="Write your question...."
+        className="pl-10 pr-36 pt-8 pb-8 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[90px] resize-none bg-transparent"
+        style={{ minHeight: '90px' }}
+        value={content}
+        onChange={e => {
+          setContent(e.target.value);
+          if (contentError) setContentError('');
+        }}
+      />
+      {contentError && <div className="text-red-500 text-xs mt-1 ml-2">{contentError}</div>}
+      <div className="absolute right-4 bottom-4 flex gap-2">
+        <button
+          className="px-4 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+          onClick={() => { setTitle(''); setContent(''); setPostError(null); }}
+          disabled={posting}
+        >
+          Cancel
+        </button>
+        <button
+          className="px-4 py-1 rounded bg-[#40433F] cursor-pointer text-white text-sm"
+          onClick={handlePost}
+          disabled={posting}
+        >
+          {posting ? 'Posting...' : 'Post'}
+        </button>
       </div>
+      {postError && <div className="text-red-500 text-sm mt-2 ml-2">{postError}</div>}
+    </div>
+  </>
+)}
 
         {loading && <LoadingSpinner />}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
