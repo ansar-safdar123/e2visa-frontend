@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@/app/components/common/LoadingSpinner';
+import ContactForm from '@/app/components/contact/ContactForm';
 // import LoadingSpinner from '../components/common/LoadingSpinner';
 
 function formatDate(dateString) {
@@ -144,9 +145,11 @@ export default function BlogDetail({ params }) {
         </div> */}
 
         {/* Contact Form */}
-        {/* <div className="my-12 p-8 bg-gray-100 rounded-lg shadow-md">
+        <div className="my-12 p-8 bg-gray-100 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Send Us Your Questions</h2>
-          <form className="space-y-4">
+        <ContactForm />
+          
+          {/* <form className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
                 Name
@@ -192,8 +195,8 @@ export default function BlogDetail({ params }) {
               Submit Question
             </button>
             </div>
-          </form>
-        </div> */}
+          </form> */}
+        </div>
         
       </div>
     </div>

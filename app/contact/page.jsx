@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import ContactForm from '../components/contact/ContactForm';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -164,136 +165,7 @@ export default function Contact() {
             <div className="w-full max-w-[540px]">
                 
             <h2 className="text-3xl font-semibold mb-8">Get in Touch</h2>
-            <form className="space-y-6" onSubmit={handleSubmit}>
-             {/* Full Name Input */}
-             <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/user.png"
-                  alt="User icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Enter your name"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              />
-              <label
-                htmlFor="fullName"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Full Name <span className="text-red-500">*</span>
-              </label>
-              {errors.fullName && (
-                <p className="text-red-500 text-xs mt-1 ml-2">{errors.fullName}</p>
-              )}
-            </div>
-
-            {/* Email Input */}
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/mail.png"
-                  alt="Email icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Enter your email"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              />
-              <label
-                htmlFor="email"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Email <span className="text-red-500">*</span>
-              </label>
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1 ml-2">{errors.email}</p>
-              )}
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/mail.png"
-                  alt="Email icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Enter your subject"
-                className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              />
-              <label
-                htmlFor="subject"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Subject <span className="text-red-500">*</span>
-              </label>
-              {errors.subject && (
-                <p className="text-red-500 text-xs mt-1 ml-2">{errors.subject}</p>
-              )}
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <Image
-                  src="/images/auth/signin/mail.png"
-                  alt="Email icon"
-                  width={23}
-                  height={20}
-                />
-              </div>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Enter your message"
-                className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs lg:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-              />
-              <label
-                htmlFor="message"
-                className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-              >
-                Message <span className="text-red-500">*</span>
-              </label>
-              {errors.message && (
-                <p className="text-red-500 text-xs mt-1 ml-2">{errors.message}</p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-[#0A3161] text-white !mt-14 py-4 2xl:py-5 rounded-lg hover:bg-bg-[#102742] transition-colors font-semibold text-sm md:text-base"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
-            </button>
-            </form>
+            <ContactForm />
             </div>
           </div>
         </div>
