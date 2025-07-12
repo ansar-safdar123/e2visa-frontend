@@ -16,31 +16,35 @@ function formatDate(dateString) {
 }
 
 const BlogCard = ({ blog }) => (
-    <Link href={`/articles/${blog.title}`} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div className="relative w-full h-48">
-        <Image
-          src={blog.banner || "/images/blog/placeholder.png"}
-          alt={blog.title}
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">{blog.title.length > 45 ? blog.title.slice(0, 45) + '...' : blog.title}</h3>
-        <p className="text-sm text-gray-600 mb-4">{blog.content ? blog.content.replace(/<[^>]+>/g, '').slice(0, 100) + (blog.content.length > 100 ? '...' : '') : ''}</p>
-        <p className="text-xs text-gray-500">{formatDate(blog.active_date)}</p>
-        {blog.user && (
-          <p className="text-xs text-gray-400 mt-2">By {blog.user.name}</p>
-        )}
-      </div>
-    </Link>
-  );
+  <Link href={`/articles/${blog.title}`} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <div className="relative w-full h-48">
+      <Image
+        src={blog.banner || "/images/blog/placeholder.png"}
+        alt={blog.title}
+        fill
+        className="object-cover"
+      />
+    </div>
+    <div className="p-4">
+      <h3 className="text-lg font-semibold text-gray-900 mb-2">{blog.title.length > 45 ? blog.title.slice(0, 45) + '...' : blog.title}</h3>
+      <p className="text-sm text-gray-600 mb-4">{blog.content ? blog.content.replace(/<[^>]+>/g, '').slice(0, 100) + (blog.content.length > 100 ? '...' : '') : ''}</p>
+      <p className="text-xs text-gray-500">{formatDate(blog.active_date)}</p>
+      {blog.user && (
+        <p className="text-xs text-gray-400 mt-2">By {blog.user.name}</p>
+      )}
+    </div>
+  </Link>
+);
 
 export default function Articles() {
   const [searchQuery, setSearchQuery] = useState('');
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const blogsPerPage = 3;
+  const [searchResults, setSearchResults] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -63,10 +67,52 @@ export default function Articles() {
     fetchBlogs();
   }, []);
 
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearching(false);
+      setSearchResults([]);
+      setCurrentPage(1);
+    }
+  }, [searchQuery]);
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      setSearching(false);
+      setSearchResults([]);
+      setCurrentPage(1);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/search?query=${encodeURIComponent(searchQuery)}`);
+      const data = await res.json();
+      if (res.ok && data.result) {
+        setSearchResults(data.result);
+        setSearching(true);
+        setCurrentPage(1);
+      } else {
+        setError(data.message || 'Failed to fetch search results');
+        setSearchResults([]);
+        setSearching(true);
+      }
+    } catch (err) {
+      setError('Failed to fetch search results');
+      setSearchResults([]);
+      setSearching(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const dataToShow = searching ? searchResults : blogs;
+  const totalPages = Math.ceil(dataToShow.length / blogsPerPage);
+  const paginatedBlogs = dataToShow.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
+
   return (
     <div>
-       {/* Hero Section with Background Image */}
-       <div className="relative h-[300px] ">
+      {/* Hero Section with Background Image */}
+      <div className="relative h-[300px] ">
         <div className="absolute inset-0 z-[1]">
           <Image
             src="/images/blog/blog.png"
@@ -88,9 +134,9 @@ export default function Articles() {
       </div>
       <div className="container mx-auto px-4 mt-8">
 
-       {/* Search Bar */}
-          <div className="flex items-center gap-4 justify-center mt-10">
-            <div className="flex items-center justify-center flex-wrap gap-4">
+        {/* Search Bar */}
+        <div className="flex items-center gap-4 justify-center mt-10">
+          <div className="flex items-center justify-center flex-wrap gap-4">
             <div className="relative min-w-[300px] lg:min-w-[556px]">
               <input
                 type="text"
@@ -98,6 +144,7 @@ export default function Articles() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4  py-3 lg:py-4 bg-[#1B263B14] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
               />
               <div className="absolute inset-y-0 left-3 flex items-center">
                 <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,27 +156,56 @@ export default function Articles() {
               <Image src="/images/findABusiness/Vector.png" alt="filter" width={20} height={20} />
             </div> */}
             <button
-              className="bg-[#0A3161]  text-white px-6 py-3 lg:py-4 rounded-lg hover:bg-[#102742]  "
+              className="bg-[#0A3161] text-white px-6 py-3 lg:py-4 rounded-lg hover:bg-[#102742]"
+              onClick={handleSearch}
             >
               Search Now
             </button>
-            </div>
           </div>
+        </div>
         <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Blog List</h1>
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
           <div className="text-center text-red-500 mb-8">{error}</div>
-        ) : blogs.length === 0 ? (
+        ) : dataToShow.length === 0 ? (
           <div className="text-center py-8">
             <p className="text-lg text-gray-600 mb-4">No Blogs Found</p>
             <p className="text-sm text-gray-500">Check back later for new content!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {blogs.map((blog) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 ">
+         
+            {paginatedBlogs.map((blog) => (
               <BlogCard key={blog.id} blog={blog} />
             ))}
+          </div>
+        )}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 my-6">
+            <button
+              className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                className={`px-3 py-1 rounded text-sm ${currentPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
           </div>
         )}
       </div>

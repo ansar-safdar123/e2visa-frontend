@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { toast } from 'react-toastify';
-import { useRef } from 'react';
 
 // Helper to get token (adjust as needed for your auth setup)
 const getToken = () => {
@@ -31,17 +30,12 @@ export default function Forum() {
   const paginatedForums = forums.slice((currentPage - 1) * forumsPerPage, currentPage * forumsPerPage);
   const [token, setToken] = useState(null);
 
-  const didFetch = useRef(false);
-
   useEffect(() => {
     setToken(getToken());
   }, []);
 
   useEffect(() => {
-    if (!didFetch.current) {
-      fetchForums();
-      didFetch.current = true;
-    }
+    fetchForums();
   }, []);
 
   const fetchForums = async () => {
