@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const ChangePassword = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +21,9 @@ const ChangePassword = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { logout } = useAuth();
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,6 +84,10 @@ const ChangePassword = () => {
         setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
         setErrors({});
         toast.success(data.message, { position: 'top-right' });
+        setTimeout(() => {
+          logout();
+          router.push('/signin');
+        }, 1500);
       } else {
         // Show backend error(s) under fields if possible
         if (data.errors && typeof data.errors === 'object') {

@@ -15,6 +15,7 @@ const Header = () => {
   const pathname = usePathname();
   const [isMobileProfessionalDropdownOpen, setIsMobileProfessionalDropdownOpen] = useState(false);
   const mobileProfessionalDropdownRef = useRef(null);
+  const [professionalDropdownItems, setProfessionalDropdownItems] = useState([]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -37,49 +38,25 @@ const Header = () => {
 
   ];
 
-  const professionalDropdownItems = [
-    { href: '/professionals', label: 'Find Business Broker' },
-    { href: '/professionals/attorney', label: 'Find Attorney - Immigration/Real Estate/Business' },
-    { href: '/professionals/real-estate-agent', label: 'Find Real Estate Agent' },
-    { href: '/professionals/commercial-real-estate-agent', label: 'Find Commercial Real Estate Agent' },
-    { href: '/professionals/immigration-consultant', label: 'Find Immigration Consultant' },
-    { href: '/professionals/cpa-accountant', label: 'Find CPA/Accountant' },
-    { href: '/professionals/appraiser', label: 'Find Appraiser, Business/Real Estate' },
-    { href: '/professionals/affiliate-services', label: 'Find Affiliate Services' },
-    { href: '/professionals/lender-loan-officer', label: 'Find Lender/Loan Officer' },
-    { href: '/professionals/home-inspector', label: 'Find Home Inspector' },
-    { href: '/professionals/insurance', label: 'Find Insurance' },
-    { href: '/professionals/financial-advisor', label: 'Find Financial Advisor' },
-    { href: '/professionals/consultant-general', label: 'Find Consultant - General' },
-    { href: '/professionals/title-company', label: 'Find Title Company' },
-  ];
-
-  // Close dropdown when clicking outside
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        professionalDropdownRef.current &&
-        !professionalDropdownRef.current.contains(event.target)
-      ) {
-        setIsProfessionalDropdownOpen(false);
-      }
-      if (
-        mobileProfessionalDropdownRef.current &&
-        !mobileProfessionalDropdownRef.current.contains(event.target) &&
-        isMobileProfessionalDropdownOpen
-      ) {
-        setIsMobileProfessionalDropdownOpen(false);
+    async function fetchProfessionals() {
+      try {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/professionals/list');
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setProfessionalDropdownItems(
+            data.result.map((prof) => ({
+              href: `/professionals?role=${prof.id}`,
+              label: prof.name,
+            }))
+          );
+        }
+      } catch (err) {
+        // Optionally handle error
       }
     }
-    if (isProfessionalDropdownOpen || isMobileProfessionalDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isProfessionalDropdownOpen, isMobileProfessionalDropdownOpen]);
+    fetchProfessionals();
+  }, []);
 
   return (
     <header className="bg-[#40433F] text-white py-[17px] relative">

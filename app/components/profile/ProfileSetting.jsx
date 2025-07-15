@@ -3,24 +3,20 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 const ProfileSetting = () => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     phone: ''
   });
 
   useEffect(() => {
     if (user) {
-      // Split the name into first and last name
-      const [firstName = '', lastName = ''] = (user.name || '').split(' ');
-      
       setFormData({
-        firstName,
-        lastName,
+        fullName: user.name || '',
         email: user.email || '',
         phone: user.phone || ''
       });
@@ -35,10 +31,29 @@ const ProfileSetting = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    const form = new FormData();
+    form.append('name', formData.fullName);
+    form.append('phone_number', formData.phone);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/user/profile', {
+        method: 'POST',
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: form,
+      });
+      const data = await res.json();
+      if (res.ok && data.message) {
+        toast.success(data.message, { position: 'top-right' });
+      } else {
+        toast.error(data.message || 'Failed to update profile.', { position: 'top-right' });
+      }
+    } catch (err) {
+      toast.error('Failed to update profile.', { position: 'top-right' });
+    }
   };
 
   return (
@@ -57,44 +72,18 @@ const ProfileSetting = () => {
           </div>
           <input
             type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
+            id="fullName"
+            name="fullName"
+            value={formData.fullName}
             onChange={handleChange}
             placeholder=" "
             className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
           />
           <label 
-            htmlFor="firstName" 
+            htmlFor="fullName" 
             className="absolute text-sm text-[#1E1E1E] left-12 bg-white px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all z-10"
           >
-            First Name
-          </label>
-        </div>
-
-        <div className="relative">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-            <Image
-              src="/images/profile/userblack.png"
-              alt="User icon"
-              width={23}
-              height={20}
-            />
-          </div>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder=" "
-            className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
-          />
-          <label 
-            htmlFor="lastName" 
-            className="absolute text-sm text-[#1E1E1E] left-12 bg-white px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all z-10"
-          >
-            Last Name
+            Full Name
           </label>
         </div>
 
@@ -115,6 +104,7 @@ const ProfileSetting = () => {
             onChange={handleChange}
             placeholder=" "
             className="pl-12 w-full max-w-[540px] pr-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none peer bg-white"
+            readOnly
           />
           <label 
             htmlFor="email" 

@@ -10,8 +10,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [newPassword, setNewPassword] = useState('');
+ 
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -33,7 +32,6 @@ const ForgotPassword = () => {
       if (res.ok && data.message) {
         toast.success(data.message, { position: 'top-right' });
         setSuccessMessage(data.message);
-        setShowNewPassword(true);
         setEmail('');
       } else {
         toast.error(data.message || 'Failed to send reset email.', { position: 'top-right' });
@@ -79,21 +77,7 @@ const ForgotPassword = () => {
           {successMessage && (
             <div className="text-green-600 text-center font-semibold mb-4">{successMessage}</div>
           )}
-          {showNewPassword && (
-            <div className="space-y-8 mt-6">
-              <div className="relative">
-                <input
-                  type="password"
-                  id="new-password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter your new password"
-                  className="pl-4 w-full pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-[22px] border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                />
-                <label htmlFor="new-password" className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">New Password</label>
-              </div>
-            </div>
-          )}
+         
 
           {/* Submit Button */}
           <button

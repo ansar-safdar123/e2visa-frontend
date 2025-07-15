@@ -174,12 +174,16 @@ export default function Forum() {
         style={{ minHeight: '90px' }}
         value={content}
         onChange={e => {
-          setContent(e.target.value);
+          if (e.target.value.length <= 500) setContent(e.target.value);
           if (contentError) setContentError('');
         }}
+        maxLength={500}
       />
+      <div className="text-xs text-right pr-4 pb-1" style={{ color: content.length >= 500 ? '#e53e3e' : '#40433F' }}>
+        {content.length}/500
+      </div>
       {contentError && <div className="text-red-500 text-xs mt-1 ml-2">{contentError}</div>}
-      <div className="absolute right-4 bottom-4 flex gap-2">
+      <div className="absolute right-0 -bottom-10 flex gap-2">
         <button
           className="px-4 py-1 rounded bg-gray-200 text-gray-700 text-sm"
           onClick={() => { setTitle(''); setContent(''); setPostError(null); }}
@@ -203,15 +207,22 @@ export default function Forum() {
         {loading && <LoadingSpinner />}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
         {!loading && !error && paginatedForums.length === 0 && <div className="text-center py-8">No forums found.</div>}
+        
         {!loading && !error && paginatedForums.map((forum) => (
-          <Link href={`/forum/${forum.id}`} key={forum.id} className="block">
+          <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-20">
             <div className="bg-white rounded-lg border border-black p-6 mb-6">
               <div className="flex items-center mb-2">
                 <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
-                  <Image src={"/images/FeaturedProfessionls/img4.png"} alt={forum.created_by_name} width={40} height={40} className="object-cover" />
+                  <Image 
+                    src={forum.created_by.image ? forum.created_by.image : "/images/FeaturedProfessionls/img4.png"} 
+                    alt={forum.created_by.name} 
+                    width={40} 
+                    height={40} 
+                    className="object-cover" 
+                  />
                 </div>
                 <div>
-                  <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by_name}</span>
+                  <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
                   <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
                 </div>
               </div>

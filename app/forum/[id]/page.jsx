@@ -142,7 +142,13 @@ export default function ForumPostPage({ params }) {
       <div className="bg-white rounded-lg border border-black p-6 mb-6">
         <div className="flex items-center mb-2">
           <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
-            <Image src={"/images/FeaturedProfessionls/img4.png"} alt={forum.created_by_name} width={40} height={40} className="object-cover" />
+            <Image 
+              src={forum.created_by?.image ? forum.created_by?.image : "/images/FeaturedProfessionls/img4.png"} 
+              alt={forum.created_by_name} 
+              width={40} 
+              height={40} 
+              className="object-cover" 
+            />
           </div>
           <div>
             <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by_name}</span>
@@ -162,8 +168,12 @@ export default function ForumPostPage({ params }) {
             rows={2}
             placeholder="Write your comment..."
             value={commentText}
-            onChange={e => { setCommentText(e.target.value); if (commentError) setCommentError(""); }}
+            onChange={e => { if (e.target.value.length <= 500) setCommentText(e.target.value); if (commentError) setCommentError(""); }}
+            maxLength={500}
           />
+          <div className="text-xs text-right pr-1 pb-1" style={{ color: commentText.length >= 500 ? '#e53e3e' : '#40433F' }}>
+            {commentText.length}/500
+          </div>
           {commentError && <div className="text-red-500 text-xs mb-2">{commentError}</div>}
           <div className="flex gap-2 justify-end">
             <button
@@ -188,7 +198,7 @@ export default function ForumPostPage({ params }) {
           {forum.comment && forum.comment.length > 0 ? (
             forum.comment.map((c) => (
               <div key={c.id} className="flex items-start gap-3">
-                <Image src={"/images/FeaturedProfessionls/img1.png"} alt={c.created_by_name} width={32} height={32} className="rounded-full object-cover" />
+                <Image src={c.create_by_image ? c.create_by_image : "/images/FeaturedProfessionls/img1.png"} alt={c.created_by_name} width={32} height={32} className="rounded-full object-cover" />
                 <div className="flex-1">
                   <div className="font-semibold text-[#0A3161] text-xs">{c.created_by_name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
                   <div className="text-[#40433F] text-xs">{c.content}</div>
@@ -202,8 +212,12 @@ export default function ForumPostPage({ params }) {
                         rows={1}
                         placeholder="Write your reply..."
                         value={replyText}
-                        onChange={e => { setReplyText(e.target.value); if (replyError) setReplyError(""); }}
+                        onChange={e => { if (e.target.value.length <= 500) setReplyText(e.target.value); if (replyError) setReplyError(""); }}
+                        maxLength={500}
                       />
+                      <div className="text-xs text-right pr-1 pb-1" style={{ color: replyText.length >= 500 ? '#e53e3e' : '#40433F' }}>
+                        {replyText.length}/500
+                      </div>
                       {replyError && <div className="text-red-500 text-xs mb-2">{replyError}</div>}
                       <div className="flex gap-2 justify-end">
                         <button

@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const brokers = [
   {
@@ -35,6 +37,38 @@ const BrokerCard = ({ broker, featured = false }) => (
 );
 
 export default function Professionals() {
+  const searchParams = useSearchParams();
+  const roleId = searchParams.get('role');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [professionals, setProfessionals] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const professionalsPerPage = 6;
+  const totalPages = Math.ceil(professionals.length / professionalsPerPage);
+  const paginatedProfessionals = professionals.slice((currentPage - 1) * professionalsPerPage, currentPage * professionalsPerPage);
+
+  useEffect(() => {
+    if (!roleId) return;
+    setLoading(true);
+    setError(null);
+    setCurrentPage(1); // Reset to first page on role change
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/profession?profession_id=${roleId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.result) {
+          setProfessionals(data.result);
+        } else {
+          setProfessionals([]);
+          setError(data.message || 'No professionals found.');
+        }
+      })
+      .catch(() => setError('Failed to fetch professionals.'))
+      .finally(() => setLoading(false));
+  }, [roleId]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -53,22 +87,75 @@ export default function Professionals() {
           <div className="flex items-center justify-center text-white">
             <span>Home</span>
             <span className="mx-2">/</span>
-            <span>Brokers</span>
+            <span>Professionals</span>
           </div>
         </div>
       </div>
 
-      {/* Featured Broker Section */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold text-center text-[#40433F] my-8">Featured Broker</h2>
-       
-
-        {/* Regular Brokers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
-          {Array(8).fill(brokers[0]).map((broker, index) => (
-            <BrokerCard key={index + 2} broker={broker} />
-          ))}
-        </div>
+        <h2 className="text-3xl font-bold text-center text-[#40433F] my-8">{roleId ? 'Professionals' : 'Featured Broker'}</h2>
+        {loading && <div className="text-center py-8">Loading...</div>}
+        {error && <div className="text-center text-red-500 py-8">{error}</div>}
+        {!loading && !error && roleId && (
+          <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
+            {paginatedProfessionals.length === 0 && <div className="col-span-2 text-center">No professionals found.</div>}
+            {paginatedProfessionals.map((pro) => (
+              <div key={pro.id} className="bg-white rounded-lg border border-[#40433F] p-6">
+                <div className="flex items-center space-x-4">
+                  <Image
+                    src={pro.image || "/images/professionals/image.png"}
+                    alt={`${pro.name}'s profile`}
+                    width={60}
+                    height={60}
+                  />
+                  <div>
+                    <h3 className="font-semibold lg:text-lg text-sm text-gray-800">{pro.name}</h3>
+                    <p className="lg:text-sm text-xs text-gray-600">{pro.user_information?.address || ''}</p>
+                    <p className="lg:text-sm text-xs text-gray-600">{pro.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-6">
+              <button
+                className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  className={`px-3 py-1 rounded text-sm ${currentPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
+                  onClick={() => setCurrentPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
+          </>
+        )}
+        {/* Show static brokers if no roleId param */}
+        {!roleId && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
+            {Array(8).fill(brokers[0]).map((broker, index) => (
+              <BrokerCard key={index + 2} broker={broker} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

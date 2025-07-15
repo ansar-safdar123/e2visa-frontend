@@ -229,14 +229,16 @@ const Footer = () => {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-white rounded-full">
-                  <Image
-                    src="/images/footer/fb.png"
-                    alt="Location"
-                    width={10}
-                    height={10}
-                  />
-                </div>
+                <Link href="https://www.facebook.com/people/Infinity-Business-Brokers/100057664291082/" target="_blank" rel="noopener noreferrer">
+                  <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-white rounded-full">
+                    <Image
+                      src="/images/footer/fb.png"
+                      alt="Facebook"
+                      width={10}
+                      height={10}
+                    />
+                  </div>
+                </Link>
                 <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-white rounded-full">
                   <Image
                     src="/images/footer/X.png"
