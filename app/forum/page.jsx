@@ -29,6 +29,7 @@ export default function Forum() {
   const totalPages = Math.ceil(forums.length / forumsPerPage);
   const paginatedForums = forums.slice((currentPage - 1) * forumsPerPage, currentPage * forumsPerPage);
   const [token, setToken] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     setToken(getToken());
@@ -54,6 +55,30 @@ export default function Forum() {
       }
     } catch (err) {
       setError('Failed to fetch forums.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/forum/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: searchQuery }),
+      });
+      const data = await res.json();
+      if (res.ok && data.result) {
+        setForums(data.result);
+        setCurrentPage(1); // Reset to first page on new search
+        setTotalPages(Math.ceil(data.result.length / forumsPerPage));
+      } else {
+        setError(data.message || 'Failed to search forums.');
+      }
+    } catch (err) {
+      setError('Failed to search forums.');
     } finally {
       setLoading(false);
     }
@@ -128,10 +153,38 @@ export default function Forum() {
      
       {/* Forum Content Section */}
       <div className="container mx-auto px-4 py-8">
+        {/* Forum Search Bar */}
+        {paginatedForums.length  !== 0 && (
+         <div className="flex items-center gap-4 justify-center mt-10 mb-8">
+           <div className="flex items-center justify-center flex-wrap gap-4">
+             <div className="relative min-w-[300px] lg:min-w-[556px]">
+               <input
+                 type="text"
+                 placeholder="What are you looking for?"
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+                 className="w-full pl-10 pr-4 py-3 lg:py-4 bg-[#1B263B14] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
+                 onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
+               />
+               <div className="absolute inset-y-0 left-3 flex items-center">
+                 <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                 </svg>
+               </div>
+             </div>
+             <button
+               className="bg-[#0A3161] text-white px-6 py-3 lg:py-4 rounded-lg hover:bg-[#102742]"
+               onClick={handleSearch}
+             >
+               Search Now
+             </button>
+           </div>
+         </div>
+        )}
          {token && (
   <>
     {/* Title Input */}
-    <div className="relative border rounded-md mb-4 min-h-[60px]">
+    <div className="relative border border-black rounded-md mb-4 min-h-[60px]">
       <label htmlFor="title-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
         Title
       </label>
@@ -157,7 +210,7 @@ export default function Forum() {
       {titleError && <div className="text-red-500 text-xs mt-1 ml-2">{titleError}</div>}
     </div>
     {/* What's your Question Input */}
-    <div className="relative border rounded-md mb-8 mt-4 min-h-[110px]">
+    <div className="relative border border-black rounded-md mb-8 mt-6 min-h-[110px]">
       <label htmlFor="question-input" className="absolute -top-3 left-4 bg-white px-1 text-[#40433F] font-semibold text-sm">
         What's your Question?
       </label>
@@ -204,9 +257,19 @@ export default function Forum() {
   </>
 )}
 
+
+
+
+
+
         {loading && <LoadingSpinner />}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
-        {!loading && !error && paginatedForums.length === 0 && <div className="text-center py-8">No forums found.</div>}
+        {!loading && !error && paginatedForums.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-10">
+            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+            <p className="text-lg text-gray-700">No Record Found</p>
+          </div>
+        )}
         
         {!loading && !error && paginatedForums.map((forum) => (
           <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-20">

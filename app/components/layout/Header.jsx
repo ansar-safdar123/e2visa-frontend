@@ -50,7 +50,7 @@ const Header = () => {
               label: prof.name,
             }))
           );
-        }
+    }
       } catch (err) {
         // Optionally handle error
       }

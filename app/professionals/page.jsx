@@ -99,8 +99,12 @@ function Professionals() {
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
         {!loading && !error && roleId && (
           <>
+            {paginatedProfessionals.length === 0 &&
+           <div className="flex flex-col items-center justify-center pt-4 pb-10">
+           <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+           <p className="text-lg text-gray-700">No Record Found</p>
+         </div>}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
-            {paginatedProfessionals.length === 0 && <div className="col-span-2 text-center">No professionals found.</div>}
             {/* <div key={pro.id} className="bg-white rounded-lg border border-[#40433F] p-6">
                 <div className="flex items-center space-x-4">
                   <Image
@@ -168,11 +172,11 @@ function Professionals() {
         )}
         {/* Show static brokers if no roleId param */}
         {!roleId && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
-            {Array(8).fill(brokers[0]).map((broker, index) => (
-              <BrokerCard key={index + 2} broker={broker} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
+          {Array(8).fill(brokers[0]).map((broker, index) => (
+            <BrokerCard key={index + 2} broker={broker} />
+          ))}
+        </div>
         )}
       </div>
     </div>

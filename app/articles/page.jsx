@@ -135,6 +135,7 @@ export default function Articles() {
       <div className="container mx-auto px-4 mt-8">
 
         {/* Search Bar */}
+        {blogs.length > 0 && (
         <div className="flex items-center gap-4 justify-center mt-10">
           <div className="flex items-center justify-center flex-wrap gap-4">
             <div className="relative min-w-[300px] lg:min-w-[556px]">
@@ -163,15 +164,16 @@ export default function Articles() {
             </button>
           </div>
         </div>
+        )}
         <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Blog List</h1>
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
           <div className="text-center text-red-500 mb-8">{error}</div>
         ) : dataToShow.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-lg text-gray-600 mb-4">No Blogs Found</p>
-            <p className="text-sm text-gray-500">Check back later for new content!</p>
+          <div className="flex flex-col items-center justify-center pb-16">
+            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+            <p className="text-lg text-gray-700">No Record Found</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 ">

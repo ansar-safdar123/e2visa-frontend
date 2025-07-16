@@ -164,7 +164,7 @@ export default function ForumPostPage({ params }) {
         <div className="mb-4">
           <div className="font-semibold mb-2 text-[#40433F]">Write your comment...</div>
           <textarea
-            className="w-full border rounded-md p-2 mb-2 text-[#40433F]"
+            className="w-full border border-black rounded-md p-2 mb-2 text-[#40433F]"
             rows={2}
             placeholder="Write your comment..."
             value={commentText}
