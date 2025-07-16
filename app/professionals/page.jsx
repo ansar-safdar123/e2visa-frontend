@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const brokers = [
   {
@@ -36,7 +37,7 @@ const BrokerCard = ({ broker, featured = false }) => (
   </div>
 );
 
-export default function Professionals() {
+function Professionals() {
   const searchParams = useSearchParams();
   const roleId = searchParams.get('role');
   const [loading, setLoading] = useState(false);
@@ -94,14 +95,13 @@ export default function Professionals() {
 
       <div className="max-w-7xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold text-center text-[#40433F] my-8">{roleId ? 'Professionals' : 'Featured Broker'}</h2>
-        {loading && <div className="text-center py-8">Loading...</div>}
+        {loading && <LoadingSpinner />}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
         {!loading && !error && roleId && (
           <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
             {paginatedProfessionals.length === 0 && <div className="col-span-2 text-center">No professionals found.</div>}
-            {paginatedProfessionals.map((pro) => (
-              <div key={pro.id} className="bg-white rounded-lg border border-[#40433F] p-6">
+            {/* <div key={pro.id} className="bg-white rounded-lg border border-[#40433F] p-6">
                 <div className="flex items-center space-x-4">
                   <Image
                     src={pro.image || "/images/professionals/image.png"}
@@ -115,7 +115,25 @@ export default function Professionals() {
                     <p className="lg:text-sm text-xs text-gray-600">{pro.role}</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
+            {paginatedProfessionals.map((pro) => (
+              <Link href={`/professional/${pro.id}`} key={pro.id} className="block">
+                <div className="bg-white rounded-lg border border-[#40433F] p-6 hover:shadow-lg transition-shadow">
+                  <div className="flex items-center space-x-4">
+                    <Image
+                      src={pro.image || "/images/professionals/image.png"}
+                      alt={`${pro.name}'s profile`}
+                      width={60}
+                      height={60}
+                    />
+                    <div>
+                      <h3 className="font-semibold lg:text-lg text-sm text-gray-800">{pro.name}</h3>
+                      <p className="lg:text-sm text-xs text-gray-600">{pro.user_information?.address || ''}</p>
+                      <p className="lg:text-sm text-xs text-gray-600">{pro.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
           {/* Pagination Controls */}
@@ -158,5 +176,13 @@ export default function Professionals() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProfessionalsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Professionals />
+    </Suspense>
   );
 } 
