@@ -19,6 +19,7 @@ export default function ForumPostPage({ params }) {
   useEffect(() => {
     setToken(localStorage.getItem('token'));
   }, []);
+  const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
 
   useEffect(() => {
     if (!id) return;
@@ -142,16 +143,26 @@ export default function ForumPostPage({ params }) {
       <div className="bg-white rounded-lg border border-black p-6 mb-6">
         <div className="flex items-center mb-2">
           <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
-            <Image 
-              src={forum.created_by?.image ? forum.created_by?.image : "/images/FeaturedProfessionls/img4.png"} 
-              alt={forum.created_by_name} 
-              width={40} 
-              height={40} 
-              className="object-cover" 
-            />
+            {forum.created_by?.image && BACKEND_STORAGE_URL ? (
+              <Image 
+                src={`${BACKEND_STORAGE_URL}/${forum.created_by.image}`}
+                alt={forum.created_by?.name || "User"}
+                width={40}
+                height={40}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <span className="flex items-center justify-center w-full h-full">
+                <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="10" cy="10" r="10" fill="#CBD5E1"/>
+                  <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B"/>
+                  <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B"/>
+                </svg>
+              </span>
+            )}
           </div>
           <div>
-            <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by_name}</span>
+            <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
             <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
           </div>
         </div>
@@ -198,9 +209,25 @@ export default function ForumPostPage({ params }) {
           {forum.comment && forum.comment.length > 0 ? (
             forum.comment.map((c) => (
               <div key={c.id} className="flex items-start gap-3">
-                <Image src={c.create_by_image ? c.create_by_image : "/images/FeaturedProfessionls/img1.png"} alt={c.created_by_name} width={32} height={32} className="rounded-full object-cover" />
+                {c.user && c.user.image && BACKEND_STORAGE_URL ? (
+                  <Image
+                    src={`${BACKEND_STORAGE_URL}/${c.user.image}`}
+                    alt={c.user?.name || "User"}
+                    width={32}
+                    height={32}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="inline-block w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="10" cy="10" r="10" fill="#CBD5E1"/>
+                      <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B"/>
+                      <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B"/>
+                    </svg>
+                  </span>
+                )}
                 <div className="flex-1">
-                  <div className="font-semibold text-[#0A3161] text-xs">{c.created_by_name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
+                  <div className="font-semibold text-[#0A3161] text-xs">{c.user.name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
                   <div className="text-[#40433F] text-xs">{c.content}</div>
                   {token && (
                     <button className="text-[#2EC4B6] text-xs mt-1" onClick={() => setReplyingTo(c.id)}>Reply</button>

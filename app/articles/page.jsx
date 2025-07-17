@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LoadingSpinner from '@/app/components/common/LoadingSpinner';
+import debounce from 'lodash.debounce';
 
 function formatDate(dateString) {
   if (!dateString) return '';
@@ -75,8 +76,8 @@ export default function Articles() {
     }
   }, [searchQuery]);
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) {
+  const handleSearch = async (query = searchQuery) => {
+    if (!query.trim()) {
       setSearching(false);
       setSearchResults([]);
       setCurrentPage(1);
@@ -85,7 +86,7 @@ export default function Articles() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/search?query=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/search?query=${encodeURIComponent(query)}`);
       const data = await res.json();
       if (res.ok && data.result) {
         setSearchResults(data.result);
@@ -103,6 +104,15 @@ export default function Articles() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const debouncedSearch = useRef(debounce((query) => {
+    handleSearch(query);
+  }, 400)).current;
+
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+    debouncedSearch(e.target.value);
   };
 
   const dataToShow = searching ? searchResults : blogs;
@@ -143,7 +153,7 @@ export default function Articles() {
                 type="text"
                 placeholder="What are you looking for?"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleInputChange}
                 className="w-full pl-10 pr-4  py-3 lg:py-4 bg-[#1B263B14] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
                 onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
               />

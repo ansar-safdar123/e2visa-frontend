@@ -40,7 +40,7 @@ const HeroSection = () => {
             >
               Find Real Estate
             </button>
-            <button
+            {/* <button
               onClick={() => setActiveTab('professional')}
               className={`xl:px-6 px-3 py-3 rounded-lg text-white font-medium transition-all ${activeTab === 'professional'
                 ? 'bg-white/10 backdrop-blur-md hover:bg-white/15'
@@ -48,7 +48,7 @@ const HeroSection = () => {
                 }`}
             >
               Find A Professional
-            </button>
+            </button> */}
           </div>
           <SearchBar activeTab={activeTab} />
         </div>

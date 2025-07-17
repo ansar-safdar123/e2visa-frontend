@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import BusinessContactForm from '../../buy-business/[id]/BusinessContactForm';
 
 const ProfessionalDetail = ({ professional }) => {
   const [formData, setFormData] = useState({
@@ -84,117 +85,7 @@ const ProfessionalDetail = ({ professional }) => {
 
         {/* Right Column - Contact Form */}
         <div className="lg:w-1/2">
-          <div className="bg-[#A4B5D53D] p-4 sm:p-8 rounded-lg">
-            <h2 className="text-2xl font-semibold text-black mb-6">Contact Form</h2>
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                  <Image
-                    src="/images/auth/signin/user.png"
-                    alt="User icon"
-                    width={23}
-                    height={20}
-                  />
-                </div>
-                <input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  placeholder="Enter your name"
-                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                />
-                <label
-                  htmlFor="fullName"
-                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
-                >
-                  Full Name
-                </label>
-              </div>
-
-              <div className="relative">
-                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                  <Image
-                    src="/images/auth/signin/phone.png"
-                    alt="Phone icon"
-                    width={23}
-                    height={20}
-                  />
-                </div>
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleInputChange}
-                  placeholder="Enter your phone no."
-                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                />
-                <label
-                  htmlFor="phoneNumber"
-                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
-                >
-                  Phone Number
-                </label>
-              </div>
-
-              <div className="relative">
-                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                  <Image
-                    src="/images/auth/signin/mail.png"
-                    alt="Email icon"
-                    width={23}
-                    height={20}
-                  />
-                </div>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Enter you email"
-                  className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                />
-                <label
-                  htmlFor="email"
-                  className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
-                >
-                  Email
-                </label>
-              </div>
-
-              <div className="relative">
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={4}
-                  placeholder="Write your message here"
-                  className="w-full px-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none resize-none"
-                />
-                <label
-                  htmlFor="message"
-                  className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#40433F] transition-all"
-                >
-                  Message
-                </label>
-              </div>
-
-
-
-              <button
-                type="submit"
-                className="w-full bg-[#0A3161] text-white py-4 rounded-lg hover:bg-[#102742] transition-colors font-medium text-lg"
-              >
-                Send Message
-              </button>
-
-
-            </form>
-          </div>
+          <BusinessContactForm business={professional} />
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ const BrokerCard = ({ broker, featured = false }) => (
 function Professionals() {
   const searchParams = useSearchParams();
   const roleId = searchParams.get('role');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [professionals, setProfessionals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -99,10 +99,10 @@ function Professionals() {
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
         {!loading && !error && roleId && (
           <>
-            {paginatedProfessionals.length === 0 &&
+            { paginatedProfessionals.length === 0 &&
            <div className="flex flex-col items-center justify-center pt-4 pb-10">
            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
-           <p className="text-lg text-gray-700">No Record Found</p>
+           <p className="text-lg text-gray-700">No Professionals Found</p>
          </div>}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:mx-28">
             {/* <div key={pro.id} className="bg-white rounded-lg border border-[#40433F] p-6">
@@ -125,7 +125,7 @@ function Professionals() {
                 <div className="bg-white rounded-lg border border-[#40433F] p-6 hover:shadow-lg transition-shadow">
                   <div className="flex items-center space-x-4">
                     <Image
-                      src={pro.image || "/images/professionals/image.png"}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL}/${pro.image}` || "/images/professionals/image.png"}
                       alt={`${pro.name}'s profile`}
                       width={60}
                       height={60}

@@ -12,6 +12,8 @@ const RealEstate = () => {
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('All');
   const [selectedListingType, setSelectedListingType] = useState('All Listings');
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
   const handleSearch = () => {
     // Implement search functionality
@@ -101,6 +103,21 @@ const RealEstate = () => {
     };
     fetchSubCategories();
   }, [selectedCategory]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/countries/list');
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setCountries(data.result);
+        }
+      } catch (err) {
+        setCountries([]);
+      }
+    };
+    fetchCountries();
+  }, []);
 
   return (
     <div className="">
@@ -205,6 +222,27 @@ const RealEstate = () => {
               </div>
             </div>
             <div className=" min-w-full sm:min-w-[222px] relative">
+              <label htmlFor="country-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Country</label>
+              <div className="relative">
+                <select
+                  id="country-dropdown"
+                  value={selectedCountry}
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
+                >
+                  <option value="">All Countries</option>
+                  {countries.map((country) => (
+                    <option key={country.id} value={country.name}>{country.name}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            {/* <div className=" min-w-full sm:min-w-[222px] relative">
               <label htmlFor="location-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Location</label>
               <div className="relative">
                 <select
@@ -224,8 +262,8 @@ const RealEstate = () => {
                   </svg>
                 </div>
               </div>
-            </div>
-            <div className=" min-w-full sm:min-w-[222px] relative">
+            </div> */}
+            {/* <div className=" min-w-full sm:min-w-[222px] relative">
               <label htmlFor="listing-type-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Listing Type</label>
               <div className="relative">
                 <select
@@ -245,7 +283,7 @@ const RealEstate = () => {
                   </svg>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
            <div className="flex items-center justify-center w-full">
 
@@ -259,8 +297,6 @@ const RealEstate = () => {
         </div>
 
         <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center lg:mt-40 mt-16 mb-12">Featured Listing</h1>
-
-
         <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
           {newListing.map((listing) => (
             <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">

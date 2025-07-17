@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const BuyBusiness = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,7 +13,11 @@ const BuyBusiness = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('All');
   const [selectedListingType, setSelectedListingType] = useState('All Listings');
-
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [businesses, setBusinesses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -56,6 +61,46 @@ const BuyBusiness = () => {
     };
     fetchSubCategories();
   }, [selectedCategory]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/countries/list');
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setCountries(data.result);
+        }
+      } catch (err) {
+        setCountries([]);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (selectedCountry) params.append('country', selectedCountry);
+        if (selectedCategory) params.append('category_id', selectedCategory);
+        if (selectedSubCategory) params.append('sub_category_id', selectedSubCategory);
+        params.append('search_type', 'business');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/business/find-business?${params.toString()}`);
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setBusinesses(data.result);
+        } else {
+          setBusinesses([]);
+        }
+      } catch {
+        setBusinesses([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBusinesses();
+  }, [selectedCountry, selectedCategory, selectedSubCategory]);
 
   const handleSearch = () => {
     // Implement search functionality
@@ -203,7 +248,7 @@ const BuyBusiness = () => {
                 </div>
               </div>
             </div>
-            <div className=" min-w-full sm:min-w-[222px] relative">
+            {/* <div className=" min-w-full sm:min-w-[222px] relative">
               <label htmlFor="location-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Business Type</label>
               <div className="relative">
                 <select
@@ -223,8 +268,30 @@ const BuyBusiness = () => {
                   </svg>
                 </div>
               </div>
-            </div>
+            </div> */}
+            {/* Country Dropdown */}
             <div className=" min-w-full sm:min-w-[222px] relative">
+              <label htmlFor="country-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Country</label>
+              <div className="relative">
+                <select
+                  id="country-dropdown"
+                  value={selectedCountry}
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  className="w-full px-4 pr-10 py-3 border border-[#40433F] rounded-lg focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white appearance-none"
+                >
+                  <option value="">All Countries</option>
+                  {countries.map((country) => (
+                    <option key={country.id} value={country.name}>{country.name}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            {/* <div className=" min-w-full sm:min-w-[222px] relative">
               <label htmlFor="listing-type-dropdown" className="block mb-2 text-sm font-medium text-[#40433F]">Listing Type</label>
               <div className="relative">
                 <select
@@ -244,7 +311,7 @@ const BuyBusiness = () => {
                   </svg>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center justify-center w-full">
 
@@ -256,9 +323,52 @@ const BuyBusiness = () => {
               </div>
         </div>
 
-        <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center lg:mt-40 mt-16 mb-12">Featured Listing</h1>
+        {/* Show businesses before Featured Listing */}
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          businesses.length > 0 && (
+            <>
+              <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center mt-16 mb-8">Business Listings</h1>
+              <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
+                {businesses.map((business) => (
+                  <Link key={business.id} href={`/buy-business/${business.id}`}>
+                    <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                      <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                        {business.verified && (
+                          <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                            Verified
+                          </div>
+                        )}
+                        <div className="relative w-full h-[197px]">
+                          <Image
+                            fill
+                            src={
+                              business.business_images && business.business_images.length > 0
+                                ? `${BACKEND_STORAGE_URL}/${business.business_images[0].image_path}`
+                                : '/images/listing/img1.png'
+                            }
+                            alt={business.business_name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="mt-[15px] flex items-center justify-between">
+                          <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                            {business.business_name}
+                          </h2>
+                            <p className="text-xs lg:text-sm mb-2">{business.listing_type}</p>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )
+        )}
 
-
+        <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Featured Listing</h1>
         <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
           {newListing.map((listing) => (
             <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">

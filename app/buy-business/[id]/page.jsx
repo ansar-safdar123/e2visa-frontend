@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { topListings } from '../../components/home/Listing';
 import { newListings } from '../../components/home/NewListing';
+import { toast } from 'react-toastify';
+import BusinessContactForm from './BusinessContactForm';
+import LoadingSpinner from '@/app/components/common/LoadingSpinner';
 
 const BusinessDetail = ({ params }) => {
   const [formData, setFormData] = useState({
@@ -16,53 +19,24 @@ const BusinessDetail = ({ params }) => {
   });
 
   const [business, setBusiness] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // This is a mock function to simulate fetching business data
-    // In a real application, this would be an API call
-    const fetchBusinessData = () => {
-      // Find the matching business from both listing arrays
-      const matchingBusiness = [...topListings, ...newListings].find(
-        listing => listing.id === parseInt(params.id)
-      );
-      
-      if (matchingBusiness) {
-        // Use all data from the matching business and add any additional details needed
-        setBusiness({
-          ...matchingBusiness,
-          EBITDA: 200000,
-          downPayment: matchingBusiness.askingPrice,
-          cashFlow: 250000,
-          FFE: 100000,
-          inventory: {
-            included: true,
-            value: 9000
-          },
-          rent: 3600,
-          established: 1996,
-          employees: {
-            fullTime: 1,
-            partTime: 8,
-            contractors: 'N/A',
-            ownerHours: 30
-          },
-          details: {
-            homeBased: false,
-            franchise: true,
-            relocatable: false,
-            lenderPrequalified: false,
-            sbaPrequalified: false
-          },
-          reasonForSale: 'The reason for selling is the Seller would like to pursue other interests.',
-          adjustedEBITDA: 200000,
-        });
-      } else {
-        // Handle case where business is not found
-        console.error('Business not found');
+    const fetchBusiness = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/business-detail/${params.id}`);
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setBusiness(data.result);
+        }
+      } finally {
+        setLoading(false);
       }
     };
-
-    fetchBusinessData();
+    fetchBusiness();
   }, [params.id]);
 
   const handleInputChange = (e) => {
@@ -73,16 +47,63 @@ const BusinessDetail = ({ params }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full Name is required';
+    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = 'Phone Number is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) newErrors.email = 'Enter a valid email address';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  if (!business) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-2xl text-gray-600">Loading...</div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setIsSubmitting(true);
+    const params = new URLSearchParams({
+      professional_id: business.user_id,
+      full_name: formData.fullName,
+      phone_number: formData.phoneNumber,
+      email: formData.email,
+      message: formData.message,
+    });
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/send-email-to-professional?${params.toString()}`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (res.ok && data.message) {
+        setFormData({ fullName: '', phoneNumber: '', email: '', message: '', newsletter: false });
+        setErrors({});
+        toast.success(data.message, { position: 'top-right' });
+      } else {
+        if (data.errors) {
+          if (Array.isArray(data.errors)) {
+            data.errors.forEach(err => toast.error(err, { position: 'top-right' }));
+          } else if (typeof data.errors === 'object') {
+            Object.values(data.errors).flat().forEach(err => toast.error(err, { position: 'top-right' }));
+          } else if (typeof data.errors === 'string') {
+            toast.error(data.errors, { position: 'top-right' });
+          }
+        } else if (data.message) {
+          toast.error(data.message, { position: 'top-right' });
+        } else {
+          toast.error('Failed to send message.', { position: 'top-right' });
+        }
+      }
+    } catch {
+      toast.error('Failed to send message.', { position: 'top-right' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-2xl text-gray-600"><LoadingSpinner /></div>
     </div>;
-  }
+  if (!business) return <div>No business found.</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -92,10 +113,14 @@ const BusinessDetail = ({ params }) => {
           <div className="space-y-8">
             <div className="relative h-[500px] rounded-lg overflow-hidden">
               <Image
-                src={business.image}
-                alt={business.title}
                 fill
-                className="object-cover"
+                src={
+                  business.business_images && business.business_images.length > 0
+                    ? `${process.env.NEXT_PUBLIC_API_URL}/${business.business_images[0].image_path}`
+                    : '/images/listing/img1.png'
+                }
+                alt={business.business_name}
+                className="w-full h-full object-cover"
               />
               {business.verified && (
                 <div className="absolute top-4 right-4 bg-[#2EC4B6] z-30 text-white text-sm px-3 py-1 rounded-full">
@@ -105,180 +130,45 @@ const BusinessDetail = ({ params }) => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-[#A4B5D53D] p-4 sm:p-8 rounded-lg">
-              <h2 className="text-2xl font-semibold text-[#40433F] mb-6">Contact Form</h2>
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                    <Image
-                      src="/images/auth/signin/user.png"
-                      alt="User icon"
-                      width={23}
-                      height={20}
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    placeholder="Ener your name"
-                    className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                  />
-                  <label 
-                    htmlFor="fullName" 
-                    className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-                  >
-                    Full Name
-                  </label>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                    <Image
-                      src="/images/auth/signin/phone.png"
-                      alt="Phone icon"
-                      width={23}
-                      height={20}
-                    />
-                  </div>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange}
-                    placeholder="Enter your phone no."
-                    className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium  text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                  />
-                  <label 
-                    htmlFor="phoneNumber" 
-                    className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-                  >
-                    Phone Number
-                  </label>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                    <Image
-                      src="/images/auth/signin/mail.png"
-                      alt="Email icon"
-                      width={23}
-                      height={20}
-                    />
-                  </div>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Enter your email"
-                    className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
-                  />
-                  <label 
-                    htmlFor="email" 
-                    className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-                  >
-                    Email
-                  </label>
-                </div>
-
-                <div className="relative">
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={4}
-                    placeholder="Write your message here"
-                    className="w-full px-4 py-4 rounded-lg border text-[#9E9E9E] font-medium text-base border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none resize-none"
-                  />
-                  <label 
-                    htmlFor="message" 
-                    className="absolute text-sm text-[#1E1E1E] left-4 bg-[#F8F9FA] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
-                  >
-                    Message
-                  </label>
-                </div>
-
-                {/* <div className="flex ">
-                  <input
-                    type="checkbox"
-                    id="newsletter"
-                    name="newsletter"
-                    checked={formData.newsletter}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 mt-1 text-[#2EC4B6] focus:ring-[#2EC4B6] border-gray-300 rounded"
-                  />
-                  <label htmlFor="newsletter" className="ml-2 text-sm text-[#9E9E9E]">
-                    Yes, send me the Buyer Newsletter for popular businesses, tips, & email promotions.
-                  </label>
-                </div> */}
-
-                <button
-                  type="submit"
-                  className="w-full bg-[#0A3161] text-white py-4 rounded-lg hover:bg-[#102742] transition-colors font-medium text-lg"
-                >
-                  Send Message
-                </button>
-
-               <div>
-               <p className="text-xs text-[#9E9E9E] text-center">
-                  By clicking the button, you agree to E2Visa's{' '} 
-                </p>
-                <div className="flex text-xs justify-center items-center gap-2 !pt-1">
-                <Link href="/terms" className="text-black underline">
-                    Terms of Use
-                  </Link>{' '}
-                  and{' '}
-                  <Link href="/privacy" className="text-black underline">
-                    Privacy Notice
-                  </Link>
-                </div>
-               </div>
-              </form>
-            </div>
+            <BusinessContactForm business={business} />
           </div>
 
           {/* Right Column - Business Information */}
           <div className="bg-white p-4 sm:p-8 rounded-lg shadow-sm">
             <div className="mb-8">
-              <h1 className="text-2xl xl:text-3xl font-semibold text-[#40433F] mb-2">{business.title} - {business.id}</h1>
-              <p className="text-gray-600">{business.location}</p>
+              <h1 className="text-2xl xl:text-3xl font-semibold text-[#40433F] mb-2">{business.business_name} - {business.id}</h1>
+              <p className="text-gray-600">{business.listing_heading}</p>
             </div>
 
             {/* Key Financial Information */}
             <div className="space-y-1 mb-8">
               <div className="flex text-[#40433F] justify-between text-lg xl:text-2xl items-center">
                 <span>Asking Price</span>
-                <span className="font-semibold">${business.askingPrice.toLocaleString()}</span>
+                <span className="font-semibold">${business.asking_price.toLocaleString()}</span>
               </div>
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Gross Revenue</span>
-                <span>${business.grossRevenue.toLocaleString()}</span>
+                <span>${business.gross_revenue.toLocaleString()}</span>
               </div>
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>EBITDA</span>
-                <span>${business.EBITDA.toLocaleString()}</span>
+                <span>${business.ebitda?.toLocaleString()}</span>
               </div>
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>FF&E:</span>
-                <span>${business.FFE.toLocaleString()}</span>
+                <span>${business.ffe.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-[#40433F] text-lg xl:text-2xl items-center">
                 <span>Cash Flow</span>
-                <span>${business.cashFlow.toLocaleString()}</span>
+                <span>${business.cash_flow.toLocaleString()}</span>
               </div>
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Inventory</span>
-                <span>${business.inventory.value.toLocaleString()}</span>
+                <span>${business.inventory?.value?.toLocaleString()}</span>
               </div>
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Rent</span>
-                <span>${business.rent.toLocaleString()}/per month</span>
+                <span>${business.rent?.toLocaleString()}/per month</span>
               </div>
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Established</span>
@@ -289,7 +179,7 @@ const BusinessDetail = ({ params }) => {
             {/* Business Description */}
             <div className="mb-8">
               <h2 className="text-xl font-bold text-[#40433F] mb-4">Business Description</h2>
-              <p className="text-gray-600 whitespace-pre-line">{business.description}</p>
+              <p className="text-gray-600 whitespace-pre-line">{business.listing_summary}</p>
             </div>
 
             {/* <div className="mb-8">
