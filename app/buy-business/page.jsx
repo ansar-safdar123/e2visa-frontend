@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useSearchParams } from 'next/navigation';
 
-const BuyBusiness = () => {
+function BuyBusiness () {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get('category_id') || '';
   const initialCountry = searchParams.get('country') || '';
@@ -434,4 +434,10 @@ const BuyBusiness = () => {
   );
 };
 
-export default BuyBusiness; 
+export default function BuyBusinessPage(){
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BuyBusiness />
+    </Suspense>
+    )
+} 
