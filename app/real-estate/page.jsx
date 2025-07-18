@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useSearchParams } from 'next/navigation';
 
-const RealEstate = () => {
+function RealEstate() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get('category_id') || '';
   const initialCountry = searchParams.get('country') || '';
@@ -444,4 +444,10 @@ const RealEstate = () => {
   );
 };
 
-export default RealEstate; 
+export default function RealEstatePage(){
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RealEstate />
+    </Suspense>
+  )
+}; 
