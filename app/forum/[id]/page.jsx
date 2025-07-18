@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
+import LoadingSpinner from '@/app/components/common/LoadingSpinner';
 
 export default function ForumPostPage({ params }) {
   const id = params?.id;
@@ -46,7 +47,7 @@ export default function ForumPostPage({ params }) {
     fetchForum();
   }, [id]);
 
-  if (loading) return <div className="p-8 text-center">Loading forum...</div>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
   if (!forum) return <div className="p-8">Forum not found.</div>;
 
@@ -227,8 +228,8 @@ export default function ForumPostPage({ params }) {
                   </span>
                 )}
                 <div className="flex-1">
-                  <div className="font-semibold text-[#0A3161] text-xs">{c.user.name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
-                  <div className="text-[#40433F] text-xs">{c.content}</div>
+                  <div className="font-semibold text-[#0A3161] text-sm">{c.user.name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
+                  <div className="text-[#40433F] text-sm">{c.content}</div>
                   {token && (
                     <button className="text-[#2EC4B6] text-xs mt-1" onClick={() => setReplyingTo(c.id)}>Reply</button>
                   )}
@@ -242,10 +243,10 @@ export default function ForumPostPage({ params }) {
                         onChange={e => { if (e.target.value.length <= 500) setReplyText(e.target.value); if (replyError) setReplyError(""); }}
                         maxLength={500}
                       />
-                      <div className="text-xs text-right pr-1 pb-1" style={{ color: replyText.length >= 500 ? '#e53e3e' : '#40433F' }}>
+                      <div className="text-sm text-right pr-1 pb-1" style={{ color: replyText.length >= 500 ? '#e53e3e' : '#40433F' }}>
                         {replyText.length}/500
                       </div>
-                      {replyError && <div className="text-red-500 text-xs mb-2">{replyError}</div>}
+                      {replyError && <div className="text-red-500 mb-2">{replyError}</div>}
                       <div className="flex gap-2 justify-end">
                         <button
                           className="px-4 py-1 rounded bg-gray-200 text-gray-700"
@@ -263,13 +264,13 @@ export default function ForumPostPage({ params }) {
                     </div>
                   )}
                   {c.replies && c.replies.length > 0 && (
-                    <div className="ml-6 mt-2 space-y-2">
+                    <div className="text-sm ml-6 mt-2 space-y-2">
                       {c.replies.map(r => (
                         <div key={r.id} className="flex items-start gap-2">
                           <Image src={"/images/FeaturedProfessionls/img1.png"} alt={r.created_by_name} width={28} height={28} className="rounded-full object-cover" />
                           <div>
-                            <div className="font-semibold text-[#0A3161] text-xs">{r.created_by_name} <span className="text-[#9E9E9E]">· {new Date(r.created_at).toLocaleDateString()}</span></div>
-                            <div className="text-[#40433F] text-xs">{r.content}</div>
+                            <div className="font-semibold text-[#0A3161]">{r.user.name} <span className="text-[#9E9E9E]">· {new Date(r.created_at).toLocaleDateString()}</span></div>
+                            <div className="text-[#40433F]">{r.content}</div>
                           </div>
                         </div>
                       ))}

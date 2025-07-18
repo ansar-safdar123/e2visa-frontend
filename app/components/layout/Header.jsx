@@ -58,6 +58,22 @@ const Header = () => {
     fetchProfessionals();
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (professionalDropdownRef.current && !professionalDropdownRef.current.contains(event.target)) {
+        setIsProfessionalDropdownOpen(false);
+      }
+    }
+    if (isProfessionalDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isProfessionalDropdownOpen]);
+
   return (
     <header className="bg-[#40433F] text-white py-[17px] relative">
       <div className="container mx-auto px-4">

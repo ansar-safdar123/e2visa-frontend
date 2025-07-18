@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const RealEstate = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,16 +15,32 @@ const RealEstate = () => {
   const [selectedListingType, setSelectedListingType] = useState('All Listings');
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [realEstates, setRealEstates] = useState([]);
+  const [loadingRealEstate, setLoadingRealEstate] = useState(true);
+  const [featuredListings, setFeaturedListings] = useState([]);
+  const [featuredLoading, setFeaturedLoading] = useState(true);
+  const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
 
-  const handleSearch = () => {
-    // Implement search functionality
-    console.log('Searching with:', {
-      searchQuery,
-      selectedCategory,
-      selectedSubCategory,
-      selectedLocation,
-      selectedListingType
-    });
+  const handleSearch = async () => {
+    setLoadingRealEstate(true);
+    try {
+      const params = new URLSearchParams();
+      if (selectedCountry) params.append('country', selectedCountry);
+      if (selectedCategory) params.append('category_id', selectedCategory);
+      if (selectedSubCategory) params.append('sub_category_id', selectedSubCategory);
+      params.append('search_type', 'real_estate');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/business/find-business?${params.toString()}`);
+      const data = await res.json();
+      if (res.ok && data.result) {
+        setRealEstates(data.result);
+      } else {
+        setRealEstates([]);
+      }
+    } catch {
+      setRealEstates([]);
+    } finally {
+      setLoadingRealEstate(false);
+    }
   };
   const newListing = [
     {
@@ -117,6 +134,37 @@ const RealEstate = () => {
       }
     };
     fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCountry, selectedCategory, selectedSubCategory]);
+
+  useEffect(() => {
+    const fetchFeaturedListings = async () => {
+      setFeaturedLoading(true);
+      try {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/featured_listing?search_type=business`, {
+          method: 'POST',
+          headers: {
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+          },
+        });
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setFeaturedListings(data.result);
+        } else {
+          setFeaturedListings([]);
+        }
+      } catch {
+        setFeaturedListings([]);
+      } finally {
+        setFeaturedLoading(false);
+      }
+    };
+    fetchFeaturedListings();
   }, []);
 
   return (
@@ -289,6 +337,7 @@ const RealEstate = () => {
 
           <button
               className="bg-[#0A3161] w-[197px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
+              onClick={handleSearch}
               >
               Search Now
             </button>
@@ -296,47 +345,92 @@ const RealEstate = () => {
         
         </div>
 
-        <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center lg:mt-40 mt-16 mb-12">Featured Listing</h1>
-        <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
-          {newListing.map((listing) => (
-            <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
-              <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                {listing.verified && (
-                  <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                    Verified
+        {/* Show real estate listings before Featured Listing */}
+        {loadingRealEstate ? (
+          <LoadingSpinner />
+        ) : realEstates.length > 0 ? (
+          <>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center my-8">Real Estate Listings</h1>
+            <div className="listing-slider flex flex-wrap justify-center gap-4">
+              {realEstates.map((estate) => (
+                <Link
+                  key={estate.id}
+                  href={`/buy-business/${estate.id}`}
+                  className="rounded-lg bg-[#1B263B1A] border border-[#40433F] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px] block hover:shadow-lg transition-shadow"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div className="relative w-full pt-[14px] pb-[19px] px-[18px]">
+                    <div className="relative w-full h-[197px]">
+                      <Image
+                        fill
+                        src={estate.business_images && estate.business_images.length > 0 ? `${BACKEND_STORAGE_URL}/${estate.business_images[0].image_path}` : '/images/listing/img1.png'}
+                        alt={estate.business_name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="mt-[15px]">
+                      <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                        {estate.business_name}
+                      </h2>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs lg:text-sm mb-2">{estate.listing_type}</p>
+                        <div className="text-xs lg:text-sm mb-2">${estate.asking_price}</div>
+                      </div>
+                    </div>
                   </div>
-                )}
-                <div className="relative w-full h-[197px]">
-                  <Image
-                    fill
-                    src={listing.image}
-                    alt="Listing"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="mt-[15px]">
-                  <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                    {listing.title}
-                  </h2>
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs lg:text-sm mb-2">{listing.status}</p>
-                    <div className="flex gap-1">
-                      {[...Array(listing.rating)].map((_, index) => (
-                        <div className="w-[12.84px] h-[12.27px] relative" key={index}>
-                          <Image
-                            src="/images/listing/star.png"
-                            fill
-                            alt="rating star"
-                            className="object-contain"
-                          />
-                        </div>
-                      ))}
+                </Link>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="text-center text-lg text-red-500 font-semibold my-12">
+            Oops, there is no real estate found.
+          </div>
+        )}
+
+        <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center my-12">Featured Listing</h1>
+        <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
+          {featuredLoading ? (
+            <LoadingSpinner />
+          ) : featuredListings.length > 0 ? (
+            featuredListings.map((listing) => (
+              <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                  {listing.verified && (
+                    <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                      Verified
+                    </div>
+                  )}
+                  <div className="relative w-full h-[197px]">
+                    <Image
+                      fill
+                      src={
+                        listing.business_images && listing.business_images.length > 0
+                          ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
+                          : '/images/listing/img1.png'
+                      }
+                      alt={listing.business_name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="mt-[15px]">
+                    <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                      {listing.business_name}
+                    </h2>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs lg:text-sm mb-2">{listing.listing_type}</p>
+                      {/* Add more info if needed */}
                     </div>
                   </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center py-10">
+              <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+              <p className="text-lg text-gray-700">No Featured Found</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
 

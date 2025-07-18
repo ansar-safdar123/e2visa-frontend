@@ -10,15 +10,18 @@ const ProfileSetting = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phone: ''
+    phone: '',
+    about: ''
   });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (user) {
       setFormData({
         fullName: user.name || '',
         email: user.email || '',
-        phone: user.phone || ''
+        phone: user.phone || '',
+        about: user.about || ''
       });
     }
   }, [user]);
@@ -33,9 +36,17 @@ const ProfileSetting = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validate required fields
+    const newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full Name is required.';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required.';
+    if (!formData.about.trim()) newErrors.about = 'About is required.';
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
     const form = new FormData();
     form.append('name', formData.fullName);
     form.append('phone_number', formData.phone);
+    form.append('about', formData.about);
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/user/profile', {
@@ -83,8 +94,9 @@ const ProfileSetting = () => {
             htmlFor="fullName" 
             className="absolute text-sm text-[#1E1E1E] left-12 bg-white px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all z-10"
           >
-            Full Name
+            Full Name <span className="text-red-500">*</span>
           </label>
+          {errors.fullName && <div className="text-red-500 text-xs mt-1">{errors.fullName}</div>}
         </div>
 
         <div className="relative">
@@ -136,8 +148,28 @@ const ProfileSetting = () => {
             htmlFor="phone" 
             className="absolute text-sm text-[#1E1E1E] left-12 bg-white px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all z-10"
           >
-            Phone no
+            Phone no <span className="text-red-500">*</span>
           </label>
+          {errors.phone && <div className="text-red-500 text-xs mt-1">{errors.phone}</div>}
+        </div>
+
+        {/* About Textarea */}
+        <div className="relative">
+          <textarea
+            id="about"
+            name="about"
+            value={formData.about}
+            onChange={handleChange}
+            placeholder="About you..."
+            className="w-full max-w-[540px] pr-4 pl-4 py-4 rounded-xl border text-[#9E9E9E] font-medium text-lg border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none bg-white min-h-[100px]"
+          />
+          <label 
+            htmlFor="about" 
+            className="absolute text-sm text-[#1E1E1E] left-4 bg-white px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all z-10"
+          >
+            About <span className="text-red-500">*</span>
+          </label>
+          {errors.about && <div className="text-red-500 text-xs mt-1">{errors.about}</div>}
         </div>
 
         <button

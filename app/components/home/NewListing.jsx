@@ -4,6 +4,63 @@ import Image from "next/image";
 import Slider from "react-slick";
 import Link from "next/link";
 
+// Custom Arrow Components
+function NextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <button
+      className={className + " custom-slick-arrow custom-slick-next"}
+      style={{
+        ...style,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#2EC4B6",
+        borderRadius: "50%",
+        width: 44,
+        height: 44,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+        border: "none",
+        zIndex: 20,
+        right: -30,
+        transition: "background 0.2s, box-shadow 0.2s",
+      }}
+      onClick={onClick}
+      aria-label="Next"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  );
+}
+
+function PrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <button
+      className={className + " custom-slick-arrow custom-slick-prev"}
+      style={{
+        ...style,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#2EC4B6",
+        borderRadius: "50%",
+        width: 44,
+        height: 44,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+        border: "none",
+        zIndex: 20,
+        left: -30,
+        transition: "background 0.2s, box-shadow 0.2s",
+      }}
+      onClick={onClick}
+      aria-label="Previous"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+  );
+}
+
 export const newListings = [
   {
     id: 5,
@@ -175,6 +232,8 @@ export default function NewListingsTabs() {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
+    nextArrow: <NextArrow />, // Custom next arrow
+    prevArrow: <PrevArrow />, // Custom prev arrow
     responsive: [
       {
         breakpoint: 1024,
@@ -223,9 +282,25 @@ export default function NewListingsTabs() {
             }
             :global(.slick-prev:before),
             :global(.slick-next:before) {
-              font-size: 40px;
-              opacity: 0.75;
-              color: #40433F;
+              display: none !important;
+            }
+            :global(.custom-slick-arrow) {
+              opacity: 1 !important;
+              background: #2EC4B6 !important;
+              color: #fff !important;
+              border: none !important;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+              transition: background 0.2s, box-shadow 0.2s;
+            }
+            :global(.custom-slick-arrow:hover) {
+              background: #0A3161 !important;
+              box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            }
+            :global(.custom-slick-next) {
+              right: -30px !important;
+            }
+            :global(.custom-slick-prev) {
+              left: -30px !important;
             }
             @media (max-width: 640px) {
               :global(.slick-prev) {
@@ -233,6 +308,12 @@ export default function NewListingsTabs() {
               }
               :global(.slick-next) {
                 right: 0;
+              }
+              :global(.custom-slick-next) {
+                right: 0 !important;
+              }
+              :global(.custom-slick-prev) {
+                left: 0 !important;
               }
             }
           `}</style>

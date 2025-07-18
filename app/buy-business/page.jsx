@@ -17,6 +17,8 @@ const BuyBusiness = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [featuredListings, setFeaturedListings] = useState([]);
+  const [featuredLoading, setFeaturedLoading] = useState(true);
   const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
   useEffect(() => {
     const fetchCategories = async () => {
@@ -102,50 +104,55 @@ const BuyBusiness = () => {
     fetchBusinesses();
   }, [selectedCountry, selectedCategory, selectedSubCategory]);
 
-  const handleSearch = () => {
-    // Implement search functionality
-    console.log('Searching with:', {
-      searchQuery,
-      selectedCategory,
-      selectedSubCategory,
-      selectedLocation,
-      selectedListingType
-    });
+  useEffect(() => {
+    const fetchFeaturedListings = async () => {
+      setFeaturedLoading(true);
+      try {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/featured_listing?search_type=business`, {
+          method: 'POST',
+          headers: {
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+          },
+        });
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setFeaturedListings(data.result);
+        } else {
+          setFeaturedListings([]);
+        }
+      } catch {
+        setFeaturedListings([]);
+      } finally {
+        setFeaturedLoading(false);
+      }
+    };
+    fetchFeaturedListings();
+  }, []);
+
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      // Build query params
+      const params = new URLSearchParams();
+      if (selectedCountry) params.append('country', selectedCountry);
+      if (selectedCategory) params.append('category_id', selectedCategory);
+      if (selectedSubCategory) params.append('sub_category_id', selectedSubCategory);
+      params.append('search_type', 'business');
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/business/find-business?${params.toString()}`);
+      const data = await res.json();
+      if (res.ok && data.result) {
+        setBusinesses(data.result);
+      } else {
+        setBusinesses([]);
+      }
+    } catch {
+      setBusinesses([]);
+    } finally {
+      setLoading(false);
+    }
   };
-  const newListing = [
-    {
-      id: 4,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img4.png",
-      status: "Leased",
-      verified: false,
-      rating: 5,
-    },
-    {
-      id: 3,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img3.png",
-      status: "Leased",
-      verified: true,
-      rating: 5,
-    },
-    {
-      id: 2,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img2.png",
-      status: "Leased",
-      verified: true,
-      rating: 5,
-    },
-    {
-      id: 1,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img1.png",
-      status: "Leased",
-      verified: true,
-      rating: 5,
-    },
-  ];
   return (
     <div className="">
       {/* Hero Section with Background Image */}
@@ -317,6 +324,7 @@ const BuyBusiness = () => {
 
           <button
               className="bg-[#0A3161] w-[197px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
+              onClick={handleSearch}
               >
               Search Now
             </button>
@@ -326,89 +334,94 @@ const BuyBusiness = () => {
         {/* Show businesses before Featured Listing */}
         {loading ? (
           <LoadingSpinner />
-        ) : (
-          businesses.length > 0 && (
-            <>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center mt-16 mb-8">Business Listings</h1>
-              <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
-                {businesses.map((business) => (
-                  <Link key={business.id} href={`/buy-business/${business.id}`}>
-                    <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
-                      <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                        {business.verified && (
-                          <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                            Verified
-                          </div>
-                        )}
-                        <div className="relative w-full h-[197px]">
-                          <Image
-                            fill
-                            src={
-                              business.business_images && business.business_images.length > 0
-                                ? `${BACKEND_STORAGE_URL}/${business.business_images[0].image_path}`
-                                : '/images/listing/img1.png'
-                            }
-                            alt={business.business_name}
-                            className="w-full h-full object-cover"
-                          />
+        ) : businesses.length > 0 ? (
+          <>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center mt-16 mb-8">Business Listings</h1>
+            <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
+              {businesses.map((business) => (
+                <Link key={business.id} href={`/buy-business/${business.id}`}>
+                  <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                    <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                      {business.verified && (
+                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                          Verified
                         </div>
-                        <div className="mt-[15px] flex items-center justify-between">
-                          <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                            {business.business_name}
-                          </h2>
-                            <p className="text-xs lg:text-sm mb-2">{business.listing_type}</p>
-                         
-                        </div>
+                      )}
+                      <div className="relative w-full h-[197px]">
+                        <Image
+                          fill
+                          src={
+                            business.business_images && business.business_images.length > 0
+                              ? `${BACKEND_STORAGE_URL}/${business.business_images[0].image_path}`
+                              : '/images/listing/img1.png'
+                          }
+                          alt={business.business_name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="mt-[15px] flex items-center justify-between">
+                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                          {business.business_name}
+                        </h2>
+                          <p className="text-xs lg:text-sm mb-2">{business.listing_type}</p>
+                       
                       </div>
                     </div>
-                  </Link>
-                ))}
-              </div>
-            </>
-          )
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-10">
+            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+            <p className="text-lg text-gray-700">No Businesses Found</p>
+          </div>
         )}
 
         <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center  mt-16 mb-12">Featured Listing</h1>
         <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
-          {newListing.map((listing) => (
-            <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
-              <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                {listing.verified && (
-                  <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                    Verified
+          {featuredLoading ? (
+            <LoadingSpinner />
+          ) : featuredListings.length > 0 ? (
+            featuredListings.map((listing) => (
+              <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                  {listing.verified && (
+                    <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                      Verified
+                    </div>
+                  )}
+                  <div className="relative w-full h-[197px]">
+                    <Image
+                      fill
+                      src={
+                        listing.business_images && listing.business_images.length > 0
+                          ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
+                          : '/images/listing/img1.png'
+                      }
+                      alt={listing.business_name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                )}
-                <div className="relative w-full h-[197px]">
-                  <Image
-                    fill
-                    src={listing.image}
-                    alt="Listing"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="mt-[15px]">
-                  <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                    {listing.title}
-                  </h2>
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs lg:text-sm mb-2">{listing.status}</p>
-                    <div className="flex gap-1">
-                      {[...Array(listing.rating)].map((_, index) => (
-                        <div className="w-[12.84px] h-[12.27px] relative" key={index}>
-                          <Image
-                            src="/images/listing/star.png"
-                            fill
-                            alt="rating star"
-                            className="object-contain"
-                          />
-                        </div>
-                      ))}
+                  <div className="mt-[15px]">
+                    <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                      {listing.business_name}
+                    </h2>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs lg:text-sm mb-2">{listing.listing_type}</p>
+                      {/* Add rating or other info if available */}
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center py-10">
+            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+            <p className="text-lg text-gray-700">No Featured Found</p>
+          </div>
+          )}
         </div>
       </div>
 
