@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 const SearchBar = ({ activeTab }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,12 +44,18 @@ const SearchBar = ({ activeTab }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Navigation logic based on activeTab
     let path = '/';
     if (activeTab === 'business') path = '/buy-business';
     else if (activeTab === 'estate') path = '/real-estate';
     else if (activeTab === 'professional') path = '/professionals';
-    router.push(path);
+
+    // Build query params
+    const params = new URLSearchParams();
+    if (selectedIndustry) params.append('category_id', selectedIndustry); // Use id
+    if (selectedCountry) params.append('country', selectedCountry);
+
+    // Navigate with params
+    router.push(`${path}?${params.toString()}`);
   };
 
   return (
@@ -64,7 +71,7 @@ const SearchBar = ({ activeTab }) => {
             >
               <option value="">All Categories</option>
               {categories.map((cat) => (
-                <option key={cat.id} value={cat.name} className="text-black px-3">
+                <option key={cat.id} value={cat.id} className="text-black px-3">
                   {cat.name}
                 </option>
               ))}

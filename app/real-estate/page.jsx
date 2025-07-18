@@ -4,17 +4,22 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import { useSearchParams } from 'next/navigation';
 
 const RealEstate = () => {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get('category_id') || '';
+  const initialCountry = searchParams.get('country') || '';
+
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('All');
   const [selectedListingType, setSelectedListingType] = useState('All Listings');
   const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [realEstates, setRealEstates] = useState([]);
   const [loadingRealEstate, setLoadingRealEstate] = useState(true);
   const [featuredListings, setFeaturedListings] = useState([]);

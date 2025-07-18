@@ -4,17 +4,21 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import { useSearchParams } from 'next/navigation';
 
 const BuyBusiness = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get('category_id') || '';
+  const initialCountry = searchParams.get('country') || '';
+
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('All');
   const [selectedListingType, setSelectedListingType] = useState('All Listings');
   const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [featuredListings, setFeaturedListings] = useState([]);
