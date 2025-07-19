@@ -469,7 +469,12 @@ function RealEstate() {
                         {listing.business_name}
                       </h2>
                       <div className="flex items-center justify-between">
-                        <p className="text-xs lg:text-sm mb-2">{listing.listing_type}</p>
+                        <p className="text-xs lg:text-sm mb-2">
+                          {(() => {
+                            const words = listing.listing_type.split(' ');
+                            return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : listing.listing_type;
+                          })()}
+                        </p>
                         {/* Add more info if needed */}
                       </div>
                     </div>
