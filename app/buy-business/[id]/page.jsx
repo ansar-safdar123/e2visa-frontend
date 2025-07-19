@@ -22,6 +22,7 @@ const BusinessDetail = ({ params }) => {
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
 
   useEffect(() => {
     const fetchBusiness = async () => {
@@ -31,6 +32,7 @@ const BusinessDetail = ({ params }) => {
         const data = await res.json();
         if (res.ok && data.result) {
           setBusiness(data.result);
+          console.log('Business detail:', data.result);
         }
       } finally {
         setLoading(false);
@@ -112,15 +114,23 @@ const BusinessDetail = ({ params }) => {
           {/* Left Column - Business Image and Contact Form */}
           <div className="space-y-8">
             <div className="relative h-[500px] rounded-lg overflow-hidden">
+              {imageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white z-20">
+                  <LoadingSpinner />
+                </div>
+              )}
               <Image
                 fill
                 src={
                   business.business_images && business.business_images.length > 0
-                    ? `${process.env.NEXT_PUBLIC_API_URL}/${business.business_images[0].image_path}`
+                    ? business.business_images[0].image_path
                     : '/images/listing/img1.png'
                 }
                 alt={business.business_name}
                 className="w-full h-full object-cover"
+                onLoad={() => setImageLoading(false)}
+                onError={() => setImageLoading(false)}
+                style={imageLoading ? { visibility: 'hidden' } : {}}
               />
               {business.verified && (
                 <div className="absolute top-4 right-4 bg-[#2EC4B6] z-30 text-white text-sm px-3 py-1 rounded-full">
