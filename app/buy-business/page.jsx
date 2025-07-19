@@ -24,6 +24,15 @@ function BuyBusiness () {
   const [featuredListings, setFeaturedListings] = useState([]);
   const [featuredLoading, setFeaturedLoading] = useState(true);
   const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(businesses.length / itemsPerPage);
+  const paginatedBusinesses = businesses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const [featuredCurrentPage, setFeaturedCurrentPage] = useState(1);
+  const featuredItemsPerPage = 4;
+  const featuredTotalPages = Math.ceil(featuredListings.length / featuredItemsPerPage);
+  const paginatedFeaturedListings = featuredListings.slice((featuredCurrentPage - 1) * featuredItemsPerPage, featuredCurrentPage * featuredItemsPerPage);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -341,10 +350,10 @@ function BuyBusiness () {
         ) : businesses.length > 0 ? (
           <>
             <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center mt-16 mb-8">Business Listings</h1>
-            <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
-              {businesses.map((business) => (
+            <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16">
+              {paginatedBusinesses.map((business) => (
                 <Link key={business.id} href={`/buy-business/${business.id}`}>
-                  <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                  <div className="bg-[#1B263B1A] w-full min-w-[280px] max-w-[350px]">
                     <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                       {business.verified && (
                         <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
@@ -365,9 +374,17 @@ function BuyBusiness () {
                       </div>
                       <div className="mt-[15px] flex items-center justify-between">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {business.business_name}
+                          {(() => {
+                            const words = business.business_name.split(' ');
+                            return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : business.business_name;
+                          })()}
                         </h2>
-                          <p className="text-xs lg:text-sm mb-2">{business.listing_type}</p>
+                          <p className="text-xs lg:text-sm mb-2">
+                            {(() => {
+                              const words = business.listing_type.split(' ');
+                              return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : business.listing_type;
+                            })()}
+                          </p>
                        
                       </div>
                     </div>
@@ -375,6 +392,34 @@ function BuyBusiness () {
                 </Link>
               ))}
             </div>
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mb-8">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+                >
+                  Prev
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i + 1}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </>
         ) : (
           <div className="flex flex-col items-center justify-center py-10">
@@ -388,7 +433,7 @@ function BuyBusiness () {
           {featuredLoading ? (
             <LoadingSpinner />
           ) : featuredListings.length > 0 ? (
-            featuredListings.map((listing) => (
+            paginatedFeaturedListings.map((listing) => (
               <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
                 <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                   {listing.verified && (
@@ -427,6 +472,34 @@ function BuyBusiness () {
           </div>
           )}
         </div>
+        {/* Featured Pagination Controls */}
+        {featuredTotalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mb-8">
+            <button
+              onClick={() => setFeaturedCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={featuredCurrentPage === 1}
+              className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+            >
+              Prev
+            </button>
+            {Array.from({ length: featuredTotalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setFeaturedCurrentPage(i + 1)}
+                className={`px-3 py-1 rounded ${featuredCurrentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => setFeaturedCurrentPage((p) => Math.min(featuredTotalPages, p + 1))}
+              disabled={featuredCurrentPage === featuredTotalPages}
+              className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
 
 
