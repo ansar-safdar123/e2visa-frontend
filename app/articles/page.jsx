@@ -196,7 +196,7 @@ export default function Articles() {
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 my-6">
             <button
-              className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
+              className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             >

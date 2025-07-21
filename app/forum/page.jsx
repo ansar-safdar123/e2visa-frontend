@@ -245,7 +245,7 @@ export default function Forum() {
                   Cancel
                 </button>
                 <button
-                  className="px-4 py-1 rounded bg-[#40433F] cursor-pointer text-white text-sm"
+                  className="px-4 py-1 rounded bg-[#0A3161] cursor-pointer text-white text-sm"
                   onClick={handlePost}
                   disabled={posting}
                 >

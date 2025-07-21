@@ -394,19 +394,19 @@ function BuyBusiness () {
             </div>
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 mb-8">
+              <div className="flex  justify-center items-center gap-2 mb-8">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
                   className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
                 >
-                  Prev
+                  Previous
                 </button>
                 {Array.from({ length: totalPages }, (_, i) => (
                   <button
                     key={i + 1}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                    className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
                   >
                     {i + 1}
                   </button>
@@ -485,13 +485,13 @@ function BuyBusiness () {
               disabled={featuredCurrentPage === 1}
               className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
             >
-              Prev
+              Previous
             </button>
             {Array.from({ length: featuredTotalPages }, (_, i) => (
               <button
                 key={i + 1}
                 onClick={() => setFeaturedCurrentPage(i + 1)}
-                className={`px-3 py-1 rounded ${featuredCurrentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                className={`px-3 py-1 rounded ${featuredCurrentPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
               >
                 {i + 1}
               </button>

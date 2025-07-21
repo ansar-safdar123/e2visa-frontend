@@ -112,7 +112,7 @@ const Header = () => {
                           <li key={subitem.href}>
                             <Link 
                               href={subitem.href} 
-                              className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap w-fit text-sm font-medium"
+                              className="block px-4 py-2 hover:bg-gray-100 whitespace-nowrap text-sm font-medium"
                               onClick={() => setIsProfessionalDropdownOpen(false)}
                             >
                               {subitem.label}

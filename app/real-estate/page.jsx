@@ -47,40 +47,7 @@ function RealEstate() {
       setLoadingRealEstate(false);
     }
   };
-  const newListing = [
-    {
-      id: 4,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img4.png",
-      status: "Leased",
-      verified: false,
-      rating: 5,
-    },
-    {
-      id: 3,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img3.png",
-      status: "Leased",
-      verified: true,
-      rating: 5,
-    },
-    {
-      id: 2,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img2.png",
-      status: "Leased",
-      verified: true,
-      rating: 5,
-    },
-    {
-      id: 1,
-      title: "Test Shop Main Street Business",
-      image: "/images/listing/img1.png",
-      status: "Leased",
-      verified: true,
-      rating: 5,
-    },
-  ];
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -178,7 +145,7 @@ function RealEstate() {
   const paginatedEstates = realEstates.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const [featuredPage, setFeaturedPage] = useState(1);
-  const featuredPerPage = 2;
+  const featuredPerPage = 4;
   const featuredTotalPages = Math.ceil(featuredListings.length / featuredPerPage);
   const paginatedFeatured = featuredListings.slice((featuredPage - 1) * featuredPerPage, featuredPage * featuredPerPage);
 
@@ -411,13 +378,13 @@ function RealEstate() {
                   disabled={currentPage === 1}
                   className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
                 >
-                  Prev
+                  Previous
                 </button>
                 {Array.from({ length: totalPages }, (_, i) => (
                   <button
                     key={i + 1}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                    className={`px-3 py-1 rounded ${currentPage === i + 1 ?  'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
                   >
                     {i + 1}
                   </button>
@@ -490,13 +457,13 @@ function RealEstate() {
                   disabled={featuredPage === 1}
                   className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
                 >
-                  Prev
+                  Previous
                 </button>
                 {Array.from({ length: featuredTotalPages }, (_, i) => (
                   <button
                     key={i + 1}
                     onClick={() => setFeaturedPage(i + 1)}
-                    className={`px-3 py-1 rounded ${featuredPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                    className={`px-3 py-1 rounded ${featuredPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
                   >
                     {i + 1}
                   </button>
