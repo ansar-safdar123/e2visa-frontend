@@ -316,7 +316,7 @@ function RealEstate() {
             </div> */}
           </div>
            <div className="flex items-center justify-center w-full">
-
+ {/* Search button */}
            <button
               className="bg-[#0A3161] text-sm w-[167px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
               onClick={handleSearch}
