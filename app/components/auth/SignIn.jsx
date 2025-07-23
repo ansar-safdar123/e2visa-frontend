@@ -185,7 +185,7 @@ const SignIn = () => {
           <div className="text-center text-xs md:text-sm font-medium mt-5 2xl:mt-10 text-[#1E1E1E]">
             If you don't have an account?{' '}
             <Link href="/signup-options" className="text-[#0A3161] font-medium hover:underline">
-              Register here
+              Register Here
             </Link>
           </div>
         </form>

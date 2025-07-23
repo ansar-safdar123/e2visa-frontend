@@ -6,7 +6,7 @@ import Image from 'next/image';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useSearchParams } from 'next/navigation';
 
-function BuyBusiness () {
+function BuyBusiness() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get('category_id') || '';
   const initialCountry = searchParams.get('country') || '';
@@ -242,7 +242,7 @@ function BuyBusiness () {
                 </select>
                 <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
                   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -263,7 +263,7 @@ function BuyBusiness () {
                 </select>
                 <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
                   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -306,7 +306,7 @@ function BuyBusiness () {
                 </select>
                 <div className="absolute right-4 top-[50%] -translate-y-1/2 pointer-events-none">
                   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -335,13 +335,13 @@ function BuyBusiness () {
           </div>
           <div className="flex items-center justify-center w-full">
 
-          <button
+            <button
               className="bg-[#0A3161]  w-[167px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
               onClick={handleSearch}
-              >
+            >
               Search Now
             </button>
-              </div>
+          </div>
         </div>
 
         {/* Show businesses before Featured Listing */}
@@ -378,12 +378,12 @@ function BuyBusiness () {
                             ? business.business_name.slice(0, 12) + '...'
                             : business.business_name}
                         </h2>
-                          <p className="text-xs lg:text-sm mb-2">
-                            {business.listing_type.length > 14
-                              ? business.listing_type.slice(0, 14) + '...'
-                              : business.listing_type}
-                          </p>
-                       
+                        <p className="text-xs lg:text-sm mb-2">
+                          {business.listing_type.length > 14
+                            ? business.listing_type.slice(0, 14) + '...'
+                            : business.listing_type}
+                        </p>
+
                       </div>
                     </div>
                   </div>
@@ -459,9 +459,9 @@ function BuyBusiness () {
                     </h2>
                     <div className="flex items-center justify-between">
                       <p className="text-xs lg:text-sm mb-2">
-                          {listing.listing_type.length > 14
-                            ? listing.listing_type.slice(0, 14) + '...'
-                            : listing.listing_type}
+                        {listing.listing_type.length > 14
+                          ? listing.listing_type.slice(0, 14) + '...'
+                          : listing.listing_type}
                       </p>
                       {/* Add rating or other info if available */}
                     </div>
@@ -471,9 +471,9 @@ function BuyBusiness () {
             ))
           ) : (
             <div className="flex flex-col items-center justify-center py-10">
-            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
-            <p className="text-lg text-gray-700">No Featured Found</p>
-          </div>
+              <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+              <p className="text-lg text-gray-700">No Featured Found</p>
+            </div>
           )}
         </div>
         {/* Featured Pagination Controls */}
@@ -511,10 +511,10 @@ function BuyBusiness () {
   );
 };
 
-export default function BuyBusinessPage(){
+export default function BuyBusinessPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BuyBusiness />
     </Suspense>
-    )
+  )
 } 

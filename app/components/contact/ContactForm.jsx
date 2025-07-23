@@ -82,7 +82,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-6 max-w-[480px] mx-auto" onSubmit={handleSubmit}>
       {/* Full Name Input */}
       <div className="relative">
         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -205,7 +205,7 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        className="w-full bg-[#0A3161] text-white !mt-14 py-4 2xl:py-5 rounded-lg hover:bg-bg-[#102742] transition-colors font-semibold text-sm md:text-base"
+        className="w-full bg-[#0A3161] text-white !mt-10 4 py-4 2xl:py-5 rounded-lg hover:bg-bg-[#102742] transition-colors font-semibold text-sm md:text-base"
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Sending...' : 'Send Message'}

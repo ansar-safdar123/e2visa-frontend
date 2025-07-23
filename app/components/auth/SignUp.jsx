@@ -556,7 +556,7 @@ const SignUp = () => {
                   htmlFor="timeframe"
                   className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all"
                 >
-                  Time frame for immigrating?
+                  Time frame in months?
                 </label>
               </div>
             )}
@@ -801,7 +801,7 @@ const SignUp = () => {
                 href="/signin"
                 className="text-[#1E1E1E] font-medium hover:underline"
               >
-                Sign in here
+                Sign In Here
               </Link>
             </div>
           </form>

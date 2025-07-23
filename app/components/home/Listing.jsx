@@ -32,7 +32,7 @@ function NextArrow(props) {
       onClick={onClick}
       aria-label="Next"
     >
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
     </button>
   );
 }
@@ -60,7 +60,7 @@ function PrevArrow(props) {
       onClick={onClick}
       aria-label="Previous"
     >
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
     </button>
   );
 }
@@ -77,7 +77,7 @@ export default function ListingsTabs() {
         const data = await res.json();
         if (res.ok && data.result) {
           setListings(data.result);
-          console.log("data.result",data.result)
+          console.log("data.result", data.result)
         } else {
           setListings([]);
         }
@@ -163,6 +163,11 @@ export default function ListingsTabs() {
           `}</style>
           {loading ? (
             <LoadingSpinner />
+          ) : listings.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-10">
+              <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+              <p className="text-lg text-gray-700">No Businesses Found</p>
+            </div>
           ) : listings.length > 4 ? (
             <Slider {...settings}>
               {listings.map((listing) => (
@@ -240,12 +245,12 @@ export default function ListingsTabs() {
                   </Link>
                 </div>
               ))}
+              {/* Empty placeholder to keep layout */}
               {/* Add placeholders if less than 4 */}
-              {Array.from({ length: 4 - listings.length }).map((_, idx) => (
+              {/* {Array.from({ length: 4 - listings.length }).map((_, idx) => (
                 <div key={`placeholder-${idx}`} style={{ minWidth: 0, flex: 1, visibility: 'hidden' }}>
-                  {/* Empty placeholder to keep layout */}
                 </div>
-              ))}
+              ))} */}
             </div>
           )}
         </div>
