@@ -43,7 +43,7 @@ export default function Articles() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 3;
+  const blogsPerPage = 6;
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
 

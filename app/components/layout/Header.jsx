@@ -89,7 +89,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden xl:flex items-center space-x-14 text-xs xl:text-sm font-medium">
+          <div className="hidden xl:flex items-center space-x-12 text-xs xl:text-sm font-medium">
             {menuItems.map((item) => {
               if (item.label === 'Find A Professional') {
                 return (
@@ -151,12 +151,20 @@ const Header = () => {
                 {user ? (
                   <ProfileDropdown user={user} />
                 ) : (
-                  <Link 
-                    href="/signin"
-                    className="xl:text-sm text-xs px-3 md:px-[15px] xl:px-[24.63px] py-2 xl:py-3 text- rounded-lg bg-white hover:bg-gray-100"
-                  >
-                    Sign In
-                  </Link> 
+                  <>
+                    <Link 
+                      href="/signup-options"
+                      className="xl:text-sm text-xs px-3 md:px-[15px] py-2 xl:py-3 text- rounded-lg bg-white hover:bg-gray-100 mr-2"
+                    >
+                      Sign Up
+                    </Link>
+                    <Link 
+                      href="/signin"
+                      className="xl:text-sm text-xs px-3 md:px-[15px] py-2 xl:py-3 text- rounded-lg bg-white hover:bg-gray-100"
+                    >
+                      Sign In
+                    </Link>
+                  </>
                 )}
               </div>
             </div>

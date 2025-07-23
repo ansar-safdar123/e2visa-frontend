@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 
 // Custom Arrow Components
 function NextArrow(props) {
@@ -197,7 +198,7 @@ const FeaturedProfessionals = () => {
             }
           `}</style>
           {loading ? (
-            <div className="text-center py-10">Loading...</div>
+            <LoadingSpinner />
           ) : professionals.length === 0 ? (
             <div className="text-center py-10">No professionals found.</div>
           ) : professionals.length > 4 ? (

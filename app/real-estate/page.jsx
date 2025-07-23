@@ -317,8 +317,8 @@ function RealEstate() {
           </div>
            <div className="flex items-center justify-center w-full">
 
-          <button
-              className="bg-[#0A3161] w-[197px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
+           <button
+              className="bg-[#0A3161] text-sm w-[167px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
               onClick={handleSearch}
               >
               Search Now
@@ -400,8 +400,9 @@ function RealEstate() {
             )}
           </>
         ) : (
-          <div className="text-center text-lg text-red-500 font-semibold my-12">
-            Oops, there is no real estate found.
+          <div className="flex flex-col items-center justify-center py-10">
+            <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+            <p className="text-lg text-gray-700">No Real Estate Found</p>
           </div>
         )}
 
@@ -411,43 +412,51 @@ function RealEstate() {
         ) : (
           <>
             <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-16">
-              {paginatedFeatured.map((listing) => (
-                <div key={listing.id} className="bg-[#1B263B1A] w-full max-w-[350px]">
-                  <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                    {listing.verified && (
-                      <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                        Verified
+              {paginatedFeatured.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-10">
+                  <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+                  <p className="text-lg text-gray-700">No Featured Found</p>
+                </div>
+              ) : (
+                paginatedFeatured.map((listing) => (
+                  <div key={listing.id} className="bg-[#1B263B1A] w-full max-w-[350px]">
+                    <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                      {listing.verified && (
+                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                          Verified
+                        </div>
+                      )}
+                      <div className="relative w-full h-[197px]">
+                        <Image
+                          fill
+                          src={
+                            listing.business_images && listing.business_images.length > 0
+                              ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
+                              : '/images/listing/img1.png'
+                          }
+                          alt={listing.business_name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                    )}
-                    <div className="relative w-full h-[197px]">
-                      <Image
-                        fill
-                        src={
-                          listing.business_images && listing.business_images.length > 0
-                            ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
-                            : '/images/listing/img1.png'
-                        }
-                        alt={listing.business_name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="mt-[15px]">
-                      <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                        {listing.business_name}
-                      </h2>
-                      <div className="flex items-center justify-between">
-                        <p className="text-xs lg:text-sm mb-2">
-                          {(() => {
-                            const words = listing.listing_type.split(' ');
-                            return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : listing.listing_type;
-                          })()}
-                        </p>
-                        {/* Add more info if needed */}
+                      <div className="mt-[15px]">
+                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                        {listing.business_name.length > 12
+                        ? listing.business_name.slice(0, 12) + '...'
+                        : listing.business_name}
+                        </h2>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs lg:text-sm mb-2">
+                          {listing.listing_type.length > 14
+                            ? listing.listing_type.slice(0, 14) + '...'
+                            : listing.listing_type}
+                          </p>
+                          {/* Add more info if needed */}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
             {/* Pagination Controls for Featured Listings */}
             {featuredTotalPages > 1 && (

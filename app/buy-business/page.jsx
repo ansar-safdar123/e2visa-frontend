@@ -336,7 +336,7 @@ function BuyBusiness () {
           <div className="flex items-center justify-center w-full">
 
           <button
-              className="bg-[#0A3161] w-[197px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
+              className="bg-[#0A3161]  w-[167px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
               onClick={handleSearch}
               >
               Search Now
@@ -372,18 +372,16 @@ function BuyBusiness () {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="mt-[15px] flex items-center justify-between">
+                      <div className="mt-[15px] flex flex-col justify-between">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {(() => {
-                            const words = business.business_name.split(' ');
-                            return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : business.business_name;
-                          })()}
+                          {business.business_name.length > 12
+                            ? business.business_name.slice(0, 12) + '...'
+                            : business.business_name}
                         </h2>
                           <p className="text-xs lg:text-sm mb-2">
-                            {(() => {
-                              const words = business.listing_type.split(' ');
-                              return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : business.listing_type;
-                            })()}
+                            {business.listing_type.length > 14
+                              ? business.listing_type.slice(0, 14) + '...'
+                              : business.listing_type}
                           </p>
                        
                       </div>
@@ -455,14 +453,15 @@ function BuyBusiness () {
                   </div>
                   <div className="mt-[15px]">
                     <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                      {listing.business_name}
+                      {listing.business_name.length > 12
+                        ? listing.business_name.slice(0, 12) + '...'
+                        : listing.business_name}
                     </h2>
                     <div className="flex items-center justify-between">
                       <p className="text-xs lg:text-sm mb-2">
-                        {(() => {
-                          const words = listing.listing_type.split(' ');
-                          return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : listing.listing_type;
-                        })()}
+                          {listing.listing_type.length > 14
+                            ? listing.listing_type.slice(0, 14) + '...'
+                            : listing.listing_type}
                       </p>
                       {/* Add rating or other info if available */}
                     </div>
