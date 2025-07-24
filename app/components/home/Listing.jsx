@@ -21,12 +21,12 @@ function NextArrow(props) {
         justifyContent: "center",
         background: "#2EC4B6",
         borderRadius: "50%",
-        width: 44,
-        height: 44,
+        width: 35,
+        height: 35,
         boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
         border: "none",
         zIndex: 20,
-        right: -30,
+        right: -22,
         transition: "background 0.2s, box-shadow 0.2s",
       }}
       onClick={onClick}
@@ -49,12 +49,12 @@ function PrevArrow(props) {
         justifyContent: "center",
         background: "#2EC4B6",
         borderRadius: "50%",
-        width: 44,
-        height: 44,
+        width: 35,
+        height: 35,
         boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
         border: "none",
         zIndex: 20,
-        left: -30,
+        left: -22,
         transition: "background 0.2s, box-shadow 0.2s",
       }}
       onClick={onClick}
@@ -92,7 +92,7 @@ export default function ListingsTabs() {
 
   const settings = {
     dots: false,
-    infinite: listings.length > 4, // Only infinite if enough slides
+    infinite: false, // <-- Make it never loop
     speed: 500,
     slidesToShow: Math.min(4, listings.length),
     slidesToScroll: 1,
@@ -100,9 +100,9 @@ export default function ListingsTabs() {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: Math.min(3, listings.length), slidesToScroll: 1 } },
-      { breakpoint: 768, settings: { slidesToShow: Math.min(2, listings.length), slidesToScroll: 1, arrows: true } },
-      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: true } }
+      { breakpoint: 1024, settings: { slidesToShow: Math.min(3, listings.length), slidesToScroll: 1, infinite: false } },
+      { breakpoint: 768, settings: { slidesToShow: Math.min(2, listings.length), slidesToScroll: 1, arrows: true, infinite: false } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: true, infinite: false } }
     ]
   };
 
@@ -115,14 +115,14 @@ export default function ListingsTabs() {
             :global(.slick-prev),
             :global(.slick-next) {
               z-index: 10;
-              width: 40px;
-              height: 40px;
+              width: 30px;
+              height: 30px;
             }
             :global(.slick-prev) {
-              left: -20px;
+              left: -22px;
             }
             :global(.slick-next) {
-              right: -20px;
+              right: -22px;
             }
             :global(.slick-prev:before),
             :global(.slick-next:before) {
@@ -141,10 +141,10 @@ export default function ListingsTabs() {
               box-shadow: 0 4px 16px rgba(0,0,0,0.18);
             }
             :global(.custom-slick-next) {
-              right: -30px !important;
+              right: -22px !important;
             }
             :global(.custom-slick-prev) {
-              left: -30px !important;
+              left: -22px !important;
             }
             @media (max-width: 640px) {
               :global(.slick-prev) {
@@ -168,8 +168,93 @@ export default function ListingsTabs() {
               <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
               <p className="text-lg text-gray-700">No Businesses Found</p>
             </div>
-          ) : listings.length > 4 ? (
-            <Slider {...settings}>
+          ) :
+          // listings.length > 4 ? (
+          //   <Slider {...settings}>
+          //     {listings.map((listing) => (
+          //       <div key={listing.id}>
+          //         <Link href={`/buy-business/${listing.id}`}>
+          //           <div className="relative listing-card-border !rounded-xl pt-[14px] pb-[19px] px-[18px] cursor-pointer">
+          //             {listing.is_featured === "Yes" && (
+          //               <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+          //                 Featured
+          //               </div>
+          //             )}
+          //             <div className="relative w-full h-[197px]">
+          //               <Image
+          //                 fill
+          //                 src={"/images/listing/img1.png"} // Replace with dynamic image if available
+          //                 alt={listing.business_name}
+          //                 className="w-full h-full object-cover"
+          //               />
+          //             </div>
+          //             <div className="mt-[15px]">
+          //               <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+          //                 {listing.business_name.length > 18
+          //                   ? listing.business_name.slice(0, 18) + '...'
+          //                   : listing.business_name}
+          //               </h2>
+          //               <div className="flex items-center justify-between">
+          //                 <p className="text-xs lg:text-sm ">
+          //                   {listing.listing_type.length > 15
+          //                     ? listing.listing_type.slice(0, 15) + '...'
+          //                     : listing.listing_type}
+          //                 </p>
+          //                 <div className="text-xs lg:text-sm ">${listing.asking_price}</div>
+          //               </div>
+          //             </div>
+          //           </div>
+          //         </Link>
+          //       </div>
+          //     ))}
+          //   </Slider>
+          // ) : (
+          //   <div className="flex gap-4">
+          //     {listings.map((listing) => (
+          //       <div key={listing.id} style={{ minWidth: 0, flex: 1 }}>
+          //         <Link href={`/buy-business/${listing.id}`}>
+          //           <div className="relative listing-card-border !rounded-xl pt-[14px] pb-[19px] px-[18px] cursor-pointer">
+          //             {listing.is_featured === "Yes" && (
+          //               <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+          //                 Featured
+          //               </div>
+          //             )}
+          //             <div className="relative w-full h-[197px]">
+          //               <Image
+          //                 fill
+          //                 src={"/images/listing/img1.png"} // Replace with dynamic image if available
+          //                 alt={listing.business_name}
+          //                 className="w-full h-full object-cover"
+          //               />
+          //             </div>
+          //             <div className="mt-[15px]">
+          //               <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+          //                 {listing.business_name.length > 12
+          //                   ? listing.business_name.slice(0, 12) + '...'
+          //                   : listing.business_name}
+          //               </h2>
+          //               <div className="flex items-center justify-between">
+          //                 <p className="text-xs lg:text-sm ">
+          //                   {listing.listing_type.length > 12
+          //                     ? listing.listing_type.slice(0, 12) + '...'
+          //                     : listing.listing_type}
+          //                 </p>
+          //                 {/* <div className="text-xs lg:text-sm ">${listing.asking_price}</div> */}
+          //               </div>
+          //             </div>
+          //           </div>
+          //         </Link>
+          //       </div>
+          //     ))}
+          //     {/* Empty placeholder to keep layout */}
+          //     {/* Add placeholders if less than 4 */}
+          //     {/* {Array.from({ length: 4 - listings.length }).map((_, idx) => (
+          //       <div key={`placeholder-${idx}`} style={{ minWidth: 0, flex: 1, visibility: 'hidden' }}>
+          //       </div>
+          //     ))} */}
+          //   </div>
+          // )
+          <Slider {...settings}>
               {listings.map((listing) => (
                 <div key={listing.id}>
                   <Link href={`/buy-business/${listing.id}`}>
@@ -189,14 +274,14 @@ export default function ListingsTabs() {
                       </div>
                       <div className="mt-[15px]">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {listing.business_name.length > 12
-                            ? listing.business_name.slice(0, 12) + '...'
+                          {listing.business_name.length > 18
+                            ? listing.business_name.slice(0, 18) + '...'
                             : listing.business_name}
                         </h2>
                         <div className="flex items-center justify-between">
                           <p className="text-xs lg:text-sm ">
-                            {listing.listing_type.length > 12
-                              ? listing.listing_type.slice(0, 12) + '...'
+                            {listing.listing_type.length > 15
+                              ? listing.listing_type.slice(0, 15) + '...'
                               : listing.listing_type}
                           </p>
                           <div className="text-xs lg:text-sm ">${listing.asking_price}</div>
@@ -207,52 +292,7 @@ export default function ListingsTabs() {
                 </div>
               ))}
             </Slider>
-          ) : (
-            <div className="flex gap-4">
-              {listings.map((listing) => (
-                <div key={listing.id} style={{ minWidth: 0, flex: 1 }}>
-                  <Link href={`/buy-business/${listing.id}`}>
-                    <div className="relative listing-card-border !rounded-xl pt-[14px] pb-[19px] px-[18px] cursor-pointer">
-                      {listing.is_featured === "Yes" && (
-                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                          Featured
-                        </div>
-                      )}
-                      <div className="relative w-full h-[197px]">
-                        <Image
-                          fill
-                          src={"/images/listing/img1.png"} // Replace with dynamic image if available
-                          alt={listing.business_name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="mt-[15px]">
-                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {listing.business_name.length > 12
-                            ? listing.business_name.slice(0, 12) + '...'
-                            : listing.business_name}
-                        </h2>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs lg:text-sm ">
-                            {listing.listing_type.length > 12
-                              ? listing.listing_type.slice(0, 12) + '...'
-                              : listing.listing_type}
-                          </p>
-                          {/* <div className="text-xs lg:text-sm ">${listing.asking_price}</div> */}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-              {/* Empty placeholder to keep layout */}
-              {/* Add placeholders if less than 4 */}
-              {/* {Array.from({ length: 4 - listings.length }).map((_, idx) => (
-                <div key={`placeholder-${idx}`} style={{ minWidth: 0, flex: 1, visibility: 'hidden' }}>
-                </div>
-              ))} */}
-            </div>
-          )}
+          }
         </div>
       </div>
     </div>

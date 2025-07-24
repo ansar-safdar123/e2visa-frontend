@@ -124,7 +124,7 @@ function Professionals() {
               <Link href={`/professional/${pro.id}`} key={pro.id} className="block relative">
                 <div className="bg-white rounded-lg border border-[#40433F] p-6 hover:shadow-lg transition-shadow">
                   {/* Contact badge */}
-                  <span className="absolute top-2 right-2 bg-[#0A3161] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm select-none cursor-default">
+                  <span className="absolute top-2 cursor-pointer right-2 bg-[#0A3161] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm select-none cursor-default">
                     Contact
                   </span>
                   <div className="flex items-center space-x-4">

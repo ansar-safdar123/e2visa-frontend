@@ -354,14 +354,15 @@ function RealEstate() {
                     </div>
                     <div className="mt-[15px]">
                       <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                        {estate.business_name}
+                        {estate.business_name.length > 28
+                        ? estate.business_name.slice(0, 28) + '...'
+                        : estate.business_name}
                       </h2>
                       <div className="flex items-center justify-between">
                         <p className="text-xs lg:text-sm mb-2">
-                          {(() => {
-                            const words = estate.listing_type.split(' ');
-                            return words.length > 2 ? words.slice(0, 2).join(' ') + ' ...' : estate.listing_type;
-                          })()}
+                        {estate.listing_type.length > 28
+                          ? estate.listing_type.slice(0, 28) + '...'
+                          : estate.listing_type}
                         </p>
                         <div className="text-xs lg:text-sm mb-2">${estate.asking_price}</div>
                       </div>
@@ -440,14 +441,14 @@ function RealEstate() {
                       </div>
                       <div className="mt-[15px]">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                        {listing.business_name.length > 12
-                        ? listing.business_name.slice(0, 12) + '...'
+                        {listing.business_name.length > 28
+                        ? listing.business_name.slice(0, 28) + '...'
                         : listing.business_name}
                         </h2>
                         <div className="flex items-center justify-between">
                           <p className="text-xs lg:text-sm mb-2">
-                          {listing.listing_type.length > 14
-                            ? listing.listing_type.slice(0, 14) + '...'
+                          {listing.listing_type.length > 28
+                            ? listing.listing_type.slice(0, 28) + '...'
                             : listing.listing_type}
                           </p>
                           {/* Add more info if needed */}
