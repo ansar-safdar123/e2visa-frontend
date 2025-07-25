@@ -63,10 +63,26 @@ function PrevArrow(props) {
   );
 }
 
+// Add a simple useMediaQuery hook
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => setMatches(media.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [matches, query]);
+  return matches;
+}
+
 const FeaturedProfessionals = () => {
   const router = useRouter();
   const [professionals, setProfessionals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   useEffect(() => {
     const fetchProfessionals = async () => {
@@ -92,6 +108,7 @@ const FeaturedProfessionals = () => {
 
   const settings = {
     dots: false,
+  
     infinite: professionals.length > 4, // Only infinite if enough items
     speed: 500,
     slidesToShow: Math.min(4, professionals.length),
@@ -99,30 +116,35 @@ const FeaturedProfessionals = () => {
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    // responsive: [
+    //   {
+    //     breakpoint: 1024,
+    //     settings: {
+    //       slidesToShow: Math.min(3, professionals.length),
+    //       slidesToScroll: 1,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 768,
+    //     settings: {
+    //       slidesToShow: Math.min(2, professionals.length),
+    //       slidesToScroll: 1,
+    //       arrows: true,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 480,
+    //     settings: {
+    //       slidesToShow: 1,
+    //       slidesToScroll: 1,
+    //       arrows: true,
+    //     }
+    //   }
+    // ]
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: Math.min(3, professionals.length),
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: Math.min(2, professionals.length),
-          slidesToScroll: 1,
-          arrows: true,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: true,
-        }
-      }
+      { breakpoint: 1024, settings: { slidesToShow: Math.min(3, professionals.length), slidesToScroll: 1, infinite: false } },
+      { breakpoint: 768, settings: { slidesToShow: Math.min(2, professionals.length), slidesToScroll: 1, arrows: true, infinite: false } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: true, infinite: false } }
     ]
   };
 
@@ -138,14 +160,15 @@ const FeaturedProfessionals = () => {
             :global(.slick-prev),
             :global(.slick-next) {
               z-index: 10;
-              width: 40px;
-              height: 40px;
+              width: 30px !important;
+              height: 30px !important;
+              z-index: 10 !important;
             }
             :global(.slick-prev) {
-              left: -20px;
+              left: -22px;
             }
             :global(.slick-next) {
-              right: -20px;
+              right: -22px;
             }
             :global(.slick-prev:before),
             :global(.slick-next:before) {
@@ -201,10 +224,10 @@ const FeaturedProfessionals = () => {
             <LoadingSpinner />
           ) : professionals.length === 0 ? (
             <div className="text-center py-10">No professionals found.</div>
-          ) : professionals.length > 4 ? (
+          ) : isMobile ? (
             <Slider {...settings}>
+
               {professionals.map((pro, index) => {
-                // Prefer user_information.image if available, else pro.image
                 let imagePath = pro.user_information && pro.user_information.image
                   ? pro.user_information.image
                   : pro.image
@@ -212,7 +235,7 @@ const FeaturedProfessionals = () => {
                     : null;
                 let imageUrl;
                 if (imagePath && !imagePath.startsWith('/images/')) {
-                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/, '');
+                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
                 } else {
                   imageUrl = imagePath || "/images/FeaturedProfessionls/img1.png";
                 }
@@ -241,10 +264,9 @@ const FeaturedProfessionals = () => {
                 );
               })}
             </Slider>
-          ) : (
-            <div className="professionals-row">
+          ) : professionals.length < 4 ? (
+            <div className="professionals-row" style={{ justifyContent: 'center' }}>
               {professionals.map((pro, index) => {
-                // Prefer user_information.image if available, else pro.image
                 let imagePath = pro.user_information && pro.user_information.image
                   ? pro.user_information.image
                   : pro.image
@@ -252,7 +274,7 @@ const FeaturedProfessionals = () => {
                     : null;
                 let imageUrl;
                 if (imagePath && !imagePath.startsWith('/images/')) {
-                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/, '');
+                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
                 } else {
                   imageUrl = imagePath || "/images/FeaturedProfessionls/img1.png";
                 }
@@ -281,6 +303,45 @@ const FeaturedProfessionals = () => {
                 );
               })}
             </div>
+          ) : (
+            <Slider {...settings}>
+              {professionals.map((pro, index) => {
+                let imagePath = pro.user_information && pro.user_information.image
+                  ? pro.user_information.image
+                  : pro.image
+                    ? pro.image
+                    : null;
+                let imageUrl;
+                if (imagePath && !imagePath.startsWith('/images/')) {
+                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
+                } else {
+                  imageUrl = imagePath || "/images/FeaturedProfessionls/img1.png";
+                }
+                return (
+                  <div
+                    key={pro.id}
+                    className='professional-card w-full bg-white transition-all px-2 cursor-pointer hover:shadow-lg'
+                    onClick={() => handleProfessionalClick(pro.id)}
+                  >
+                    <div className="w-full h-[376px] relative">
+                      <img
+                        src={imageUrl}
+                        alt={pro.name}
+                        className="w-full h-full object-cover rounded-xl"
+                        onError={e => { e.target.src = "/images/FeaturedProfessionls/img1.png"; }}
+                      />
+                      <div className="text-center absolute left-1/2 -translate-x-1/2 w-full bottom-5 text-[15.25px] p-3">
+                        <div className="professional-name-tags w-full px-4 py-2 rounded-lg inline-block font-semibold">
+                          {pro.name}
+                          <br />
+                          <span className="text-gray-600 text-xs font-normal">{pro.role}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </Slider>
           )}
         </div>
       </div>
