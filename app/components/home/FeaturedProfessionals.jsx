@@ -199,7 +199,10 @@ const FeaturedProfessionals = () => {
           {loading ? (
             <LoadingSpinner />
           ) : professionals.length === 0 ? (
-            <div className="text-center py-10">No professionals found.</div>
+            <div className="flex flex-col items-center justify-center py-10">
+              <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+              <p className="text-lg text-gray-700">No Professionals Found</p>
+            </div>
           ) : isMobile ? (
             <Slider {...settings}>
 
