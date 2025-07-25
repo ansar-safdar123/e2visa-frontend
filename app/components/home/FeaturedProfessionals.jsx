@@ -116,31 +116,7 @@ const FeaturedProfessionals = () => {
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: Math.min(3, professionals.length),
-    //       slidesToScroll: 1,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 768,
-    //     settings: {
-    //       slidesToShow: Math.min(2, professionals.length),
-    //       slidesToScroll: 1,
-    //       arrows: true,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 480,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1,
-    //       arrows: true,
-    //     }
-    //   }
-    // ]
+    
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: Math.min(3, professionals.length), slidesToScroll: 1, infinite: false } },
       { breakpoint: 768, settings: { slidesToShow: Math.min(2, professionals.length), slidesToScroll: 1, arrows: true, infinite: false } },
@@ -155,7 +131,7 @@ const FeaturedProfessionals = () => {
           Featured Professionals
         </h1>
 
-        <div className="listing-slider">
+        <div className="listing-slider text-center">
           <style jsx>{`
             :global(.slick-prev),
             :global(.slick-next) {
