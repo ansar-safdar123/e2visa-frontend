@@ -210,13 +210,15 @@ export default function ForumPostPage({ params }) {
           {forum.comment && forum.comment.length > 0 ? (
             forum.comment.map((c) => (
               <div key={c.id} className="flex items-start gap-3">
+               <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
+
                 {c.user && c.user.image && BACKEND_STORAGE_URL ? (
                   <Image
                     src={`${BACKEND_STORAGE_URL}/${c.user.image}`}
                     alt={c.user?.name || "User"}
                     width={32}
                     height={32}
-                    className="rounded-full object-cover"
+                    className="object-cover w-full h-full"
                   />
                 ) : (
                   <span className="inline-block w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
@@ -227,6 +229,9 @@ export default function ForumPostPage({ params }) {
                     </svg>
                   </span>
                 )}
+                </div>
+
+            
                 <div className="flex-1">
                   <div className="font-semibold text-[#0A3161] text-sm">{c.user.name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
                   <div className="text-[#40433F] text-sm">{c.content}</div>
@@ -267,13 +272,15 @@ export default function ForumPostPage({ params }) {
                     <div className="text-sm ml-6 mt-2 space-y-2">
                       {c.replies.map(r => (
                         <div key={r.id} className="flex items-start gap-2">
+                          <div className="w-10 h-10">
+
                           {r.user && r.user.image && BACKEND_STORAGE_URL ? (
                             <Image
                               src={`${BACKEND_STORAGE_URL}/${r.user.image}`}
                               alt={r.user.name}
                               width={28}
                               height={28}
-                              className="rounded-full object-cover"
+                              className="w-full h-full rounded-full object-cover"
                             />
                           ) : (
                             <span className="inline-block w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center">
@@ -284,6 +291,7 @@ export default function ForumPostPage({ params }) {
                               </svg>
                             </span>
                           )}
+                          </div>
                           <div>
                             <div className="font-semibold text-[#0A3161]">{r.user.name} <span className="text-[#9E9E9E]">· {new Date(r.created_at).toLocaleDateString()}</span></div>
                             <div className="text-[#40433F]">{r.content}</div>

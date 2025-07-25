@@ -86,7 +86,7 @@ export default function BlogDetail({ params }) {
         <div className="absolute inset-0 bg-black/50 z-[5]"></div>
         <div className="relative z-[10] container mx-auto px-4 h-full flex flex-col items-center justify-center">
           <h1 className="text-xl sm:text-2xl md:text-5xl max-w-3xl text-center text-white mb-4">{blog.title}</h1>
-          <div className="flex flex-col md:flex-row items-center text-white text-lg">
+          <div className="flex  items-center text-white text-lg">
             <Link href="/" className="hover:text-[#2EC4B6]">Home</Link>
             <span className="mx-2">/</span>
             <Link href="/articles" className="hover:text-[#2EC4B6]">Articles</Link>

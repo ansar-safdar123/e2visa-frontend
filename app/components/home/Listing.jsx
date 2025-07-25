@@ -118,12 +118,7 @@ export default function ListingsTabs() {
               width: 30px;
               height: 30px;
             }
-            :global(.slick-prev) {
-              left: -22px;
-            }
-            :global(.slick-next) {
-              right: -22px;
-            }
+          
             :global(.slick-prev:before),
             :global(.slick-next:before) {
               display: none !important;
@@ -141,10 +136,10 @@ export default function ListingsTabs() {
               box-shadow: 0 4px 16px rgba(0,0,0,0.18);
             }
             :global(.custom-slick-next) {
-              right: -22px !important;
+              right: -15px !important;
             }
             :global(.custom-slick-prev) {
-              left: -22px !important;
+              left: -15px !important;
             }
             @media (max-width: 640px) {
               :global(.slick-prev) {
@@ -260,7 +255,7 @@ export default function ListingsTabs() {
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative listing-card-border !rounded-xl pt-[14px] pb-[19px] px-[18px] cursor-pointer">
                       {listing.is_featured === "Yes" && (
-                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                        <div className="absolute top-7 right-0 rounded-l-full bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 ">
                           Featured
                         </div>
                       )}

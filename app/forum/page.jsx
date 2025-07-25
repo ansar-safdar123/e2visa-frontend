@@ -272,7 +272,7 @@ export default function Forum() {
         )}
 
         {!loading && !error && paginatedForums.map((forum) => (
-          <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-20">
+          <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
             <div className="bg-white rounded-lg border border-black p-6 mb-6">
               <div className="flex items-center mb-2">
                 <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">

@@ -164,7 +164,7 @@ export default function Contact() {
           <div className="p-8 flex flex-col items-center justify-center">
             <div className="w-full max-w-[540px]">
                 
-            <h2 className="text-3xl font-semibold mb-8">Get in Touch</h2>
+            <h2 className="text-3xl font-semibold mb-8 ml-[26px]">Get in Touch</h2>
             <ContactForm />
             </div>
           </div>

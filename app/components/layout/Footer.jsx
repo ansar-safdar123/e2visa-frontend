@@ -116,9 +116,9 @@ const Footer = () => {
                       placeholder="Enter your email to get started"
                       className={`rounded-lg  px-6 py-4 pl-12 bg-[#FFFFFF] font-medium text-[#64748B] outline-none text-sm w-[304px] ${subscribeError ? 'border-red-500' : ''}`}
                     />
-                    {subscribeError && (
+                    {/* {subscribeError && (
                       <div className="text-red-500 text-xs absolute left-0 w-full mt-1 pl-2 text-left z-20">{subscribeError}</div>
-                    )}
+                    )} */}
                     </div>
 
                     <button type="submit" className="bg-[#2EC4B6] text-left rounded-lg pl-5 cursor-pointer relative text-white py-4 w-full sm:w-[196px] font-bold text-base "
@@ -148,7 +148,7 @@ const Footer = () => {
           <div className="flex flex-wrap  gap-8">
             {/* Contact Section */}
             <div className="space-y-4 flex-1 min-w-[250px] max-w-[300px]">
-              <h1 className="font-normal text-[24px] xl:text-[40px]">Contact us today</h1>
+              <h1 className="font-normal text-[24px] xl:text-[40px]">Contact us Today</h1>
               <p className="font-medium xl:text-base text-sm">
                 Contact us today to schedule a consultation and discover how we
                 can help your business thrive.

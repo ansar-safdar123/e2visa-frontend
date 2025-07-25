@@ -434,11 +434,16 @@ function BuyBusiness() {
             paginatedFeaturedListings.map((listing) => (
               <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
                 <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                  {listing.verified && (
+                  {/* {listing.verified && (
                     <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
                       Verified
                     </div>
-                  )}
+                  )} */}
+                   {(listing.is_featured === true || listing.is_featured === "Yes") && (
+                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
+                          Featured
+                        </div>
+                      )}
                   <div className="relative w-full h-[197px]">
                     <Image
                       fill

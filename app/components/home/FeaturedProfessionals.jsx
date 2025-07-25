@@ -141,10 +141,10 @@ const FeaturedProfessionals = () => {
               z-index: 10 !important;
             }
             :global(.slick-prev) {
-              left: -22px;
+              left: -15px;
             }
             :global(.slick-next) {
-              right: -22px;
+              right: -15px;
             }
             :global(.slick-prev:before),
             :global(.slick-next:before) {
@@ -163,10 +163,10 @@ const FeaturedProfessionals = () => {
               box-shadow: 0 4px 16px rgba(0,0,0,0.18);
             }
             :global(.custom-slick-next) {
-              right: -30px !important;
+              right: 15px !important;
             }
             :global(.custom-slick-prev) {
-              left: -30px !important;
+              left: 15px !important;
             }
             @media (max-width: 640px) {
               :global(.slick-prev) {
@@ -225,6 +225,12 @@ const FeaturedProfessionals = () => {
                     onClick={() => handleProfessionalClick(pro.id)}
                   >
                     <div className="w-full h-[376px] relative">
+                      {/* Featured label */}
+                      {(pro.is_featured === true || pro.is_featured === "Yes") && (
+                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1  shadow-md z-10">
+                          Featured
+                        </div>
+                      )}
                       <img
                         src={imageUrl}
                         alt={pro.name}
@@ -264,6 +270,12 @@ const FeaturedProfessionals = () => {
                     onClick={() => handleProfessionalClick(pro.id)}
                   >
                     <div className="w-full h-[376px] relative">
+                      {/* Featured label */}
+                      {(pro.is_featured === true || pro.is_featured === "Yes") && (
+                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
+                          Featured
+                        </div>
+                      )}
                       <img
                         src={imageUrl}
                         alt={pro.name}
@@ -303,6 +315,12 @@ const FeaturedProfessionals = () => {
                     onClick={() => handleProfessionalClick(pro.id)}
                   >
                     <div className="w-full h-[376px] relative">
+                      {/* Featured label */}
+                      {(pro.is_featured === true || pro.is_featured === "Yes") && (
+                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
+                          Featured
+                        </div>
+                      )}
                       <img
                         src={imageUrl}
                         alt={pro.name}

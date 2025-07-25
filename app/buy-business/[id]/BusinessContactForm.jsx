@@ -77,7 +77,7 @@ const BusinessContactForm = ({ business }) => {
 
   return (
     <div className="bg-[#A4B5D53D] p-4 sm:p-8 rounded-lg">
-      <h2 className="text-2xl font-semibold text-[#40433F] mb-6">Contact Form</h2>
+      <h2 className="text-2xl font-semibold mb-6">Contact Form</h2>
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="relative">
           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -196,15 +196,15 @@ const BusinessContactForm = ({ business }) => {
         </button>
 
        <div>
-       <p className="text-xs text-[#9E9E9E] text-center">
+       <p className="text-xs  text-center">
           By clicking the button, you agree to E2Visa's{' '} 
         </p>
         <div className="flex text-xs justify-center items-center gap-2 !pt-1">
-        <a href="/terms" className="text-black underline">
+        <a href="/terms" className=" underline">
             Terms of Use
           </a>{' '}
           and{' '}
-          <a href="/privacy" className="text-black underline">
+          <a href="/privacy" className=" underline">
             Privacy Notice
           </a>
         </div>
