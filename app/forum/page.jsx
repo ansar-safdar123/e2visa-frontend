@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { toast } from 'react-toastify';
 
@@ -30,7 +30,12 @@ export default function Forum() {
   const paginatedForums = forums.slice((currentPage - 1) * forumsPerPage, currentPage * forumsPerPage);
   const [token, setToken] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [errorSearch, setErrorSearch] = useState(null);
   const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
+  const searchTimeout = useRef(null);
+
   useEffect(() => {
     setToken(getToken());
   }, []);
@@ -38,6 +43,39 @@ export default function Forum() {
   useEffect(() => {
     fetchForums();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setSearchResults([]);
+      setErrorSearch(null);
+      setLoadingSearch(false);
+      return;
+    }
+    setLoadingSearch(true);
+    setErrorSearch(null);
+
+    if (searchTimeout.current) clearTimeout(searchTimeout.current);
+
+    searchTimeout.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forum/search-forums?query=${encodeURIComponent(searchQuery)}`);
+        const data = await res.json();
+        if (res.ok && data.result) {
+          setSearchResults(data.result);
+        } else {
+          setSearchResults([]);
+          setErrorSearch("No results found.");
+        }
+      } catch (err) {
+        setErrorSearch("Something went wrong.");
+        setSearchResults([]);
+      } finally {
+        setLoadingSearch(false);
+      }
+    }, 400); // 400ms debounce
+
+    return () => clearTimeout(searchTimeout.current);
+  }, [searchQuery]);
 
   const fetchForums = async () => {
     setLoading(true);
@@ -61,26 +99,22 @@ export default function Forum() {
   };
 
   const handleSearch = async () => {
-    setLoading(true);
-    setError(null);
+    setLoadingSearch(true);
+    setErrorSearch(null);
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/forum/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: searchQuery }),
-      });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/forum/search-forums?query=${encodeURIComponent(searchQuery)}`);
       const data = await res.json();
       if (res.ok && data.result) {
-        setForums(data.result);
-        setCurrentPage(1); // Reset to first page on new search
-        setTotalPages(Math.ceil(data.result.length / forumsPerPage));
+        setSearchResults(data.result);
       } else {
-        setError(data.message || 'Failed to search forums.');
+        setSearchResults([]);
+        setErrorSearch("No results found.");
       }
     } catch (err) {
-      setError('Failed to search forums.');
+      setErrorSearch("Something went wrong.");
+      setSearchResults([]);
     } finally {
-      setLoading(false);
+      setLoadingSearch(false);
     }
   };
 
@@ -181,6 +215,19 @@ export default function Forum() {
             </div>
           </div>
         )}
+        {loadingSearch && <LoadingSpinner />}
+        {errorSearch && <div className="text-red-500">{errorSearch}</div>}
+        {/* {searchResults.length > 0 && (
+          <div className="mt-6">
+            {searchResults.map((forum) => (
+              <div key={forum.id} className="p-4 border-b">
+                <h3 className="font-bold">{forum.title}</h3>
+                <p>{forum.description}</p>
+                
+              </div>
+            ))}
+          </div>
+        )} */}
         {token && (
           <>
             {/* Title Input */}
@@ -271,43 +318,95 @@ export default function Forum() {
           </div>
         )}
 
-        {!loading && !error && paginatedForums.map((forum) => (
-          <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
-            <div className="bg-white rounded-lg border border-black p-6 mb-6">
-              <div className="flex items-center mb-2">
-                <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
-                  {forum.created_by.image && BACKEND_STORAGE_URL ? (
-                    <Image
-                      src={`${BACKEND_STORAGE_URL}/${forum.created_by.image}`}
-                      alt={forum.created_by.name}
-                      width={40}
-                      height={40}
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <span className="flex items-center justify-center w-full h-full">
-                      <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
-                        <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
-                        <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
-                      </svg>
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
-                  <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
-                </div>
+        {searchQuery.trim() ? (
+          <>
+            {loadingSearch && <LoadingSpinner />}
+            {errorSearch && <div className="text-red-500">{errorSearch}</div>}
+            {!loadingSearch && !errorSearch && searchResults.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-10">
+                <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
+                <p className="text-lg text-gray-700">No Record Found</p>
               </div>
-              <div className="text-[#40433F] text-sm lg:text-lg font-medium mb-2">{forum.title}</div>
-              <div className="text-[#40433F] text-xs lg:text-sm mb-2">{forum.content}</div>
-              <div className="flex cursor-pointer items-center gap-2 mt-3 text-white rounded-md w-fit py-1 px-2 bg-[#40433F80] text-xs">
-                <Image src="/images/forums/chat.png" alt='' width={20} height={20} className="object-cover " />
-                <span>{forum.comment_count}</span>
-              </div>
-            </div>
-          </Link>
-        ))}
+            )}
+            {!loadingSearch && !errorSearch && searchResults.map((forum) => (
+              <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
+                <div className="bg-white rounded-lg border border-black p-6 mb-6">
+                  <div className="flex items-center mb-2">
+                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
+                      {forum.created_by.image && BACKEND_STORAGE_URL ? (
+                        <Image
+                          src={`${BACKEND_STORAGE_URL}/${forum.created_by.image}`}
+                          alt={forum.created_by.name}
+                          width={40}
+                          height={40}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <span className="flex items-center justify-center w-full h-full">
+                          <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
+                            <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
+                            <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
+                          </svg>
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
+                      <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                  <div className="text-[#40433F] text-sm lg:text-lg font-medium mb-2">{forum.title}</div>
+                  <div className="text-[#40433F] text-xs lg:text-sm mb-2">{forum.content}</div>
+                  <div className="flex cursor-pointer items-center gap-2 mt-3 text-white rounded-md w-fit py-1 px-2 bg-[#40433F80] text-xs">
+                    <Image src="/images/forums/chat.png" alt='' width={20} height={20} className="object-cover " />
+                    <span>{forum.comment_count}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </>
+        ) : (
+          <>
+            {!loading && !error && paginatedForums.map((forum) => (
+              <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
+                <div className="bg-white rounded-lg border border-black p-6 mb-6">
+                  <div className="flex items-center mb-2">
+                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
+                      {forum.created_by.image && BACKEND_STORAGE_URL ? (
+                        <Image
+                          src={`${BACKEND_STORAGE_URL}/${forum.created_by.image}`}
+                          alt={forum.created_by.name}
+                          width={40}
+                          height={40}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <span className="flex items-center justify-center w-full h-full">
+                          <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
+                            <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
+                            <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
+                          </svg>
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
+                      <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                  <div className="text-[#40433F] text-sm lg:text-lg font-medium mb-2">{forum.title}</div>
+                  <div className="text-[#40433F] text-xs lg:text-sm mb-2">{forum.content}</div>
+                  <div className="flex cursor-pointer items-center gap-2 mt-3 text-white rounded-md w-fit py-1 px-2 bg-[#40433F80] text-xs">
+                    <Image src="/images/forums/chat.png" alt='' width={20} height={20} className="object-cover " />
+                    <span>{forum.comment_count}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </>
+        )}
         {/* Pagination Controls */}
         {!loading && !error && totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-6">

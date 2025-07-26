@@ -432,6 +432,8 @@ function BuyBusiness() {
             <LoadingSpinner />
           ) : featuredListings.length > 0 ? (
             paginatedFeaturedListings.map((listing) => (
+              <Link key={listing.id} href={`/buy-business/${listing.id}`}>
+
               <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
                 <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                   {/* {listing.verified && (
@@ -473,6 +475,7 @@ function BuyBusiness() {
                   </div>
                 </div>
               </div>
+              </Link>
             ))
           ) : (
             <div className="flex flex-col items-center justify-center py-10">

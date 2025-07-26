@@ -420,6 +420,8 @@ function RealEstate() {
                 </div>
               ) : (
                 paginatedFeatured.map((listing) => (
+              <Link key={listing.id} href={`/buy-business/${listing.id}`}>
+
                   <div key={listing.id} className="bg-[#1B263B1A] w-full max-w-[350px]">
                     <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                       {/* {listing.verified && (
@@ -461,6 +463,7 @@ function RealEstate() {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 ))
               )}
             </div>

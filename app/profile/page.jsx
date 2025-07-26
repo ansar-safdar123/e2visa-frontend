@@ -51,7 +51,7 @@ const ProfilePage = () => {
       </div>
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
-        <div className="w-full lg:w-1/4 border border-[#40433F] mb-6 lg:mb-0">
+        <div className="w-full lg:w-1/4 border border-[#40433F] mb-6 rounded-lg lg:mb-0">
           <ProfileSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
         <div className="w-full lg:w-3/4">

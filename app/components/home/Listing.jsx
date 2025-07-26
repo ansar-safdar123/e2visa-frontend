@@ -262,7 +262,11 @@ export default function ListingsTabs() {
                       <div className="relative w-full h-[197px]">
                         <Image
                           fill
-                          src={"/images/listing/img1.png"} // Replace with dynamic image if available
+                          src={
+                            listing.business_images && listing.business_images.length > 0
+                              ? `${process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
+                              : "/images/listing/img1.png"
+                          }
                           alt={listing.business_name}
                           className="w-full h-full object-cover"
                         />
@@ -271,7 +275,7 @@ export default function ListingsTabs() {
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
                           {listing.business_name.length > 18
                             ? listing.business_name.slice(0, 18) + '...'
-                            : listing.business_name}
+                            : listing.business_name}dddd
                         </h2>
                         <div className="flex items-center justify-between">
                           <p className="text-xs lg:text-sm ">
