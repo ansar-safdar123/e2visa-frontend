@@ -88,8 +88,9 @@ const SignUpOptions = () => {
                 onClick={() => handleUserTypeSelect(type.id, type.name)}
                 className="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 "
               >
-                <div className="w-12 h-12 mb-4">
+                <div className="w-14 h-14 mb-4 rounded-full overflow-hidden flex p-2 items-center justify-center bg-gray-100">
                   <Image
+                    className="rounded-full"
                     src={
                       type.badge && type.badge.icon && BACKEND_STORAGE_URL
                         ? `${BACKEND_STORAGE_URL}/${type.badge.icon}`

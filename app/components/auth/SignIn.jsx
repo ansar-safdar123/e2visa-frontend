@@ -84,7 +84,7 @@ const SignIn = () => {
             <div className="text-red-500 text-center mb-2">{loginError}</div>
           )} */}
           {/* Email Input */}
-          <div className="space-y-8">
+          <div className={`space-y-8 ${errors.email ? 'pb-4' : ''}`}>
            
             <div className="relative">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -95,6 +95,7 @@ const SignIn = () => {
                   height={20}
                 />
               </div>
+
               <input
                 type="email"
                 id="email"
@@ -112,12 +113,12 @@ const SignIn = () => {
                 className="pl-12 w-full pr-4 py-4 rounded-lg border text-[#40433F] font-medium text-xs md:text-sm border-[#1B263B] focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent outline-none"
               />
                 <label htmlFor="email" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Email</label>
-                {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
+                {errors.email && <div className="text-red-500 absolute text-xs mt-1">{errors.email}</div>}
             </div>
           </div>
 
           {/* Password Input */}
-          <div className="space-y-8">
+          <div className={`space-y-8 `}>
             
             <div className="relative">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -146,7 +147,7 @@ const SignIn = () => {
 
               />
                 <label htmlFor="password" className="absolute text-sm text-[#1E1E1E] left-12 bg-[#F3F7F9] px-1 -top-2 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">Password</label>
-                {errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
+                {errors.password && <div className="absolute -bottom-5 text-red-500 text-xs mt-1">{errors.password}</div>}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}

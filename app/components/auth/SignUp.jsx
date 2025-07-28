@@ -302,7 +302,7 @@ const SignUp = () => {
               <div className="text-green-600 text-center mb-2">{registerSuccess}</div>
             )} */}
             {/* Full Name Input */}
-            <div className="relative">
+            <div className={`relative ${errors.fullName && 'pb-3'}`}>
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <Image
                   src="/images/auth/signin/user.png"
@@ -326,11 +326,11 @@ const SignUp = () => {
               >
                 Full Name <span className="text-red-500">*</span>
               </label>
-              {errors.fullName && <div className="text-red-500 text-xs mt-1">{errors.fullName}</div>}
+              {errors.fullName && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.fullName}</div>}
             </div>
 
             {/* Email Input */}
-            <div className="relative">
+            <div className={`relative ${errors.email && 'pb-3'}`}>
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <Image
                   src="/images/auth/signin/mail.png"
@@ -358,11 +358,11 @@ const SignUp = () => {
               >
                 Email <span className="text-red-500">*</span>
               </label>
-              {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
+              {errors.email && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.email}</div>}
             </div>
 
             {/* Password Input */}
-            <div className="relative">
+            <div className={`relative ${errors.password && 'pb-3'}`}>
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <Image
                   src="/images/auth/signin/lock.png"
@@ -398,11 +398,11 @@ const SignUp = () => {
                   height={20}
                 />
               </button>
-              {errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
+              {errors.password && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.password}</div>}
             </div>
 
             {/* Confirm Password Input */}
-            <div className="relative">
+            <div className={`relative ${errors.confirmPassword && 'pb-3'}`}>
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <Image
                   src="/images/auth/signin/lock.png"
@@ -439,11 +439,11 @@ const SignUp = () => {
                   height={20}
                 />
               </button>
-              {errors.confirmPassword && <div className="text-red-500 text-xs mt-1">{errors.confirmPassword}</div>}
+              {errors.confirmPassword && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.confirmPassword}</div>}
             </div>
 
             {/* Phone Input */}
-            <div className="relative">
+            <div className={`relative ${(errors.phone || errors.phone_number )&& 'pb-3'}`}>
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <Image
                   src="/images/auth/signin/phone.png"
@@ -467,13 +467,13 @@ const SignUp = () => {
               >
                 Phone no <span className="text-red-500">*</span>
               </label>
-              {errors.phone && <div className="text-red-500 text-xs mt-1">{errors.phone}</div>}
-              {errors.phone_number && <div className="text-red-500 text-xs mt-1">{errors.phone_number}</div>}
+              {errors.phone && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.phone}</div>}
+              {errors.phone_number && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.phone_number}</div>}
             </div>
 
             {/* Broker License Input - Only shown for broker user type */}
             {formData.userType === 'Broker' && (
-              <div className="relative">
+             <div className={`relative ${errors.brokerLicense && 'pb-3'}`}>
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                   <Image
                     src="/images/auth/signin/lock.png"
@@ -497,13 +497,13 @@ const SignUp = () => {
                 >
                   Broker License <span className="text-red-500">*</span>
                 </label>
-                {errors.brokerLicense && <div className="text-red-500 text-xs mt-1">{errors.brokerLicense}</div>}
+                {errors.brokerLicense && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.brokerLicense}</div>}
               </div>
             )}
 
             {/* Attorney License Input - Only shown for attorney user type */}
             {formData.userType === 'Attorney' && (
-              <div className="relative">
+            <div className={`relative ${errors.attorneyLicense && 'pb-3'}`}>
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                   <Image
                     src="/images/auth/signin/lock.png"
@@ -527,7 +527,7 @@ const SignUp = () => {
                 >
                   Attorney License <span className="text-red-500">*</span>
                 </label>
-                {errors.attorneyLicense && <div className="text-red-500 text-xs mt-1">{errors.attorneyLicense}</div>}
+                {errors.attorneyLicense && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.attorneyLicense}</div>}
               </div>
             )}
 
@@ -591,7 +591,7 @@ const SignUp = () => {
             </div>
 
             {/* City Input */}
-            <div className="relative">
+            <div className={`relative ${errors.city && 'pb-3'}`}>
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <Image
                   src="/images/auth/signin/location.png"
@@ -615,12 +615,12 @@ const SignUp = () => {
               >
                 City <span className="text-red-500">*</span>
               </label>
-              {errors.city && <div className="text-red-500 text-xs mt-1">{errors.city}</div>}
+              {errors.city && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.city}</div>}
             </div>
 
             {/* Country and City Selection */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
+            <div className={`relative ${errors.country && 'pb-3'}`}>
                 <select
                   id="country"
                   name="country"
@@ -641,9 +641,9 @@ const SignUp = () => {
                 >
                   Country <span className="text-red-500">*</span>
                 </label>
-                {errors.country && <div className="text-red-500 text-xs mt-1">{errors.country}</div>}
+                {errors.country && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.country}</div>}
               </div>
-              <div className="relative">
+              <div className={`relative ${errors.state && 'pb-3'}`}>
                 <select
                   id="state"
                   name="state"
@@ -664,14 +664,14 @@ const SignUp = () => {
                 >
                   State <span className="text-red-500">*</span>
                 </label>
-                {errors.state && <div className="text-red-500 text-xs mt-1">{errors.state}</div>}
+                {errors.state && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.state}</div>}
               </div>
 
             </div>
 
             {/* State and Zipcode */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
+            <div className={`relative ${errors.county && 'pb-3'}`}>
                 <select
                   id="county"
                   name="county"
@@ -692,9 +692,9 @@ const SignUp = () => {
                 >
                   County <span className="text-red-500">*</span>
                 </label>
-                {errors.county && <div className="text-red-500 text-xs mt-1">{errors.county}</div>}
+                {errors.county && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.county}</div>}
               </div>
-              <div className="relative">
+              <div className={`relative ${errors.zipcode && 'pb-3'}`}>
                 <input
                   type="text"
                   id="zipcode"
@@ -710,14 +710,14 @@ const SignUp = () => {
                 >
                   Zipcode <span className="text-red-500">*</span>
                 </label>
-                {errors.zipcode && <div className="text-red-500 text-xs mt-1">{errors.zipcode}</div>}
+                {errors.zipcode && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.zipcode}</div>}
               </div>
             </div>
 
             {formData.userType === 'Buyer' && (
               <>
                 {/* Broker Selection */}
-                <div className="relative">
+                <div className={`relative ${errors.broker && 'pb-3'}`}>
                   <select
                     id="broker"
                     name="broker"
@@ -735,11 +735,11 @@ const SignUp = () => {
                   >
                     Do you have a Broker? <span className="text-red-500">*</span>
                   </label>
-                  {errors.broker && <div className="text-red-500 text-xs mt-1">{errors.broker}</div>}
+                  {errors.broker && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.broker}</div>}
                 </div>
 
                 {/* Attorney Selection */}
-                <div className="relative">
+                <div className={`relative ${errors.attorney && 'pb-3'}`}>
                   <select
                     id="attorney"
                     name="attorney"
@@ -757,14 +757,14 @@ const SignUp = () => {
                   >
                     Do you have an Attorney? <span className="text-red-500">*</span>
                   </label>
-                  {errors.attorney && <div className="text-red-500 text-xs mt-1">{errors.attorney}</div>}
+                  {errors.attorney && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.attorney}</div>}
                 </div>
               </>
             )}
 
 
             {/* Newsletter Selection */}
-            <div className="relative">
+            <div className={`relative ${errors.newsletter && 'pb-3'}`}>
               <select
                 id="newsletter"
                 name="newsletter"
@@ -782,7 +782,7 @@ const SignUp = () => {
               >
                 Register for newsletters? <span className="text-red-500">*</span>
               </label>
-              {errors.newsletter && <div className="text-red-500 text-xs mt-1">{errors.newsletter}</div>}
+              {errors.newsletter && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.newsletter}</div>}
             </div>
 
             {/* Create Account Button */}
