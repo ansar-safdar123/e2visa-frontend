@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,9 @@ const ForgotPassword = () => {
       if (res.ok && data.message) {
         toast.success(data.message, { position: 'top-right' });
         setSuccessMessage(data.message);
+        setTimeout(()=>{
+          setSuccessMessage('');
+        }, 5000);
         setEmail('');
       } else {
         toast.error(data.message || 'Failed to send reset email.', { position: 'top-right' });
@@ -82,10 +86,10 @@ const ForgotPassword = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#0A3161] !mt-20 text-white py-4 2xl:py-5 rounded-lg hover:bg-[#102742] transition-colors font-semibold text-2xl flex items-center justify-center"
+            className="w-full bg-[#0A3161] !mt-20 text-white py-4 2xl:py-5 rounded-lg hover:bg-[#102742] transition-colors font-semibold flex items-center justify-center"
             disabled={loading}
           >
-            {loading ? <LoadingSpinner size={28} color="#fff" /> : 'Reset Password'}
+            {loading ? 'Please wait...' : 'Reset Password'}
           </button>
 
           {/* Back to Login Link */}
