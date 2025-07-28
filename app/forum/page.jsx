@@ -246,7 +246,7 @@ export default function Forum() {
                 id="title-input"
                 type="text"
                 placeholder="Enter forum title..."
-                className="pl-10 pr-4 pt-6 pb-2 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[40px] bg-transparent"
+                className="pl-10 pr-4 pt-6 pb-2 w-full border-none bg-white rounded-md focus:outline-none focus:ring-0 text-sm min-h-[40px] bg-transparent"
                 value={title}
                 onChange={e => {
                   setTitle(e.target.value);
@@ -270,7 +270,7 @@ export default function Forum() {
               <textarea
                 id="question-input"
                 placeholder="Write your question...."
-                className="pl-10 pr-36 pt-8 pb-8 w-full border-none rounded-md focus:outline-none focus:ring-0 text-sm min-h-[90px] resize-none bg-transparent"
+                className="pl-10 pr-36 pt-8 pb-8 w-full border-none rounded-md bg-white focus:outline-none focus:ring-0 text-sm min-h-[90px] resize-none bg-transparent"
                 style={{ minHeight: '90px' }}
                 value={content}
                 onChange={e => {
@@ -328,6 +328,8 @@ export default function Forum() {
                 <p className="text-lg text-gray-700">No Record Found</p>
               </div>
             )}
+          <div class="pt-2">
+
             {!loadingSearch && !errorSearch && searchResults.map((forum) => (
               <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
                 <div className="bg-white rounded-lg border border-black p-6 mb-6">
@@ -365,11 +367,13 @@ export default function Forum() {
                 </div>
               </Link>
             ))}
+          </div>
+
           </>
         ) : (
-          <>
+          <div class="pt-5">
             {!loading && !error && paginatedForums.map((forum) => (
-              <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
+              <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-4">
                 <div className="bg-white rounded-lg border border-black p-6 mb-6">
                   <div className="flex items-center mb-2">
                     <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
@@ -405,7 +409,7 @@ export default function Forum() {
                 </div>
               </Link>
             ))}
-          </>
+          </div>
         )}
         {/* Pagination Controls */}
         {!loading && !error && totalPages > 1 && (

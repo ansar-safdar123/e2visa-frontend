@@ -467,8 +467,8 @@ const SignUp = () => {
               >
                 Phone no <span className="text-red-500">*</span>
               </label>
-              {errors.phone && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.phone}</div>}
-              {errors.phone_number && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.phone_number}</div>}
+              {errors.phone && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.phone}eee</div>}
+              {errors.phone_number && <div className="text-red-500 text-xs mt-1 absolute -bottom-2">{errors.phone_number}eeee</div>}
             </div>
 
             {/* Broker License Input - Only shown for broker user type */}

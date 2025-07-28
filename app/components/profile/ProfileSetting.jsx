@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 const ProfileSetting = () => {
   const { user } = useAuth();
+  console.log("user from profile",user)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -16,11 +17,27 @@ const ProfileSetting = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (user) {
+    let localUser = null;
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('userData');
+      if (stored) {
+        try {
+          localUser = JSON.parse(stored);
+        } catch {}
+      }
+    }
+    if (localUser) {
+      setFormData({
+        fullName: localUser.name || '',
+        email: localUser.email || '',
+        phone: localUser.phone || localUser.user_information?.phone_number || '',
+        about: localUser.about || ''
+      });
+    } else if (user) {
       setFormData({
         fullName: user.name || '',
         email: user.email || '',
-        phone: user.phone || '',
+        phone: user.phone || user.user_information?.phone_number || '',
         about: user.about || ''
       });
     }
@@ -57,8 +74,21 @@ const ProfileSetting = () => {
         body: form,
       });
       const data = await res.json();
-      if (res.ok && data.message) {
+      if (res.ok && data.result && data.result.user) {
+        // Save user data to localStorage
+        localStorage.setItem('userData', JSON.stringify({
+          ...data.result.user,
+          phone: data.result.user.user_information?.phone_number || '',
+          about: data.result.user.about || ''
+        }));
         toast.success(data.message, { position: 'top-right' });
+        // Optionally, update the form with the new data
+        setFormData({
+          fullName: data.result.user.name || '',
+          email: data.result.user.email || '',
+          phone: data.result.user.user_information?.phone_number || '',
+          about: data.result.user.about || ''
+        });
       } else {
         toast.error(data.message || 'Failed to update profile.', { position: 'top-right' });
       }

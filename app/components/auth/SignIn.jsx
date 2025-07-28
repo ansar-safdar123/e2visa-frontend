@@ -55,6 +55,7 @@ const SignIn = () => {
         const userData = {
           email: email,
         };
+        localStorage.setItem('userData', JSON.stringify(data.result));
         login(userData,data.result.token);
         toast.success(data.message, { position: 'top-right' });
         router.push('/');

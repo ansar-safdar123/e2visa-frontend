@@ -412,14 +412,16 @@ function RealEstate() {
           <LoadingSpinner />
         ) : (
           <>
-            <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-16">
-              {paginatedFeatured.length === 0 ? (
+        {/* */}
+           
+              { paginatedFeatured.length === 0  ? (
                 <div className="flex flex-col items-center justify-center py-10">
                   <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
                   <p className="text-lg text-gray-700">No Featured Found</p>
                 </div>
               ) : (
                 paginatedFeatured.map((listing) => (
+                  <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-16">
               <Link key={listing.id} href={`/buy-business/${listing.id}`}>
 
                   <div key={listing.id} className="bg-[#1B263B1A] w-full max-w-[350px]">
@@ -464,9 +466,11 @@ function RealEstate() {
                     </div>
                   </div>
                   </Link>
-                ))
-              )}
             </div>
+                )
+                )
+              )
+              }
             {/* Pagination Controls for Featured Listings */}
             {featuredTotalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mb-8">

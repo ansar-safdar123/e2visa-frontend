@@ -210,7 +210,7 @@ export default function ForumPostPage({ params }) {
           {forum.comment && forum.comment.length > 0 ? (
             forum.comment.map((c) => (
               <div key={c.id} className="flex items-start gap-3">
-               <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
+               <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border flex justify-center items-center border-gray-200">
 
                 {c.user && c.user.image && BACKEND_STORAGE_URL ? (
                   <Image
@@ -271,7 +271,7 @@ export default function ForumPostPage({ params }) {
                   {c.replies && c.replies.length > 0 && (
                     <div className="text-sm ml-6 mt-2 space-y-2">
                       {c.replies.map(r => (
-                        <div key={r.id} className="flex items-start gap-2">
+                        <div key={r.id} className="flex items-start w-full gap-2">
                           <div className="w-10 h-10">
 
                           {r.user && r.user.image && BACKEND_STORAGE_URL ? (
@@ -292,9 +292,9 @@ export default function ForumPostPage({ params }) {
                             </span>
                           )}
                           </div>
-                          <div>
-                            <div className="font-semibold text-[#0A3161]">{r.user.name} <span className="text-[#9E9E9E]">· {new Date(r.created_at).toLocaleDateString()}</span></div>
-                            <div className="text-[#40433F]">{r.content}</div>
+                          <div>  <div className="font-semibold text-[#0A3161]">{r.user.name} <span className="text-[#9E9E9E]">· {new Date(r.created_at).toLocaleDateString()}</span></div>
+                            <div className="text-[#40433F]" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{r.content}</div>
+                          
                           </div>
                         </div>
                       ))}
