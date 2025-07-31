@@ -110,11 +110,11 @@ export default function ContactForm() {
           Full Name <span className="text-red-500">*</span>
         </label>
         {errors.fullName && (
-          <p className="text-red-500 text-xs mt-1 ml-2">{errors.fullName}</p>
+          <p className="text-red-500 text-xs absolute -bottom-5 mt-1 ml-2">{errors.fullName}</p>
         )}
       </div>
       {/* Email Input */}
-      <div className="relative">
+      <div className={`relative ${errors.fullName && '!mt-10'}`}>
         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
           <Image
             src="/images/auth/signin/mail.png"
@@ -140,11 +140,11 @@ export default function ContactForm() {
           Email <span className="text-red-500">*</span>
         </label>
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1 ml-2">{errors.email}</p>
+          <p className="text-red-500 text-xs absolute -bottom-5 mt-1 ml-2">{errors.email}</p>
         )}
       </div>
       {/* Subject Input */}
-      <div className="relative">
+      <div className={`relative ${errors.email && '!mt-10'}`}>
         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
           <Image
             src="/images/auth/signin/mail.png"
@@ -171,11 +171,11 @@ export default function ContactForm() {
           Subject <span className="text-red-500">*</span>
         </label>
         {errors.subject && (
-          <p className="text-red-500 text-xs mt-1 ml-2">{errors.subject}</p>
+          <p className="text-red-500 text-xs absolute -bottom-5 mt-1 ml-2">{errors.subject}</p>
         )}
       </div>
       {/* Message Input */}
-      <div className="relative">
+      <div className={`relative ${errors.subject && '!mt-10'}`}>
         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
           <Image
             src="/images/auth/signin/mail.png"
@@ -200,7 +200,7 @@ export default function ContactForm() {
           Message <span className="text-red-500">*</span>
         </label>
         {errors.message && (
-          <p className="text-red-500 text-xs mt-1 ml-2">{errors.message}</p>
+          <p className="text-red-500 text-xs absolute -bottom-4 ml-2">{errors.message}</p>
         )}
       </div>
       <button

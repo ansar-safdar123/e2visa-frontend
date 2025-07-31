@@ -306,7 +306,7 @@ const FeaturedProfessionals = () => {
                 if (imagePath && !imagePath.startsWith('/images/')) {
                   imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
                 } else {
-                  imageUrl = imagePath || "/images/FeaturedProfessionls/img1.png";
+                  imageUrl = imagePath || "/images/professionals/image.png";
                 }
                 return (
                   <div
@@ -314,7 +314,7 @@ const FeaturedProfessionals = () => {
                     className='professional-card w-full bg-white transition-all cursor-pointer hover:shadow-lg'
                     onClick={() => handleProfessionalClick(pro.id)}
                   >
-                    <div className="w-full h-[376px] border-[#40433F] rounded-xl relative">
+                    <div className="w-full h-[376px] border border-[#40433F] rounded-xl relative">
                       {/* Featured label */}
                       {(pro.is_featured === true || pro.is_featured === "Yes") && (
                         <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">

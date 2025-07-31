@@ -154,7 +154,7 @@ export default function ForumPostPage({ params }) {
               />
             ) : (
               <span className="flex items-center justify-center w-full h-full">
-                <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="10" cy="10" r="10" fill="#CBD5E1"/>
                   <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B"/>
                   <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B"/>
@@ -210,7 +210,7 @@ export default function ForumPostPage({ params }) {
           {forum.comment && forum.comment.length > 0 ? (
             forum.comment.map((c) => (
               <div key={c.id} className="flex items-start gap-3">
-               <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border flex justify-center items-center border-gray-200">
+               <div className="w-10 h-10 rounded-full overflow-hidden border flex justify-center items-center border-gray-200">
 
                 {c.user && c.user.image && BACKEND_STORAGE_URL ? (
                   <Image
@@ -218,11 +218,11 @@ export default function ForumPostPage({ params }) {
                     alt={c.user?.name || "User"}
                     width={32}
                     height={32}
-                    className="object-cover w-full h-full"
+                    className="object-cover rounded-full w-full h-full"
                   />
                 ) : (
-                  <span className="inline-block w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <span className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                    <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="10" cy="10" r="10" fill="#CBD5E1"/>
                       <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B"/>
                       <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B"/>
@@ -234,7 +234,10 @@ export default function ForumPostPage({ params }) {
             
                 <div className="flex-1">
                   <div className="font-semibold text-[#0A3161] text-sm">{c.user.name} <span className="text-[#9E9E9E]">· {new Date(c.created_at).toLocaleDateString()}</span></div>
-                  <div className="text-[#40433F] text-sm">{c.content}</div>
+                  {/* <div className="text-[#40433F] text-sm"> */}
+                  <div className="text-[#40433F]" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                    {c.content}
+                    </div>
                   {token && (
                     <button className="text-[#2EC4B6] text-xs mt-1" onClick={() => setReplyingTo(c.id)}>Reply</button>
                   )}
@@ -269,10 +272,10 @@ export default function ForumPostPage({ params }) {
                     </div>
                   )}
                   {c.replies && c.replies.length > 0 && (
-                    <div className="text-sm ml-6 mt-2 space-y-2">
+                    <div className="text-sm ml-6 mt-2 space-y-4">
                       {c.replies.map(r => (
-                        <div key={r.id} className="flex items-start w-full gap-2">
-                          <div className="w-10 h-10">
+                        <div key={r.id} className="flex items-start w-full gap-3">
+                          <div className="min-w-10 !h-10 rounded-full flex items-center justify-center">
 
                           {r.user && r.user.image && BACKEND_STORAGE_URL ? (
                             <Image
@@ -283,8 +286,8 @@ export default function ForumPostPage({ params }) {
                               className="w-full h-full rounded-full object-cover"
                             />
                           ) : (
-                            <span className="inline-block w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center">
-                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <span className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                              <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="10" cy="10" r="10" fill="#CBD5E1"/>
                                 <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B"/>
                                 <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B"/>

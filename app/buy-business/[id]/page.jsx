@@ -103,8 +103,8 @@ const BusinessDetail = ({ params }) => {
   };
 
   if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-2xl text-gray-600"><LoadingSpinner /></div>
-    </div>;
+    <div className="text-2xl text-gray-600"><LoadingSpinner /></div>
+  </div>;
   if (!business) return <div>No business found.</div>;
 
   return (
@@ -144,7 +144,7 @@ const BusinessDetail = ({ params }) => {
               <h1 className="text-2xl xl:text-3xl font-semibold text-[#40433F] mb-2">{business.business_name} - {business.id}</h1>
               <p className="text-gray-600">{business.listing_heading}</p>
             </div>
-            <div className="space-y-1 mb-8">
+            {/* <div className="space-y-1 mb-8">
               <div className="flex text-[#40433F] justify-between text-lg xl:text-2xl items-center">
                 <span>Asking Price</span>
                 <span className="font-semibold">${business.asking_price.toLocaleString()}</span>
@@ -177,7 +177,55 @@ const BusinessDetail = ({ params }) => {
                 <span>Established</span>
                 <span>{business.established}</span>
               </div>
+            </div> */}
+            <div className="space-y-1 mb-8">
+              <div className="flex text-[#40433F] justify-between text-lg xl:text-2xl items-center">
+                <span>Asking Price</span>
+                <span className="font-semibold">
+                  {business.asking_price != null ? `$${business.asking_price.toLocaleString()}` : 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Gross Revenue</span>
+                <span>{business.gross_revenue != null ? `$${business.gross_revenue.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>EBITDA</span>
+                <span>{business.ebitda != null ? `$${business.ebitda.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>FF&E:</span>
+                <span>{business.ffe != null ? `$${business.ffe.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex justify-between text-[#40433F] text-lg xl:text-2xl items-center">
+                <span>Cash Flow</span>
+                <span>{business.cash_flow != null ? `$${business.cash_flow.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Inventory</span>
+                <span>
+                  {business.inventory?.value != null ? `$${business.inventory.value.toLocaleString()}` : 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Rent</span>
+                <span>
+                  {business.rent != null ? `$${business.rent.toLocaleString()}/per month` : 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Established</span>
+                <span>{business.established || 'N/A'}</span>
+              </div>
             </div>
+
             <div className="mb-8">
               <h2 className="text-xl font-bold text-[#40433F] mb-4">Business Description</h2>
               <p className="text-gray-600 whitespace-pre-line">{business.listing_summary}</p>
@@ -224,7 +272,7 @@ const BusinessDetail = ({ params }) => {
               <h1 className="text-2xl xl:text-3xl font-semibold text-[#40433F] mb-2">{business.business_name} - {business.id}</h1>
               <p className="text-gray-600">{business.listing_heading}</p>
             </div>
-            <div className="space-y-1 mb-8">
+            {/* <div className="space-y-1 mb-8">
               <div className="flex text-[#40433F] justify-between text-lg xl:text-2xl items-center">
                 <span>Asking Price</span>
                 <span className="font-semibold">${business.asking_price.toLocaleString()}</span>
@@ -257,7 +305,57 @@ const BusinessDetail = ({ params }) => {
                 <span>Established</span>
                 <span>{business.established}</span>
               </div>
+            </div> */}
+
+
+            <div className="space-y-1 mb-8">
+              <div className="flex text-[#40433F] justify-between text-lg xl:text-2xl items-center">
+                <span>Asking Price</span>
+                <span className="font-semibold">
+                  {business.asking_price != null ? `$${business.asking_price.toLocaleString()}` : 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Gross Revenue</span>
+                <span>{business.gross_revenue != null ? `$${business.gross_revenue.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>EBITDA</span>
+                <span>{business.ebitda != null ? `$${business.ebitda.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>FF&E:</span>
+                <span>{business.ffe != null ? `$${business.ffe.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex justify-between text-[#40433F] text-lg xl:text-2xl items-center">
+                <span>Cash Flow</span>
+                <span>{business.cash_flow != null ? `$${business.cash_flow.toLocaleString()}` : 'N/A'}</span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Inventory</span>
+                <span>
+                  {business.inventory?.value != null ? `$${business.inventory.value.toLocaleString()}` : 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Rent</span>
+                <span>
+                  {business.rent != null ? `$${business.rent.toLocaleString()}/per month` : 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex text-[#64748B] justify-between items-center">
+                <span>Established</span>
+                <span>{business.established || 'N/A'}</span>
+              </div>
             </div>
+
             <div className="mb-8">
               <h2 className="text-xl font-bold text-[#40433F] mb-4">Business Description</h2>
               <p className="text-gray-600 whitespace-pre-line">{business.listing_summary}</p>

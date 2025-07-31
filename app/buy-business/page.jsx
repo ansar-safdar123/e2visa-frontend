@@ -143,6 +143,14 @@ function BuyBusiness() {
     fetchFeaturedListings();
   }, []);
 
+  const columnCount = Math.min(businesses.length, 4);
+  const gridColsClass = {
+    1: "grid-cols-1",
+    2: "sm:grid-cols-2",
+    3: "lg:grid-cols-3",
+    4: "xl:grid-cols-4",
+  }[columnCount];
+
   const handleSearch = async () => {
     setLoading(true);
     try {
@@ -350,7 +358,9 @@ function BuyBusiness() {
         ) : businesses.length > 0 ? (
           <>
             <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center mt-16 mb-8">Business Listings</h1>
-            <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16">
+            <div className="flex justify-center">
+  <div className={`grid ${gridColsClass} gap-4 mb-16 w-full max-w-screen-xl px-4 justify-items-center`}>
+            {/* <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16"> */}
               {paginatedBusinesses.map((business) => (
                 <Link key={business.id} href={`/buy-business/${business.id}`}>
                   <div className="bg-[#1B263B1A] w-full min-w-[280px] max-w-[350px]">
@@ -389,6 +399,7 @@ function BuyBusiness() {
                   </div>
                 </Link>
               ))}
+            </div>
             </div>
             {/* Pagination Controls */}
             {totalPages > 1 && (

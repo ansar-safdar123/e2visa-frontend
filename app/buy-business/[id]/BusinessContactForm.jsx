@@ -200,11 +200,11 @@ const BusinessContactForm = ({ business }) => {
           By clicking the button, you agree to E2Visa's{' '} 
         </p>
         <div className="flex text-xs justify-center items-center gap-2 !pt-1">
-        <a href="/terms" className=" underline">
+        <a href="/terms-conditions" className=" underline">
             Terms of Use
           </a>{' '}
           and{' '}
-          <a href="/privacy" className=" underline">
+          <a href="/privacy-policy" className=" underline">
             Privacy Notice
           </a>
         </div>
