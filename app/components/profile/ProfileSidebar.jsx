@@ -42,21 +42,21 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-  
+
     // Preview locally
     const reader = new FileReader();
     reader.onloadend = () => {
       setNewImage(reader.result); // Just for preview if needed
     };
     reader.readAsDataURL(file);
-  
+
     // Prepare image upload
     const formData = new FormData();
     formData.append('image', file);
-  
+
     try {
       const token = JSON.parse(localStorage.getItem('userDetail'))?.token;
-  
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/update-profile-image-update`, {
         method: 'POST',
         headers: {
@@ -64,9 +64,9 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
         },
         body: formData,
       });
-  
+
       const result = await res.json();
-  
+
       if (res.ok && result.result?.image_url) {
         // Save image URL in localStorage and state
         const updatedUser = {
@@ -82,8 +82,8 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
       console.error('Error uploading image:', error);
     }
   };
-  
-  
+
+
 
   const menuItems = [
     {
@@ -107,30 +107,18 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
     <div className="bg-white rounded-lg p-6">
       <div className="flex items-center mb-6 gap-4 border-b">
         <label htmlFor="profile-image-upload" className="relative w-24 h-24 rounded-full overflow-hidden border border-[#2EC4B6] mb-4 flex-shrink-0 cursor-pointer group">
-          {/* // src={newImage || user?.image || "/images/auth/signin/user2.png"} */}
-          {/* <Image
+
+          <Image
             src={
-           
-              (newImage?.image
-                ? `${process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL}/${newImage.image}`
-                : "/images/auth/signin/user2.png")
+              newImage ||
+              JSON.parse(localStorage.getItem("userDetail"))?.image ||
+              "/images/auth/signin/user2.png"
             }
             alt="Profile"
             width={96}
             height={96}
-            className="w-full h-full object-cover"
-          /> */}
-          <Image
-  src={
-    newImage ||
-    JSON.parse(localStorage.getItem("userDetail"))?.image || 
-    "/images/auth/signin/user2.png"
-  }
-  alt="Profile"
-  width={96}
-  height={96}
-  className="w-full h-full object-cover rounded-full"
-/>
+            className="w-full h-full object-cover rounded-full"
+          />
           <input
             id="profile-image-upload"
             type="file"
@@ -158,7 +146,7 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
               </svg>
             </div>
           </div>
-          
+
         </label>
         <div className="min-w-0 flex-1">
           <h3 className="text-lg font-semibold truncate">{user?.name || 'User Name'}</h3>
@@ -171,20 +159,19 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`w-full flex items-center text-[#40433F] space-x-3 px-4 py-3 rounded-lg transition-colors ${
-              activeTab === item.id
+            className={`w-full flex items-center text-[#40433F] space-x-3 px-4 py-3 rounded-lg transition-colors ${activeTab === item.id
                 ? 'bg-[#1B263B1A] '
                 : 'hover:bg-gray-50'
-            }`}
+              }`}
           >
-          <div className='w-10 h-10 rounded-full bg-[#0A3161] flex items-center justify-center'>
-            <Image
-              src={item.icon}
-              alt={item.label}
-              width={20}
-              height={20}
-              className={activeTab === item.id ? 'brightness-0 invert' : ''}
-            />
+            <div className='w-10 h-10 rounded-full bg-[#0A3161] flex items-center justify-center'>
+              <Image
+                src={item.icon}
+                alt={item.label}
+                width={20}
+                height={20}
+                className={activeTab === item.id ? 'brightness-0 invert' : ''}
+              />
             </div>
             <span>{item.label}</span>
           </button>
@@ -195,13 +182,13 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
           className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-gray-50"
         >
           <div className='w-10 h-10 rounded-full bg-[#0A3161] flex items-center justify-center'>
-          <Image
-            src="/images/profile/logout.svg"
-            alt="Logout"
-            width={20}
-            height={20}
+            <Image
+              src="/images/profile/logout.svg"
+              alt="Logout"
+              width={20}
+              height={20}
             />
-            </div>
+          </div>
           <span>Logout</span>
         </button>
       </div>
