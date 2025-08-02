@@ -193,7 +193,7 @@ export default function Articles() {
             ))}
           </div>
         )}
-        {totalPages > 1 && (
+        {/* {totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 my-6">
             <button
               className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
@@ -219,7 +219,107 @@ export default function Articles() {
               Next
             </button>
           </div>
+        )} */}
+        {totalPages > 1 && (
+  <div className="flex justify-center items-center gap-2 my-6">
+    {/* Previous Button */}
+    <button
+      className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
+      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
+
+    {/* Pagination Logic */}
+    {totalPages <= 3 ? (
+      // Show all pages
+      Array.from({ length: totalPages }, (_, i) => (
+        <button
+          key={i + 1}
+          onClick={() => setCurrentPage(i + 1)}
+          className={`px-3 py-1 rounded text-sm ${
+            currentPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+          }`}
+        >
+          {i + 1}
+        </button>
+      ))
+    ) : (
+      <>
+        {/* Always show first page */}
+        <button
+          onClick={() => setCurrentPage(1)}
+          className={`px-3 py-1 rounded text-sm ${
+            currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+          }`}
+        >
+          1
+        </button>
+
+        {/* Show second page if current is 2 */}
+        {currentPage === 2 && (
+          <button
+            onClick={() => setCurrentPage(2)}
+            className={`px-3 py-1 rounded text-sm ${
+              currentPage === 2 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+            }`}
+          >
+            2
+          </button>
         )}
+
+        {/* Ellipsis before middle if needed */}
+        {currentPage > 3 && <span className="text-sm">...</span>}
+
+        {/* Show current page if not first or last */}
+        {currentPage > 2 && currentPage < totalPages - 1 && (
+          <button
+            onClick={() => setCurrentPage(currentPage)}
+            className="px-3 py-1 rounded text-sm bg-[#40433F] text-white"
+          >
+            {currentPage}
+          </button>
+        )}
+
+        {/* Ellipsis after middle if needed */}
+        {currentPage < totalPages - 2 && <span className="text-sm">...</span>}
+
+        {/* Show second last page if current is totalPages - 1 */}
+        {currentPage === totalPages - 1 && (
+          <button
+            onClick={() => setCurrentPage(totalPages - 1)}
+            className={`px-3 py-1 rounded text-sm ${
+              currentPage === totalPages - 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+            }`}
+          >
+            {totalPages - 1}
+          </button>
+        )}
+
+        {/* Always show last page */}
+        <button
+          onClick={() => setCurrentPage(totalPages)}
+          className={`px-3 py-1 rounded text-sm ${
+            currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+          }`}
+        >
+          {totalPages}
+        </button>
+      </>
+    )}
+
+    {/* Next Button */}
+    <button
+      className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
+      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+      disabled={currentPage === totalPages}
+    >
+      Next
+    </button>
+  </div>
+)}
+
       </div>
     </div>
   );

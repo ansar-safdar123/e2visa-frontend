@@ -359,47 +359,47 @@ function BuyBusiness() {
           <>
             <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center mt-16 mb-8">Business Listings</h1>
             <div className="flex justify-center">
-  <div className={`grid ${gridColsClass} gap-4 mb-16 w-full max-w-screen-xl px-4 justify-items-center`}>
-            {/* <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16"> */}
-              {paginatedBusinesses.map((business) => (
-                <Link key={business.id} href={`/buy-business/${business.id}`}>
-                  <div className="bg-[#1B263B1A] w-full min-w-[280px] max-w-[350px]">
-                    <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                      {business.verified && (
-                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                          Verified
+              <div className={`grid ${gridColsClass} gap-4 mb-16 w-full max-w-screen-xl px-4 justify-items-center`}>
+                {/* <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16"> */}
+                {paginatedBusinesses.map((business) => (
+                  <Link key={business.id} href={`/buy-business/${business.id}`}>
+                    <div className="bg-[#1B263B1A] w-full min-w-[280px] max-w-[350px]">
+                      <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                        {business.verified && (
+                          <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                            Verified
+                          </div>
+                        )}
+                        <div className="relative w-full h-[197px]">
+                          <Image
+                            fill
+                            src={
+                              business.business_images && business.business_images.length > 0
+                                ? `${BACKEND_STORAGE_URL}/${business.business_images[0].image_path}`
+                                : '/images/listing/img1.png'
+                            }
+                            alt={business.business_name}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
-                      )}
-                      <div className="relative w-full h-[197px]">
-                        <Image
-                          fill
-                          src={
-                            business.business_images && business.business_images.length > 0
-                              ? `${BACKEND_STORAGE_URL}/${business.business_images[0].image_path}`
-                              : '/images/listing/img1.png'
-                          }
-                          alt={business.business_name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="mt-[15px] flex flex-col justify-between">
-                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {business.business_name.length > 28
-                            ? business.business_name.slice(0, 28) + '...'
-                            : business.business_name}
-                        </h2>
-                        <p className="text-xs lg:text-sm mb-2">
-                          {business.listing_type.length > 28
-                            ? business.listing_type.slice(0, 28) + '...'
-                            : business.listing_type}
-                        </p>
+                        <div className="mt-[15px] flex flex-col justify-between">
+                          <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                            {business.business_name.length > 28
+                              ? business.business_name.slice(0, 28) + '...'
+                              : business.business_name}
+                          </h2>
+                          <p className="text-xs lg:text-sm mb-2">
+                            {business.listing_type.length > 28
+                              ? business.listing_type.slice(0, 28) + '...'
+                              : business.listing_type}
+                          </p>
 
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
             </div>
             {/* Pagination Controls */}
             {/* {totalPages > 1 && (
@@ -430,66 +430,64 @@ function BuyBusiness() {
               </div>
             )} */}
             {totalPages > 1 && (
-  <div className="flex justify-center items-center gap-2 mb-8">
-    {/* Prev Button */}
-    <button
-      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-      disabled={currentPage === 1}
-      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-    >
-      Prev
-    </button>
+              <div className="flex justify-center items-center gap-2 mb-8">
+                {/* Prev Button */}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+                >
+                  Prev
+                </button>
 
-    {/* First Page */}
-    <button
-      onClick={() => setCurrentPage(1)}
-      className={`px-3 py-1 rounded ${
-        currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
-      }`}
-    >
-      1
-    </button>
+                {/* First Page */}
+                <button
+                  onClick={() => setCurrentPage(1)}
+                  className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+                    }`}
+                >
+                  1
+                </button>
 
-    {/* Middle Section */}
-    {currentPage > 3 && <span key="dots-start">...</span>}
+                {/* Middle Section */}
+                {currentPage > 3 && <span key="dots-start">...</span>}
 
-    {/* Show current page in middle if it's not 1 or last */}
-    {currentPage !== 1 && currentPage !== totalPages && (
-      <button
-        key={currentPage}
-        onClick={() => setCurrentPage(currentPage)}
-        className="px-3 py-1 rounded bg-[#40433F] text-white"
-      >
-        {currentPage}
-      </button>
-    )}
+                {/* Show current page in middle if it's not 1 or last */}
+                {currentPage !== 1 && currentPage !== totalPages && (
+                  <button
+                    key={currentPage}
+                    onClick={() => setCurrentPage(currentPage)}
+                    className="px-3 py-1 rounded bg-[#40433F] text-white"
+                  >
+                    {currentPage}
+                  </button>
+                )}
 
-    {currentPage < totalPages - 2 && <span key="dots-end">...</span>}
+                {currentPage < totalPages - 2 && <span key="dots-end">...</span>}
 
-    {/* Last Page */}
-    {totalPages !== 1 && (
-      <button
-        onClick={() => setCurrentPage(totalPages)}
-        className={`px-3 py-1 rounded ${
-          currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
-        }`}
-      >
-        {totalPages}
-      </button>
-    )}
+                {/* Last Page */}
+                {totalPages !== 1 && (
+                  <button
+                    onClick={() => setCurrentPage(totalPages)}
+                    className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+                      }`}
+                  >
+                    {totalPages}
+                  </button>
+                )}
 
-    {/* Next Button */}
-    <button
-      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-      disabled={currentPage === totalPages}
-      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-    >
-      Next
-    </button>
-  </div>
-)}
+                {/* Next Button */}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </div>
+            )}
 
-            
+
           </>
         ) : (
           <div className="flex flex-col items-center justify-center py-10">
@@ -506,47 +504,47 @@ function BuyBusiness() {
             paginatedFeaturedListings.map((listing) => (
               <Link key={listing.id} href={`/buy-business/${listing.id}`}>
 
-              <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
-                <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                  {/* {listing.verified && (
+                <div key={listing.id} className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                  <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                    {/* {listing.verified && (
                     <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
                       Verified
                     </div>
                   )} */}
-                   {(listing.is_featured === true || listing.is_featured === "Yes") && (
-                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
-                          Featured
-                        </div>
-                      )}
-                  <div className="relative w-full h-[197px]">
-                    <Image
-                      fill
-                      src={
-                        listing.business_images && listing.business_images.length > 0
-                          ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
-                          : '/images/listing/img1.png'
-                      }
-                      alt={listing.business_name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="mt-[15px]">
-                    <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                      {listing.business_name.length > 28
-                        ? listing.business_name.slice(0, 28) + '...'
-                        : listing.business_name}
-                    </h2>
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs lg:text-sm mb-2">
-                        {listing.listing_type.length > 28
-                          ? listing.listing_type.slice(0, 28) + '...'
-                          : listing.listing_type}
-                      </p>
-                      {/* Add rating or other info if available */}
+                    {(listing.is_featured === true || listing.is_featured === "Yes") && (
+                      <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
+                        Featured
+                      </div>
+                    )}
+                    <div className="relative w-full h-[197px]">
+                      <Image
+                        fill
+                        src={
+                          listing.business_images && listing.business_images.length > 0
+                            ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
+                            : '/images/listing/img1.png'
+                        }
+                        alt={listing.business_name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="mt-[15px]">
+                      <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                        {listing.business_name.length > 28
+                          ? listing.business_name.slice(0, 28) + '...'
+                          : listing.business_name}
+                      </h2>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs lg:text-sm mb-2">
+                          {listing.listing_type.length > 28
+                            ? listing.listing_type.slice(0, 28) + '...'
+                            : listing.listing_type}
+                        </p>
+                        {/* Add rating or other info if available */}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </Link>
             ))
           ) : (
@@ -584,7 +582,7 @@ function BuyBusiness() {
             </button>
           </div>
         )} */}
-         {featuredTotalPages > 1 && (
+        {featuredTotalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mb-8">
             <button
               onClick={() => setFeaturedCurrentPage((p) => Math.max(1, p - 1))}
