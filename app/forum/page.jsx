@@ -328,46 +328,46 @@ export default function Forum() {
                 <p className="text-lg text-gray-700">No Record Found</p>
               </div>
             )}
-          <div class="pt-2">
+            <div class="pt-2">
 
-            {!loadingSearch && !errorSearch && searchResults.map((forum) => (
-              <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
-                <div className="bg-white rounded-lg border border-black p-6 mb-6">
-                  <div className="flex items-center mb-2">
-                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
-                      {forum.created_by.image && BACKEND_STORAGE_URL ? (
-                        <Image
-                          src={`${BACKEND_STORAGE_URL}/${forum.created_by.image}`}
-                          alt={forum.created_by.name}
-                          width={40}
-                          height={40}
-                          className="object-cover w-full rounded-full h-full"
-                        />
-                      ) : (
-                        <span className="flex items-center justify-center w-full h-full">
-                          <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
-                            <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
-                            <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
-                          </svg>
-                        </span>
-                      )}
+              {!loadingSearch && !errorSearch && searchResults.map((forum) => (
+                <Link href={`/forum/${forum.id}`} key={forum.id} className="block mt-10">
+                  <div className="bg-white rounded-lg border border-black p-6 mb-6">
+                    <div className="flex items-center mb-2">
+                      <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border border-gray-200">
+                        {forum.created_by.image && BACKEND_STORAGE_URL ? (
+                          <Image
+                            src={`${BACKEND_STORAGE_URL}/${forum.created_by.image}`}
+                            alt={forum.created_by.name}
+                            width={40}
+                            height={40}
+                            className="object-cover w-full rounded-full h-full"
+                          />
+                        ) : (
+                          <span className="flex items-center justify-center w-full h-full">
+                            <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
+                              <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
+                              <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
+                            </svg>
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
+                        <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
-                      <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
+                    <div className="text-[#40433F] text-sm lg:text-lg font-medium mb-2">{forum.title}</div>
+                    <div className="text-[#40433F] text-xs lg:text-sm mb-2">{forum.content}</div>
+                    <div className="flex cursor-pointer items-center gap-2 mt-3 text-white rounded-md w-fit py-1 px-2 bg-[#40433F80] text-xs">
+                      <Image src="/images/forums/chat.png" alt='' width={20} height={20} className="object-cover " />
+                      <span>{forum.comment_count}</span>
                     </div>
                   </div>
-                  <div className="text-[#40433F] text-sm lg:text-lg font-medium mb-2">{forum.title}</div>
-                  <div className="text-[#40433F] text-xs lg:text-sm mb-2">{forum.content}</div>
-                  <div className="flex cursor-pointer items-center gap-2 mt-3 text-white rounded-md w-fit py-1 px-2 bg-[#40433F80] text-xs">
-                    <Image src="/images/forums/chat.png" alt='' width={20} height={20} className="object-cover " />
-                    <span>{forum.comment_count}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
 
           </>
         ) : (
@@ -439,66 +439,91 @@ export default function Forum() {
             </button>
           </div>
         )} */}
+
         {!loading && !error && totalPages > 1 && (
-  <div className="flex justify-center items-center gap-2 mt-6">
-    {/* Prev Button */}
-    <button
-      className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
-      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-      disabled={currentPage === 1}
-    >
-      Previous
-    </button>
+          <div className="flex justify-center items-center gap-2 mt-6">
+            {/* Previous Button */}
+            <button
+              type="button"
+              className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCurrentPage((prev) => Math.max(prev - 1, 1));
+              }}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
 
-    {/* Page 1 */}
-    <button
-      onClick={() => setCurrentPage(1)}
-      className={`px-3 py-1 rounded text-sm ${
-        currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
-      }`}
-    >
-      1
-    </button>
+            {/* Page 1 */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCurrentPage(1);
+              }}
+              className={`px-3 py-1 rounded text-sm ${currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+                }`}
+            >
+              1
+            </button>
 
-    {/* Start Ellipsis */}
-    {currentPage > 3 && <span className="text-sm">...</span>}
+            {/* Ellipsis before current */}
+            {currentPage > 3 && <span className="text-sm">...</span>}
 
-    {/* Current page (in middle) if it's not 1 or last */}
-    {currentPage !== 1 && currentPage !== totalPages && (
-      <button
-        key={currentPage}
-        onClick={() => setCurrentPage(currentPage)}
-        className="px-3 py-1 rounded text-sm bg-[#40433F] text-white"
-      >
-        {currentPage}
-      </button>
-    )}
+            {/* Middle Current Page */}
+            {currentPage !== 1 && currentPage !== totalPages && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrentPage(currentPage);
+                }}
+                className="px-3 py-1 rounded text-sm bg-[#40433F] text-white"
+              >
+                {currentPage}
+              </button>
+            )}
 
-    {/* End Ellipsis */}
-    {currentPage < totalPages - 2 && <span className="text-sm">...</span>}
+            {/* Ellipsis after current */}
+            {currentPage < totalPages - 2 && <span className="text-sm">...</span>}
 
-    {/* Last Page */}
-    {totalPages !== 1 && (
-      <button
-        onClick={() => setCurrentPage(totalPages)}
-        className={`px-3 py-1 rounded text-sm ${
-          currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
-        }`}
-      >
-        {totalPages}
-      </button>
-    )}
+            {/* Last Page */}
+            {totalPages !== 1 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrentPage(totalPages);
+                }}
+                className={`px-3 py-1 rounded text-sm ${currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+                  }`}
+              >
+                {totalPages}
+              </button>
+            )}
 
-    {/* Next Button */}
-    <button
-      className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
-      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-      disabled={currentPage === totalPages}
-    >
-      Next
-    </button>
-  </div>
-)}
+            {/* Next Button */}
+            <button
+              type="button"
+              className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+              }}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        )}
+
+
 
       </div>
 
