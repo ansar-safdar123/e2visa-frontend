@@ -15,6 +15,14 @@ const ProfileSetting = () => {
     about: ''
   });
   const [errors, setErrors] = useState({});
+  const [token, setToken] = useState(null);
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    if(token){
+      setToken(token);
+    }
+  },[])
 
   useEffect(() => {
     let localUser = null;
@@ -65,7 +73,7 @@ const ProfileSetting = () => {
     form.append('phone_number', formData.phone);
     form.append('about', formData.about);
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/user/profile', {
         method: 'POST',
         headers: {
@@ -75,12 +83,14 @@ const ProfileSetting = () => {
       });
       const data = await res.json();
       if (res.ok && data.result && data.result.user) {
-        // Save user data to localStorage
-        localStorage.setItem('userData', JSON.stringify({
-          ...data.result.user,
-          phone: data.result.user.user_information?.phone_number || '',
-          about: data.result.user.about || ''
-        }));
+        // Save user data to localStorage (client-side only)
+        // if (typeof window !== 'undefined') {
+        //   localStorage.setItem('userData', JSON.stringify({
+        //     ...data.result.user,
+        //     phone: data.result.user.user_information?.phone_number || '',
+        //     about: data.result.user.about || ''
+        //   }));
+        // }
         toast.success(data.message, { position: 'top-right' });
         // Optionally, update the form with the new data
         setFormData({

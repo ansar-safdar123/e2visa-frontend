@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 
 const ChangePassword = () => {
+
   const [formData, setFormData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -40,6 +41,14 @@ const ChangePassword = () => {
       [field]: !prev[field]
     }));
   };
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token){
+      setToken(token);
+    }
+  },[])
 
   const validate = () => {
     const newErrors = {};
@@ -55,7 +64,7 @@ const ChangePassword = () => {
 
   const getToken = () => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('token');
+      return token;
     }
     return null;
   };

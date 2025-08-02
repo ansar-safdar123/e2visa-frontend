@@ -9,12 +9,18 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const router = useRouter();
   const { logout, user } = useAuth();
   const [newImage, setNewImage] = useState(null);
+const [token, setToken] = useState(null);
 
-
+useEffect(()=>{
+  const token = localStorage.getItem('token');
+  if(token){
+    setToken(token);
+  }
+},[])
   useEffect(() => {
     const storedUser = localStorage.getItem('userDetail');
     if (storedUser) {
-      setNewImage(JSON.parse(storedUser));
+      setNewImage(storedUser.image);
     }
   }, []);
 
@@ -55,7 +61,7 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
     formData.append('image', file);
 
     try {
-      const token = JSON.parse(localStorage.getItem('userDetail'))?.token;
+      // const token = JSON.parse(localStorage.getItem('userDetail'))?.token;
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/update-profile-image-update`, {
         method: 'POST',
