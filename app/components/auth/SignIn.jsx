@@ -51,6 +51,11 @@ const SignIn = () => {
         body: form,
       });
       const data = await res.json();
+      console.log("Data",data)
+      localStorage.setItem('userDetail', JSON.stringify(data.result)); // store as string
+      const userDetail = JSON.parse(localStorage.getItem('userDetail')); // retrieve and parse
+      console.log("userDetail", userDetail);
+
       if (res.ok && data.message && data.message.toLowerCase().includes('success')) {
         const userData = {
           email: email,

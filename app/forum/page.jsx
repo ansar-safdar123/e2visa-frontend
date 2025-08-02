@@ -457,7 +457,7 @@ export default function Forum() {
                 e.preventDefault();
                 setCurrentPage((prev) => {
                   const newPage = Math.max(prev - 1, 1);
-                  window.scrollTo({ top: 500, behavior: 'smooth' });
+                  window.scrollTo({ top: 500 });
                   return newPage;
                 });
               }}
@@ -471,7 +471,7 @@ export default function Forum() {
               onClick={(e) => {
                 e.preventDefault();
                 setCurrentPage(1);
-                window.scrollTo({ top: 500, behavior: 'smooth' });
+                window.scrollTo({ top: 500 });
               }}
               className={`px-3 py-1 rounded text-sm ${currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
                 }`}
@@ -488,7 +488,7 @@ export default function Forum() {
                 onClick={(e) => {
                   e.preventDefault();
                   setCurrentPage(currentPage);
-                  window.scrollTo({ top: 500, behavior: 'smooth' });
+                  window.scrollTo({ top: 500 });
                 }}
                 className="px-3 py-1 rounded text-sm bg-[#40433F] text-white"
               >
@@ -505,7 +505,7 @@ export default function Forum() {
                 onClick={(e) => {
                   e.preventDefault();
                   setCurrentPage(totalPages);
-                  window.scrollTo({ top: 500, behavior: 'smooth' });
+                  window.scrollTo({ top: 500 });
                 }}
                 className={`px-3 py-1 rounded text-sm ${currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
                   }`}
@@ -521,7 +521,7 @@ export default function Forum() {
                 e.preventDefault();
                 setCurrentPage((prev) => {
                   const newPage = Math.min(prev + 1, totalPages);
-                  window.scrollTo({ top: 500, behavior: 'smooth' });
+                  window.scrollTo({ top: 500 });
                   return newPage;
                 });
               }}

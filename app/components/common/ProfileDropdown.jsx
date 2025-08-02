@@ -26,6 +26,7 @@ const ProfileDropdown = ({ user }) => {
   const handleLogout = () => {
     setIsOpen(false);
     logout();
+    localStorage.clear();
     router.push('/signin');
   };
 

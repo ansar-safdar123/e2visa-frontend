@@ -1,11 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
   const [formData, setFormData] = useState({
-    profileType: 'Buyer',
-    businessListings: '0'
+    profileType: '',
+    // other form fields...
   });
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('userDetail'));
+    if (storedUser?.role) {
+      setFormData((prev) => ({ ...prev, profileType: storedUser.role }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +55,7 @@ const Dashboard = () => {
         </div>
 
         {/* Business Listings Input */}
-        <div className="relative">
+        {/* <div className="relative">
           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
             <img
               src="/images/profile/listing.png"
@@ -73,7 +80,7 @@ const Dashboard = () => {
           >
             Business Listings
           </label>
-        </div>
+        </div> */}
       </div>
     </div>
   );

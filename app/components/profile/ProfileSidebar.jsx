@@ -10,30 +10,80 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const { logout, user } = useAuth();
   const [newImage, setNewImage] = useState(null);
 
+
   useEffect(() => {
-    const storedImage = localStorage.getItem('profileImage');
-    if (storedImage) {
-      setNewImage(storedImage);
+    const storedUser = localStorage.getItem('userDetail');
+    if (storedUser) {
+      setNewImage(JSON.parse(storedUser));
     }
   }, []);
 
+
+
   const handleLogout = () => {
     logout();
+    localStorage.clear();
     router.push('/signin');
   };
 
-  const handleImageChange = (event) => {
+  // const handleImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setNewImage(reader.result);
+  //       localStorage.setItem('profileImage', reader.result);
+  //       console.log('Selected image saved to localStorage:', reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewImage(reader.result);
-        localStorage.setItem('profileImage', reader.result);
-        console.log('Selected image saved to localStorage:', reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+  
+    // Preview locally
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setNewImage(reader.result); // Just for preview if needed
+    };
+    reader.readAsDataURL(file);
+  
+    // Prepare image upload
+    const formData = new FormData();
+    formData.append('image', file);
+  
+    try {
+      const token = JSON.parse(localStorage.getItem('userDetail'))?.token;
+  
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/update-profile-image-update`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
+      const result = await res.json();
+  
+      if (res.ok && result.result?.image_url) {
+        // Save image URL in localStorage and state
+        const updatedUser = {
+          ...JSON.parse(localStorage.getItem('userDetail')),
+          image: result.result.image_url,
+        };
+        localStorage.setItem('userDetail', JSON.stringify(updatedUser));
+        setNewImage(result.result.image_url); // Store URL, not base64
+      } else {
+        console.error('Upload failed:', result);
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
   };
+  
+  
 
   const menuItems = [
     {
@@ -57,13 +107,30 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
     <div className="bg-white rounded-lg p-6">
       <div className="flex items-center mb-6 gap-4 border-b">
         <label htmlFor="profile-image-upload" className="relative w-24 h-24 rounded-full overflow-hidden border border-[#2EC4B6] mb-4 flex-shrink-0 cursor-pointer group">
-          <Image
-            src={newImage || user?.image || "/images/auth/signin/user2.png"}
+          {/* // src={newImage || user?.image || "/images/auth/signin/user2.png"} */}
+          {/* <Image
+            src={
+           
+              (newImage?.image
+                ? `${process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL}/${newImage.image}`
+                : "/images/auth/signin/user2.png")
+            }
             alt="Profile"
             width={96}
             height={96}
             className="w-full h-full object-cover"
-          />
+          /> */}
+          <Image
+  src={
+    newImage ||
+    JSON.parse(localStorage.getItem("userDetail"))?.image || 
+    "/images/auth/signin/user2.png"
+  }
+  alt="Profile"
+  width={96}
+  height={96}
+  className="w-full h-full object-cover rounded-full"
+/>
           <input
             id="profile-image-upload"
             type="file"
