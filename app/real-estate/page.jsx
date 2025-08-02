@@ -372,7 +372,7 @@ function RealEstate() {
               ))}
             </div>
             {/* Pagination Controls */}
-            {totalPages > 1 && (
+            {/* {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 my-8">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
@@ -398,7 +398,67 @@ function RealEstate() {
                   Next
                 </button>
               </div>
-            )}
+            )} */}
+            {totalPages > 1 && (
+  <div className="flex justify-center items-center gap-2 mb-8">
+    {/* Prev Button */}
+    <button
+      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+      disabled={currentPage === 1}
+      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+    >
+      Prev
+    </button>
+
+    {/* First Page */}
+    <button
+      onClick={() => setCurrentPage(1)}
+      className={`px-3 py-1 rounded ${
+        currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+      }`}
+    >
+      1
+    </button>
+
+    {/* Middle Section */}
+    {currentPage > 3 && <span key="dots-start">...</span>}
+
+    {/* Show current page in middle if it's not 1 or last */}
+    {currentPage !== 1 && currentPage !== totalPages && (
+      <button
+        key={currentPage}
+        onClick={() => setCurrentPage(currentPage)}
+        className="px-3 py-1 rounded bg-[#40433F] text-white"
+      >
+        {currentPage}
+      </button>
+    )}
+
+    {currentPage < totalPages - 2 && <span key="dots-end">...</span>}
+
+    {/* Last Page */}
+    {totalPages !== 1 && (
+      <button
+        onClick={() => setCurrentPage(totalPages)}
+        className={`px-3 py-1 rounded ${
+          currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+        }`}
+      >
+        {totalPages}
+      </button>
+    )}
+
+    {/* Next Button */}
+    <button
+      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+      disabled={currentPage === totalPages}
+      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
+)}
+
           </>
         ) : (
           <div className="flex flex-col items-center justify-center py-10">
@@ -472,7 +532,7 @@ function RealEstate() {
               )
               }
             {/* Pagination Controls for Featured Listings */}
-            {featuredTotalPages > 1 && (
+            {/* {featuredTotalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mb-8">
                 <button
                   onClick={() => setFeaturedPage((p) => Math.max(1, p - 1))}
@@ -498,7 +558,65 @@ function RealEstate() {
                   Next
                 </button>
               </div>
-            )}
+            )} */}
+            {featuredTotalPages > 1 && (
+  <div className="flex justify-center items-center gap-2 mb-8">
+    {/* Prev Button */}
+    <button
+      onClick={() => setFeaturedPage((p) => Math.max(1, p - 1))}
+      disabled={featuredPage === 1}
+      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+    >
+      Previous
+    </button>
+
+    {/* First Page */}
+    <button
+      onClick={() => setFeaturedPage(1)}
+      className={`px-3 py-1 rounded ${
+        featuredPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+      }`}
+    >
+      1
+    </button>
+
+    {/* Dots or Middle Page */}
+    {featuredPage > 3 && <span>...</span>}
+
+    {featuredPage !== 1 && featuredPage !== featuredTotalPages && (
+      <button
+        onClick={() => setFeaturedPage(featuredPage)}
+        className="px-3 py-1 rounded bg-[#40433F] text-white"
+      >
+        {featuredPage}
+      </button>
+    )}
+
+    {featuredPage < featuredTotalPages - 2 && <span>...</span>}
+
+    {/* Last Page */}
+    {featuredTotalPages !== 1 && (
+      <button
+        onClick={() => setFeaturedPage(featuredTotalPages)}
+        className={`px-3 py-1 rounded ${
+          featuredPage === featuredTotalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+        }`}
+      >
+        {featuredTotalPages}
+      </button>
+    )}
+
+    {/* Next Button */}
+    <button
+      onClick={() => setFeaturedPage((p) => Math.min(featuredTotalPages, p + 1))}
+      disabled={featuredPage === featuredTotalPages}
+      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
+)}
+
           </>
         )}
       </div>
