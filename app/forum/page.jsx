@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { toast } from 'react-toastify';
-
 // Helper to get token (adjust as needed for your auth setup)
 const getToken = () => {
   if (typeof window !== 'undefined') {
@@ -35,7 +34,8 @@ export default function Forum() {
   const [errorSearch, setErrorSearch] = useState(null);
   const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
   const searchTimeout = useRef(null);
-
+  const containerRef = useRef(null);
+  const prevPageRef = useRef(currentPage);
   useEffect(() => {
     setToken(getToken());
   }, []);
@@ -160,6 +160,15 @@ export default function Forum() {
       setPosting(false);
     }
   };
+
+  // Optional: Prevent scroll jump on re-render
+  useLayoutEffect(() => {
+    if (containerRef.current && prevPageRef.current !== currentPage) {
+      // Restore scroll position of pagination container
+      containerRef.current.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      prevPageRef.current = currentPage;
+    }
+  }, [currentPage]);
 
   return (
     <>
@@ -439,30 +448,30 @@ export default function Forum() {
             </button>
           </div>
         )} */}
-
         {!loading && !error && totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-6">
             {/* Previous Button */}
             <button
-              type="button"
               className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
               onClick={(e) => {
                 e.preventDefault();
-                e.stopPropagation();
-                setCurrentPage((prev) => Math.max(prev - 1, 1));
+                setCurrentPage((prev) => {
+                  const newPage = Math.max(prev - 1, 1);
+                  window.scrollTo({ top: 700, behavior: 'smooth' });
+                  return newPage;
+                });
               }}
               disabled={currentPage === 1}
             >
-              Prev
+              Previous
             </button>
 
             {/* Page 1 */}
             <button
-              type="button"
               onClick={(e) => {
                 e.preventDefault();
-                e.stopPropagation();
                 setCurrentPage(1);
+                window.scrollTo({ top: 700, behavior: 'smooth' });
               }}
               className={`px-3 py-1 rounded text-sm ${currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
                 }`}
@@ -476,11 +485,10 @@ export default function Forum() {
             {/* Middle Current Page */}
             {currentPage !== 1 && currentPage !== totalPages && (
               <button
-                type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  e.stopPropagation();
                   setCurrentPage(currentPage);
+                  window.scrollTo({ top: 700, behavior: 'smooth' });
                 }}
                 className="px-3 py-1 rounded text-sm bg-[#40433F] text-white"
               >
@@ -494,11 +502,10 @@ export default function Forum() {
             {/* Last Page */}
             {totalPages !== 1 && (
               <button
-                type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  e.stopPropagation();
                   setCurrentPage(totalPages);
+                  window.scrollTo({ top: 700, behavior: 'smooth' });
                 }}
                 className={`px-3 py-1 rounded text-sm ${currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
                   }`}
@@ -509,12 +516,14 @@ export default function Forum() {
 
             {/* Next Button */}
             <button
-              type="button"
               className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
               onClick={(e) => {
                 e.preventDefault();
-                e.stopPropagation();
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                setCurrentPage((prev) => {
+                  const newPage = Math.min(prev + 1, totalPages);
+                  window.scrollTo({ top: 700, behavior: 'smooth' });
+                  return newPage;
+                });
               }}
               disabled={currentPage === totalPages}
             >
@@ -522,7 +531,6 @@ export default function Forum() {
             </button>
           </div>
         )}
-
 
 
       </div>
