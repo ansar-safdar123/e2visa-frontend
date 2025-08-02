@@ -412,7 +412,7 @@ export default function Forum() {
           </div>
         )}
         {/* Pagination Controls */}
-        {!loading && !error && totalPages > 1 && (
+        {/* {!loading && !error && totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-6">
             <button
               className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm"
@@ -438,7 +438,68 @@ export default function Forum() {
               Next
             </button>
           </div>
-        )}
+        )} */}
+        {!loading && !error && totalPages > 1 && (
+  <div className="flex justify-center items-center gap-2 mt-6">
+    {/* Prev Button */}
+    <button
+      className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
+      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
+
+    {/* Page 1 */}
+    <button
+      onClick={() => setCurrentPage(1)}
+      className={`px-3 py-1 rounded text-sm ${
+        currentPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+      }`}
+    >
+      1
+    </button>
+
+    {/* Start Ellipsis */}
+    {currentPage > 3 && <span className="text-sm">...</span>}
+
+    {/* Current page (in middle) if it's not 1 or last */}
+    {currentPage !== 1 && currentPage !== totalPages && (
+      <button
+        key={currentPage}
+        onClick={() => setCurrentPage(currentPage)}
+        className="px-3 py-1 rounded text-sm bg-[#40433F] text-white"
+      >
+        {currentPage}
+      </button>
+    )}
+
+    {/* End Ellipsis */}
+    {currentPage < totalPages - 2 && <span className="text-sm">...</span>}
+
+    {/* Last Page */}
+    {totalPages !== 1 && (
+      <button
+        onClick={() => setCurrentPage(totalPages)}
+        className={`px-3 py-1 rounded text-sm ${
+          currentPage === totalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
+        }`}
+      >
+        {totalPages}
+      </button>
+    )}
+
+    {/* Next Button */}
+    <button
+      className="px-3 py-1 rounded bg-gray-200 text-gray-700 text-sm disabled:opacity-50"
+      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+      disabled={currentPage === totalPages}
+    >
+      Next
+    </button>
+  </div>
+)}
+
       </div>
 
     </>
