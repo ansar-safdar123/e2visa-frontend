@@ -10,6 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
+        const storedUser = JSON.parse(localStorage.getItem('userDetail') || '{}');
         if (storedUser?.role) {
           setFormData((prev) => ({ ...prev, profileType: storedUser.role }));
         }
