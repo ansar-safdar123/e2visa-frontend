@@ -1,13 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { useAuth } from '../context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useAuth } from '../context/AuthContext';
-import ProfileSidebar from '../components/profile/ProfileSidebar.jsx';
-import Dashboard from '../components/profile/Dashboard.jsx';
-import ProfileSetting from '../components/profile/ProfileSetting.jsx';
-import ChangePassword from '../components/profile/ChangePassword.jsx';
+
+// Dynamically import components with SSR disabled
+const ProfileSidebar = dynamic(
+  () => import('../components/profile/ProfileSidebar.jsx'),
+  { ssr: false }
+);
+
+const Dashboard = dynamic(
+  () => import('../components/profile/Dashboard.jsx'),
+  { ssr: false }
+);
+
+const ProfileSetting = dynamic(
+  () => import('../components/profile/ProfileSetting.jsx'),
+  { ssr: false }
+);
+
+const ChangePassword = dynamic(
+  () => import('../components/profile/ChangePassword.jsx'),
+  { ssr: false }
+);
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('dashboard');

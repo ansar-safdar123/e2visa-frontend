@@ -266,7 +266,7 @@ const FeaturedProfessionals = () => {
                 return (
                   <div
                     key={pro.id}
-                    className='professional-card w-full bg-white transition-all cursor-pointer hover:shadow-lg'
+                    className='professional-card w-full bg-white transition-all cursor-pointer hover:shadow-lg '
                     onClick={() => handleProfessionalClick(pro.id)}
                   >
                     <div className="w-full h-[376px] border border-[#40433F] rounded-xl relative">

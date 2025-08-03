@@ -8,9 +8,14 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('userDetail'));
-    if (storedUser?.role) {
-      setFormData((prev) => ({ ...prev, profileType: storedUser.role }));
+    if (typeof window !== 'undefined') {
+      try {
+        if (storedUser?.role) {
+          setFormData((prev) => ({ ...prev, profileType: storedUser.role }));
+        }
+      } catch (e) {
+        console.error('Error accessing localStorage:', e);
+      }
     }
   }, []);
 

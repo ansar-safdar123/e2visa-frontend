@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useSearchParams } from 'next/navigation';
+import FeaturedListings from '../components/home/FeaturedListings';
 
 function RealEstate() {
   const searchParams = useSearchParams();
@@ -225,7 +226,7 @@ function RealEstate() {
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -246,7 +247,7 @@ function RealEstate() {
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -267,7 +268,7 @@ function RealEstate() {
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#40433F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -315,16 +316,16 @@ function RealEstate() {
               </div>
             </div> */}
           </div>
-           <div className="flex items-center justify-center w-full">
- {/* Search button */}
-           <button
+          <div className="flex items-center justify-center w-full">
+            {/* Search button */}
+            <button
               className="bg-[#0A3161] text-sm w-[167px] mt-10 text-white px-8 lg:py-5 py-3 rounded-lg hover:bg-[#102742] transition-colors whitespace-nowrap min-w-[150px]"
               onClick={handleSearch}
-              >
+            >
               Search Now
             </button>
-              </div>
-        
+          </div>
+
         </div>
 
         {/* Show real estate listings before Featured Listing */}
@@ -333,73 +334,46 @@ function RealEstate() {
         ) : realEstates.length > 0 ? (
           <>
             <h1 className="text-2xl md:text-3xl font-bold text-[#40433F] text-center my-8">Real Estate Listings</h1>
-            <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16">
-            
-            {/* <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"> */}
+            <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
               {paginatedEstates.map((estate) => (
-                <Link
-                  key={estate.id}
-                  href={`/buy-business/${estate.id}`}
-                  className="rounded-lg bg-[#1B263B1A]  border border-[#40433F] w-full min-w-[280px] max-w-[350px] block hover:shadow-lg transition-shadow"
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  <div className="relative w-full pt-[14px] pb-[19px] px-[18px]">
-                    <div className="relative w-full h-[197px]">
-                      <Image
-                        fill
-                        src={estate.business_images && estate.business_images.length > 0 ? `${BACKEND_STORAGE_URL}/${estate.business_images[0].image_path}` : '/images/listing/img1.png'}
-                        alt={estate.business_name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="mt-[15px]">
-                      <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                        {estate.business_name.length > 28
-                        ? estate.business_name.slice(0, 28) + '...'
-                        : estate.business_name}
-                      </h2>
-                      <div className="flex items-center justify-between">
-                        <p className="text-xs lg:text-sm mb-2">
-                        {estate.listing_type.length > 28
-                          ? estate.listing_type.slice(0, 28) + '...'
-                          : estate.listing_type}
-                        </p>
-                        <div className="text-xs lg:text-sm mb-2">${estate.asking_price}</div>
+                <Link key={estate.id} href={`/buy-business/${estate.id}`}>
+                  <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                    <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
+                    {estate?.verified && (
+                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
+                          Verified
+                        </div>
+                      )}
+                      <div className="relative w-full h-[197px]">
+                        <Image
+                          fill
+                          src={estate.business_images && estate.business_images.length > 0 ? `${BACKEND_STORAGE_URL}/${estate.business_images[0].image_path}` : '/images/listing/img1.png'}
+                          alt={estate.business_name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="mt-[15px]">
+                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
+                          {estate.business_name.length > 18
+                            ? estate.business_name.slice(0, 18) + '...'
+                            : estate.business_name}
+                        </h2>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs lg:text-sm mb-2">
+                            {estate.listing_type.length > 18
+                              ? estate.listing_type.slice(0, 18) + '...'
+                              : estate.listing_type}
+                          </p>
+                          <div className="text-xs lg:text-sm mb-2">${estate.asking_price}</div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
-            {/* Pagination Controls */}
-            {/* {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 my-8">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-                >
-                  Previous
-                </button>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => setCurrentPage(i + 1)}
-                    className={`px-3 py-1 rounded ${currentPage === i + 1 ?  'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-                >
-                  Next
-                </button>
-              </div>
-            )} */}
-        {totalPages > 1 && (
+
+            {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mb-8">
                 {/* Prev Button */}
                 <button
@@ -463,159 +437,14 @@ function RealEstate() {
             <p className="text-lg text-gray-700">No Real Estate Found</p>
           </div>
         )}
-
         <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center my-12">Featured Listing</h1>
-        {featuredLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <>
-        {/* */}
-           
-              { paginatedFeatured.length === 0  ? (
-                <div className="flex flex-col items-center justify-center py-10">
-                  <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
-                  <p className="text-lg text-gray-700">No Featured Found</p>
-                </div>
-              ) : (
-                paginatedFeatured.map((listing) => (
-                  <div className="listing-slider grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-16">
-              <Link key={listing.id} href={`/buy-business/${listing.id}`}>
 
-                  <div key={listing.id} className="bg-[#1B263B1A] w-full max-w-[350px]">
-                    <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
-                      {/* {listing.verified && (
-                        <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
-                          Verified
-                        </div>
-                      )} */}
-                        {(listing.is_featured === true || listing.is_featured === "Yes") && (
-                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
-                          Featured
-                        </div>
-                      )}
-                      <div className="relative w-full h-[197px]">
-                        <Image
-                          fill
-                          src={
-                            listing.business_images && listing.business_images.length > 0
-                              ? `${BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
-                              : '/images/listing/img1.png'
-                          }
-                          alt={listing.business_name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="mt-[15px]">
-                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                        {listing.business_name.length > 28
-                        ? listing.business_name.slice(0, 28) + '...'
-                        : listing.business_name}
-                        </h2>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs lg:text-sm mb-2">
-                          {listing.listing_type.length > 28
-                            ? listing.listing_type.slice(0, 28) + '...'
-                            : listing.listing_type}
-                          </p>
-                          {/* Add more info if needed */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  </Link>
-            </div>
-                )
-                )
-              )
-              }
-            {/* Pagination Controls for Featured Listings */}
-            {/* {featuredTotalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 mb-8">
-                <button
-                  onClick={() => setFeaturedPage((p) => Math.max(1, p - 1))}
-                  disabled={featuredPage === 1}
-                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-                >
-                  Previous
-                </button>
-                {Array.from({ length: featuredTotalPages }, (_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => setFeaturedPage(i + 1)}
-                    className={`px-3 py-1 rounded ${featuredPage === i + 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'}`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-                <button
-                  onClick={() => setFeaturedPage((p) => Math.min(featuredTotalPages, p + 1))}
-                  disabled={featuredPage === featuredTotalPages}
-                  className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-                >
-                  Next
-                </button>
-              </div>
-            )} */}
-            {featuredTotalPages > 1 && (
-  <div className="flex justify-center items-center gap-2 mb-8">
-    {/* Prev Button */}
-    <button
-      onClick={() => setFeaturedPage((p) => Math.max(1, p - 1))}
-      disabled={featuredPage === 1}
-      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-    >
-      Previous
-    </button>
+        <FeaturedListings
+          listings={paginatedFeatured}
+          loading={featuredLoading}
+          title="Featured Listing"
+        />
 
-    {/* First Page */}
-    <button
-      onClick={() => setFeaturedPage(1)}
-      className={`px-3 py-1 rounded ${
-        featuredPage === 1 ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
-      }`}
-    >
-      1
-    </button>
-
-    {/* Dots or Middle Page */}
-    {featuredPage > 3 && <span>...</span>}
-
-    {featuredPage !== 1 && featuredPage !== featuredTotalPages && (
-      <button
-        onClick={() => setFeaturedPage(featuredPage)}
-        className="px-3 py-1 rounded bg-[#40433F] text-white"
-      >
-        {featuredPage}
-      </button>
-    )}
-
-    {featuredPage < featuredTotalPages - 2 && <span>...</span>}
-
-    {/* Last Page */}
-    {featuredTotalPages !== 1 && (
-      <button
-        onClick={() => setFeaturedPage(featuredTotalPages)}
-        className={`px-3 py-1 rounded ${
-          featuredPage === featuredTotalPages ? 'bg-[#40433F] text-white' : 'bg-gray-100 text-gray-700'
-        }`}
-      >
-        {featuredTotalPages}
-      </button>
-    )}
-
-    {/* Next Button */}
-    <button
-      onClick={() => setFeaturedPage((p) => Math.min(featuredTotalPages, p + 1))}
-      disabled={featuredPage === featuredTotalPages}
-      className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-    >
-      Next
-    </button>
-  </div>
-)}
-
-          </>
-        )}
       </div>
 
 
@@ -623,7 +452,7 @@ function RealEstate() {
   );
 };
 
-export default function RealEstatePage(){
+export default function RealEstatePage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <RealEstate />

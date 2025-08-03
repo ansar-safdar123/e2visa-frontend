@@ -9,26 +9,39 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const router = useRouter();
   const { logout, user } = useAuth();
   const [newImage, setNewImage] = useState(null);
-const [token, setToken] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-useEffect(()=>{
-  const token = localStorage.getItem('token');
-  if(token){
-    setToken(token);
-  }
-},[])
   useEffect(() => {
-    const storedUser = localStorage.getItem('userDetail');
-    if (storedUser) {
-      setNewImage(storedUser.image);
+    // This effect only runs on the client side after the initial render
+    setIsMounted(true);
+    
+    // Only access localStorage after component mounts on the client side
+    if (typeof window !== 'undefined') {
+      try {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+          setToken(storedToken);
+        }
+        
+        const storedUser = localStorage.getItem('userDetail');
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          if (userData?.image) {
+            setNewImage(userData.image);
+          }
+        }
+      } catch (e) {
+        console.error('Error accessing localStorage:', e);
+      }
     }
   }, []);
 
-
-
   const handleLogout = () => {
     logout();
-    localStorage.clear();
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+    }
     router.push('/signin');
   };
 
@@ -56,12 +69,14 @@ useEffect(()=>{
     };
     reader.readAsDataURL(file);
 
-    // Prepare image upload
     const formData = new FormData();
     formData.append('image', file);
 
     try {
-      // const token = JSON.parse(localStorage.getItem('userDetail'))?.token;
+      if (typeof window === 'undefined' || !token) {
+        console.error('Cannot upload image: Not in browser environment or missing token');
+        return;
+      }
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/update-profile-image-update`, {
         method: 'POST',
@@ -74,13 +89,22 @@ useEffect(()=>{
       const result = await res.json();
 
       if (res.ok && result.result?.image_url) {
-        // Save image URL in localStorage and state
-        const updatedUser = {
-          ...JSON.parse(localStorage.getItem('userDetail')),
-          image: result.result.image_url,
-        };
-        localStorage.setItem('userDetail', JSON.stringify(updatedUser));
-        setNewImage(result.result.image_url); // Store URL, not base64
+        // Only update if we're in the browser
+        if (typeof window !== 'undefined') {
+          try {
+            const userDetail = localStorage.getItem('userDetail');
+            if (userDetail) {
+              const updatedUser = {
+                ...JSON.parse(userDetail),
+                image: result.result.image_url,
+              };
+              localStorage.setItem('userDetail', JSON.stringify(updatedUser));
+            }
+          } catch (e) {
+            console.error('Error updating user details in localStorage:', e);
+          }
+        }
+        setNewImage(result.result.image_url); // Update the image in state
       } else {
         console.error('Upload failed:', result);
       }
