@@ -96,6 +96,8 @@ export default function ListingsTabs() {
     speed: 500,
     slidesToShow: Math.min(4, listings.length),
     slidesToScroll: 1,
+    // centerMode: listings.length < 4, // Enable centerMode when less than 4 items
+    // centerPadding: '60px', // Add some padding when centered
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
