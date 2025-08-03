@@ -92,49 +92,17 @@ export default function ListingsTabs() {
 
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: false, // <-- Make it never loop
     speed: 500,
     slidesToShow: Math.min(4, listings.length),
     slidesToScroll: 1,
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    centerMode: listings.length < 4, // Enable center mode when less than 4 items
-    centerPadding: '0', // Remove any padding around centered items
-    variableWidth: true, // Allow items to take their natural width
     responsive: [
-      { 
-        breakpoint: 1024, 
-        settings: { 
-          slidesToShow: Math.min(3, listings.length), 
-          slidesToScroll: 1, 
-          infinite: false,
-          centerMode: listings.length <= 3,
-          variableWidth: true
-        } 
-      },
-      { 
-        breakpoint: 768, 
-        settings: { 
-          slidesToShow: Math.min(2, listings.length), 
-          slidesToScroll: 1, 
-          arrows: true, 
-          infinite: false,
-          centerMode: listings.length <= 2,
-          variableWidth: true
-        } 
-      },
-      { 
-        breakpoint: 480, 
-        settings: { 
-          slidesToShow: 1, 
-          slidesToScroll: 1, 
-          arrows: true, 
-          infinite: false,
-          centerMode: true,
-          variableWidth: false
-        } 
-      }
+      { breakpoint: 1024, settings: { slidesToShow: Math.min(3, listings.length), slidesToScroll: 1, infinite: false } },
+      { breakpoint: 768, settings: { slidesToShow: Math.min(2, listings.length), slidesToScroll: 1, arrows: true, infinite: false } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: true, infinite: false } }
     ]
   };
 
@@ -180,24 +148,6 @@ export default function ListingsTabs() {
             :global(.custom-slick-prev) {
               left: -15px !important;
             }
-            
-            /* Center align the slider track */
-            :global(.slick-track) {
-              display: flex;
-              justify-content: center;
-              margin: 0 auto;
-              width: 100% !important;
-            }
-            
-            /* Style for individual slides */
-            :global(.slick-slide) {
-              float: none;
-              display: inline-block;
-              vertical-align: top;
-              height: 100%;
-              padding: 0 8px;
-            }
-            
             @media (max-width: 640px) {
               :global(.slick-prev) {
                 left: 0;
@@ -210,10 +160,6 @@ export default function ListingsTabs() {
               }
               :global(.custom-slick-prev) {
                 left: 0 !important;
-              }
-              
-              :global(.slick-slide) {
-                padding: 0 4px;
               }
             }
           `}</style>
@@ -310,10 +256,9 @@ export default function ListingsTabs() {
             //     ))} */}
             //   </div>
             // )
-            <div className="relative">
-              <Slider {...settings}>
-                {listings.map((listing) => (
-                  <div key={listing.id} className="px-2">
+            <Slider {...settings}>
+              {listings.map((listing) => (
+                <div key={listing.id}>
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative listing-card-border !rounded-xl pt-[14px] pb-[19px] px-[18px] cursor-pointer">
                       {listing.is_featured === "Yes" && (
@@ -360,10 +305,9 @@ export default function ListingsTabs() {
                       </div>
                     </div>
                   </Link>
-                  </div>
-                ))}
-              </Slider>
-            </div>
+                </div>
+              ))}
+            </Slider>
           }
         </div>
       </div>
