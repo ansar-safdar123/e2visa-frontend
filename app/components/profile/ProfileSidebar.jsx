@@ -11,6 +11,7 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const [newImage, setNewImage] = useState(null);
   const [token, setToken] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     // This effect only runs on the client side after the initial render
@@ -25,6 +26,8 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
         }
         
         const storedUser = localStorage.getItem('userDetail');
+        setUserInfo(JSON.parse(storedUser));
+       
         if (storedUser) {
           const userData = JSON.parse(storedUser);
           if (userData?.image) {
@@ -140,8 +143,8 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
 
           <Image
             src={
-              newImage ||
-              JSON.parse(localStorage.getItem("userDetail"))?.image ||
+              process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + newImage ||
+              // process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + JSON.parse(localStorage.getItem("userDetail"))?.image ||
               "/images/auth/signin/user2.png"
             }
             alt="Profile"
@@ -179,7 +182,7 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
 
         </label>
         <div className="min-w-0 flex-1">
-          <h3 className="text-lg font-semibold truncate">{user?.name || 'User Name'}</h3>
+          <h3 className="text-lg font-semibold truncate">{userInfo?.name || 'User Name'}</h3>
           <p className="text-gray-500 text-sm truncate">{user?.email || 'user@example.com'}</p>
         </div>
       </div>
