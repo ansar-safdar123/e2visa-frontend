@@ -144,7 +144,6 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
           <Image
             src={
               process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + newImage ||
-              // process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + JSON.parse(localStorage.getItem("userDetail"))?.image ||
               "/images/auth/signin/user2.png"
             }
             alt="Profile"
