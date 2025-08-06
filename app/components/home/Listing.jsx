@@ -214,10 +214,9 @@ export default function ListingsTabs() {
               box-shadow: 0 2px 8px rgba(0,0,0,0.12);
               transition: all 0.2s ease;
             }
-            :global(.custom-slick-arrow:hover) {
-              background: #0A3161 !important;
-              transform: scale(1.05);
-              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            :global(.custom-slick-arrow) {
+
+              box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             }
             :global(.custom-slick-next) {
               right: -15px !important;
@@ -252,7 +251,7 @@ export default function ListingsTabs() {
               <p className="text-lg">No Listings Found</p>
             </div>
           ) : !isMobile && listings.length < 4 ? (
-            <div className="flex flex-wrap justify-center gap-4 lg:gap-5">
+            <div className="flex flex-wrap justify-center gap-4">
               {listings.map((listing) => (
                 <div key={listing.id} className="w-full max-w-[280px] flex-shrink-0">
                   <Link href={`/buy-business/${listing.id}`}>
@@ -293,7 +292,7 @@ export default function ListingsTabs() {
           ) : (
             <Slider {...settings}>
               {listings.map((listing) => (
-                <div key={listing.id} className="px-2">
+                <div key={listing.id} className="px-1">
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative  bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
                       {listing.is_featured === "Yes" && (

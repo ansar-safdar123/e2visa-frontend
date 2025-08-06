@@ -183,7 +183,7 @@ export default function Articles() {
         ) : dataToShow.length === 0 ? (
           <div className="flex flex-col items-center justify-center pb-16">
             <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
-            <p className="text-lg text-gray-700">No Record Found</p>
+            <p className="text-lg text-gray-700">No Blog Found</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 ">

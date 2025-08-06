@@ -144,7 +144,7 @@ body {
 .listing-slider .slick-next {
   width: 32px;
   height: 32px;
-  background: #0A3161 !important;
+  /* background: #0A3161 !important; */
   border-radius: 50%;
   z-index: 1;
   display: flex !important;
@@ -196,7 +196,7 @@ body {
 
 .listing-slider .slick-prev:hover,
 .listing-slider .slick-next:hover {
-  background: #0A3161 !important;
+  /* background: #0A3161 !important; */
 }
 
 .listing-slider .slick-dots li button:before {

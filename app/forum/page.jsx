@@ -320,12 +320,12 @@ export default function Forum() {
 
         {loading && <LoadingSpinner />}
         {error && <div className="text-center text-red-500 py-8">{error}</div>}
-        {!loading && !error && paginatedForums.length === 0 && (
+        {/* {!loading && !error && paginatedForums.length === 0 && (
           <div className="flex flex-col items-center justify-center py-10">
             <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
             <p className="text-lg text-gray-700">No Record Found</p>
           </div>
-        )}
+        )} */}
 
         {searchQuery.trim() ? (
           <>

@@ -8,10 +8,15 @@ import { useAuth } from '../../context/AuthContext';
 
 const ProfileDropdown = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const dropdownRef = useRef(null);
   const router = useRouter();
   const { logout } = useAuth();
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userDetail');
+    setUserInfo(JSON.parse(storedUser));
+  }, []);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -21,7 +26,9 @@ const ProfileDropdown = ({ user }) => {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+   
   }, []);
+
 
   const handleLogout = () => {
     setIsOpen(false);
@@ -64,8 +71,8 @@ const ProfileDropdown = ({ user }) => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-60 bg-white rounded-lg shadow-lg py-2 z-50">
           <div className="px-4 py-3 border-b border-gray-100">
-            <p className="text-sm font-medium text-[#1E1E1E]">{user?.name || 'User Name'}</p>
-            <p className="text-sm text-gray-500">{user?.email || 'user@example.com'}</p>
+            <p className="text-sm font-medium text-[#1E1E1E]">{userInfo?.name || 'User Name'}</p>
+            <p className="text-sm text-gray-500">{userInfo?.email || 'user@example.com'}</p>
           </div>
           
           <Link

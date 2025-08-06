@@ -17,7 +17,8 @@ function NextArrow(props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#2EC4B6",
+        background: "#2EC4B6 ",
+
         borderRadius: "50%",
         width: 44,
         height: 44,
@@ -46,6 +47,7 @@ function PrevArrow(props) {
         alignItems: "center",
         justifyContent: "center",
         background: "#2EC4B6",
+
         borderRadius: "50%",
         width: 44,
         height: 44,
@@ -155,12 +157,7 @@ const FeaturedProfessionals = () => {
               background: #2EC4B6 !important;
               color: #fff !important;
               border: none !important;
-              box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-              transition: background 0.2s, box-shadow 0.2s;
-            }
-            :global(.custom-slick-arrow:hover) {
-              background: #0A3161 !important;
-              box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+              box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
             }
             :global(.custom-slick-next) {
               right: 15px !important;
