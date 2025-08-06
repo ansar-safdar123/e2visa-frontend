@@ -275,7 +275,7 @@ export default function ForumPostPage({ params }) {
                     <div className="text-sm ml-6 mt-2 space-y-4">
                       {c.replies.map(r => (
                         <div key={r.id} className="flex items-start w-full gap-3">
-                          <div className="!w-10 !h-10 rounded-full flex items-center justify-center">
+                          <div className="!max-w-10 w-full !h-10 rounded-full flex items-center justify-center">
 
                           {r.user && r.user.image && BACKEND_STORAGE_URL ? (
                             <Image
