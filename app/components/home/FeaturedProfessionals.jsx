@@ -207,17 +207,17 @@ const FeaturedProfessionals = () => {
             <Slider {...settings}>
 
               {professionals.map((pro, index) => {
-                let imagePath = pro.user_information && pro.user_information.image
-                  ? pro.user_information.image
-                  : pro.image
-                    ? pro.image
-                    : null;
-                let imageUrl;
-                if (imagePath && !imagePath.startsWith('/images/')) {
-                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
-                } else {
-                  imageUrl = imagePath || "/images/FeaturedProfessionls/img1.png";
-                }
+               let imagePath = pro.user_information && pro.user_information.image
+               ? pro.user_information.image
+               : pro.image
+                 ? pro.image
+                 : null;
+             let imageUrl;
+             if (imagePath && !imagePath.startsWith('/images/')) {
+               imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
+             } else {
+               imageUrl = imagePath || "/images/professionals/image.png";
+             }
                 return (
                   <div
                     key={pro.id}
@@ -253,16 +253,16 @@ const FeaturedProfessionals = () => {
             <div className="professionals-row" style={{ justifyContent: 'center' }}>
               {professionals.map((pro, index) => {
                 let imagePath = pro.user_information && pro.user_information.image
-                  ? pro.user_information.image
-                  : pro.image
-                    ? pro.image
-                    : null;
-                let imageUrl;
-                if (imagePath && !imagePath.startsWith('/images/')) {
-                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
-                } else {
-                  imageUrl = imagePath || "/images/FeaturedProfessionls/img1.png";
-                }
+                ? pro.user_information.image
+                : pro.image
+                  ? pro.image
+                  : null;
+              let imageUrl;
+              if (imagePath && !imagePath.startsWith('/images/')) {
+                imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
+              } else {
+                imageUrl = imagePath || "/images/professionals/image.png";
+              }
                 return (
                   <div
                     key={pro.id}
