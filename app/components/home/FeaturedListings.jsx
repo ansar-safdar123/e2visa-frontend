@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import LoadingSpinner from '../common/LoadingSpinner';
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 4;
 
 const FeaturedListings = ({ listings, loading, title = 'Featured Listing' }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,9 +29,7 @@ const FeaturedListings = ({ listings, loading, title = 'Featured Listing' }) => 
 
   return (
     <div className="w-full">
-      {/* <h1 className="text-2xl md:text-3xl xl:mb-16 font-bold text-[#40433F] text-center mt-16 mb-12">
-        {title}
-      </h1> */}
+      
       <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
         {paginatedListings.length > 0 ? (
           paginatedListings.map((listing) => (
