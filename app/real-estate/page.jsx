@@ -119,7 +119,7 @@ function RealEstate() {
       setFeaturedLoading(true);
       try {
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/featured_listing?search_type=business`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/featured_listing?search_type=real_estate`, {
           method: 'POST',
           headers: {
             ...(token ? { 'Authorization': `Bearer ${token}` } : {}),

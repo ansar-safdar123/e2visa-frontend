@@ -109,52 +109,50 @@ export default function ListingsTabs() {
 
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: listings.length > 4, // Only infinite if enough items
     speed: 500,
-    slidesToShow: Math.min(4, listings.length),
+    slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    centerMode: listings.length < 4, // Enable center mode only if less than 4
-    centerPadding: "0px", // Remove side spacing in centerMode
-  
     responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: Math.min(3, listings.length),
+          slidesToScroll: 1,
+          infinite: listings.length > 3,
+        }
+      },
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: Math.min(3, listings.length),
           slidesToScroll: 1,
-          infinite: false,
-          centerMode: listings.length < 3,
-          centerPadding: "0px",
-        },
+          infinite: listings.length > 3,
+        }
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: Math.min(2, listings.length),
+          slidesToShow: 2,
           slidesToScroll: 1,
-          infinite: false,
-          arrows: true,
-          centerMode: listings.length < 2,
-          centerPadding: "0px",
-        },
+          infinite: listings.length > 2,
+          arrows: true
+        }
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: true,
-          infinite: false,
-          centerMode: true,
-          centerPadding: "0px",
-        },
-      },
-    ],
+          infinite: listings.length > 1,
+          arrows: true
+        }
+      }
+    ]
   };
-
   const fallbackSvg = encodeURIComponent(`
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
       <circle cx='32' cy='20' r='12' fill='#ccc'/>
@@ -162,34 +160,64 @@ export default function ListingsTabs() {
     </svg>
   `);
 
+  // Check if mobile view
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="bg-[#40433F] py-[52px] text-white">
       <div className="container mx-auto px-4">
         <h1 className="text-center xl:text-3xl text-2xl text-white font-bold mb-20">New Listings</h1>
-        <div className="listing-slider w-full relative">
-          {/* <style jsx>{`
+        <div className="w-full relative">
+          <style jsx>{`
             :global(.slick-prev),
             :global(.slick-next) {
               z-index: 10;
-              width: 30px;
-              height: 30px;
+              width: 35px;
+              height: 35px;
             }
-          
             :global(.slick-prev:before),
             :global(.slick-next:before) {
               display: none !important;
+            }
+            :global(.slick-slide > div) {
+              padding: 0 8px;
+            }
+            :global(.slick-list) {
+              margin: 0 -8px;
             }
             :global(.custom-slick-arrow) {
               opacity: 1 !important;
               background: #2EC4B6 !important;
               color: #fff !important;
               border: none !important;
+              border-radius: 50% !important;
+              width: 35px !important;
+              height: 35px !important;
+              display: flex !important;
+              align-items: center;
+              justify-content: center;
               box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-              transition: background 0.2s, box-shadow 0.2s;
+              transition: all 0.2s ease;
             }
             :global(.custom-slick-arrow:hover) {
               background: #0A3161 !important;
-              box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+              transform: scale(1.05);
+              box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             }
             :global(.custom-slick-next) {
               right: -15px !important;
@@ -197,51 +225,44 @@ export default function ListingsTabs() {
             :global(.custom-slick-prev) {
               left: -15px !important;
             }
-            @media (max-width: 640px) {
-              :global(.slick-prev) {
-                left: 0;
+            @media (max-width: 768px) {
+              :global(.slick-slide > div) {
+                padding: 0 4px;
               }
-              :global(.slick-next) {
-                right: 0;
+              :global(.slick-list) {
+                margin: 0 -4px;
+              }
+              :global(.custom-slick-arrow) {
+                width: 30px !important;
+                height: 30px !important;
               }
               :global(.custom-slick-next) {
-                right: 0 !important;
+                right: -5px !important;
               }
               :global(.custom-slick-prev) {
-                left: 0 !important;
+                left: -5px !important;
               }
             }
-          `}</style> */}
+          `}</style>
           {loading ? (
             <LoadingSpinner />
           ) : listings.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10">
               <h2 className="text-3xl font-bold mb-2">Oops!</h2>
-              <p className="text-lg">No Listing Found</p>
+              <p className="text-lg">No Listings Found</p>
             </div>
-          ) :
-            
-            <Slider {...settings}>
+          ) : !isMobile && listings.length < 4 ? (
+            <div className="flex flex-wrap justify-center gap-4 lg:gap-5">
               {listings.map((listing) => (
-                <div key={listing.id}>
+                <div key={listing.id} className="w-full max-w-[280px] flex-shrink-0">
                   <Link href={`/buy-business/${listing.id}`}>
-                    <div className="relative listing-card-border max-w-[280px] mx-auto !rounded-xl pt-[14px] pb-[19px] px-[18px] cursor-pointer">
+                    <div className="relative bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
                       {listing.is_featured === "Yes" && (
-                        <div className="absolute top-7 right-0 rounded-l-full bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 ">
+                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] z-30 text-white text-xs px-3 py-1">
                           Featured
                         </div>
                       )}
-                      <div className="relative w-full h-[197px]">
-                        {/* <Image
-                          fill
-                          src={
-                            listing.business_images && listing.business_images.length > 0
-                              ? `${process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
-                              : "/images/listing/img1.png"
-                          }
-                          alt={listing.business_name}
-                          className="w-full h-full object-cover"
-                        /> */}
+                      <div className="relative w-full h-[180px] rounded-lg overflow-hidden">
                         <Image
                           fill
                           src={
@@ -253,19 +274,54 @@ export default function ListingsTabs() {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="mt-[15px]">
-                        <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {listing.business_name.length > 18
-                            ? listing.business_name.slice(0, 18) + '...'
-                            : listing.business_name}dddd
+                      <div className="mt-4">
+                        <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
+                          {listing.business_name}
                         </h2>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs lg:text-sm ">
-                            {listing.listing_type.length > 15
-                              ? listing.listing_type.slice(0, 15) + '...'
-                              : listing.listing_type}
+                        <div className="flex items-center justify-between mt-2">
+                          <p className="text-xs text-gray-600 truncate max-w-[60%]">
+                            {listing.listing_type}
                           </p>
-                          <div className="text-xs lg:text-sm ">${listing.asking_price}</div>
+                          <p className="text-sm font-medium text-gray-900">${listing.asking_price}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Slider {...settings}>
+              {listings.map((listing) => (
+                <div key={listing.id} className="px-2">
+                  <Link href={`/buy-business/${listing.id}`}>
+                    <div className="relative  bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
+                      {listing.is_featured === "Yes" && (
+                        <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] z-30 text-white text-xs px-3 py-1">
+                          Featured
+                        </div>
+                      )}
+                      <div className="relative w-full h-[180px] rounded-lg overflow-hidden">
+                        <Image
+                          fill
+                          src={
+                            listing.business_images?.[0]?.image_path
+                              ? `${process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL}/${listing.business_images[0].image_path}`
+                              : `data:image/svg+xml;utf8,${fallbackSvg}`
+                          }
+                          alt={listing.business_name || "Business Image"}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
+                          {listing.business_name}
+                        </h2>
+                        <div className="flex items-center justify-between mt-2">
+                          <p className="text-xs text-gray-600 truncate max-w-[60%]">
+                            {listing.listing_type}
+                          </p>
+                          <p className="text-sm font-medium text-gray-900">${listing.asking_price}</p>
                         </div>
                       </div>
                     </div>
@@ -273,7 +329,7 @@ export default function ListingsTabs() {
                 </div>
               ))}
             </Slider>
-          }
+          )}
         </div>
       </div>
     </div>
