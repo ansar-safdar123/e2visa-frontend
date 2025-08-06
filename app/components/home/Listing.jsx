@@ -169,8 +169,8 @@ export default function ListingsTabs() {
             <LoadingSpinner />
           ) : listings.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10">
-              <h2 className="text-3xl font-bold text-[#0A3161] mb-2">Oops!</h2>
-              <p className="text-lg text-gray-700">No Businesses Found</p>
+              <h2 className="text-3xl font-bold mb-2">Oops!</h2>
+              <p className="text-lg">No Businesses Found</p>
             </div>
           ) :
             // listings.length > 4 ? (
