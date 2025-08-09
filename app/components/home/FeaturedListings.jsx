@@ -34,7 +34,7 @@ const FeaturedListings = ({ listings, loading, title = 'Featured Listing' }) => 
         {paginatedListings.length > 0 ? (
           paginatedListings.map((listing) => (
             <Link key={listing.id} href={`/buy-business/${listing.id}`}>
-              <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+              <div className="bg-[#1B263B1A] w-[280px] flex-shrink-0">
                 <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                   {(listing.is_featured === true || listing.is_featured === "Yes") && (
                     <div className="absolute top-3 right-0 rounded-l-full bg-[#2EC4B6] text-white text-xs font-bold px-3 py-1 shadow-md z-10">
@@ -55,9 +55,10 @@ const FeaturedListings = ({ listings, loading, title = 'Featured Listing' }) => 
                   </div>
                   <div className="mt-[15px]">
                     <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                      {listing.business_name.length > 28
+                      {/* {listing.business_name.length > 28
                         ? listing.business_name.slice(0, 28) + '...'
-                        : listing.business_name}
+                        : listing.business_name} */}
+                        {listing.business_name}
                     </h2>
                     <div className="flex items-center justify-between">
                       <p className="text-xs lg:text-sm mb-2">

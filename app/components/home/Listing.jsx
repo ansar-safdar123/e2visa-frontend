@@ -109,7 +109,7 @@ export default function ListingsTabs() {
 
   const settings = {
     dots: false,
-    infinite: listings.length > 4, // Only infinite if enough items
+    infinite: false, // Only infinite if enough items
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -252,7 +252,7 @@ export default function ListingsTabs() {
             </div>
           ) : !isMobile && listings.length < 4 ? (
             <div className="flex flex-wrap justify-center gap-4">
-              {listings.map((listing) => (
+              {listings.map((listing,index) => (
                 <div key={listing.id} className="w-full max-w-[280px] flex-shrink-0">
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
@@ -274,9 +274,12 @@ export default function ListingsTabs() {
                         />
                       </div>
                       <div className="mt-4">
-                        <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
-                          {listing.business_name}
-                        </h2>
+                     
+                      <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
+  {/* {index === 0 ? listing.business_name?.split(" ")[0] : listing.business_name} */}
+ {listing.business_name}
+
+</h2>
                         <div className="flex items-center justify-between mt-2">
                           <p className="text-xs text-gray-600 truncate max-w-[60%]">
                             {listing.listing_type}
@@ -291,7 +294,7 @@ export default function ListingsTabs() {
             </div>
           ) : (
             <Slider {...settings}>
-              {listings.map((listing) => (
+              {listings.map((listing,index) => (
                 <div key={listing.id} className="px-1">
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative  bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
@@ -300,7 +303,7 @@ export default function ListingsTabs() {
                           Featured
                         </div>
                       )}
-                      <div className="relative w-full h-[180px] rounded-lg overflow-hidden">
+                      <div className="relative w-full h-full min-h-[180px] rounded-lg ">
                         <Image
                           fill
                           src={

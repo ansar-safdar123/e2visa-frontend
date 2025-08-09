@@ -363,7 +363,7 @@ function BuyBusiness() {
 
               {paginatedBusinesses.map((business) => (
                 <Link key={business.id} href={`/buy-business/${business.id}`}>
-                  <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                  <div className="bg-[#1B263B1A] w-[280px] flex-shrink-0">
                     <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                       {business.verified && (
                         <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
@@ -384,9 +384,10 @@ function BuyBusiness() {
                       </div>
                       <div className="mt-[15px] flex flex-col justify-between">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {business.business_name.length > 28
+                          {/* {business.business_name.length > 28
                             ? business.business_name.slice(0, 28) + '...'
-                            : business.business_name}
+                            : business.business_name} */}
+                            {business.business_name}
                         </h2>
                         <p className="text-xs lg:text-sm mb-2">
                           {business.listing_type.length > 28
