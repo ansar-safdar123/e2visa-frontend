@@ -384,10 +384,9 @@ function BuyBusiness() {
                       </div>
                       <div className="mt-[15px] flex flex-col justify-between">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {/* {business.business_name.length > 28
-                            ? business.business_name.slice(0, 28) + '...'
-                            : business.business_name} */}
-                            {business.business_name}
+                          {business.business_name.length > 50
+                            ? business.business_name.slice(0, 50) + '...'
+                            : business.business_name}
                         </h2>
                         <p className="text-xs lg:text-sm mb-2">
                           {business.listing_type.length > 28

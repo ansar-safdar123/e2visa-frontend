@@ -96,7 +96,7 @@ export default function ListingsTabs() {
   //   speed: 500,
   //   slidesToShow: Math.min(4, listings.length),
   //   slidesToScroll: 1,
-    
+
   //   arrows: true,
   //   nextArrow: <NextArrow />,
   //   prevArrow: <PrevArrow />,
@@ -167,13 +167,13 @@ export default function ListingsTabs() {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     // Set initial value
     handleResize();
-    
+
     // Add event listener
     window.addEventListener('resize', handleResize);
-    
+
     // Clean up
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -252,7 +252,7 @@ export default function ListingsTabs() {
             </div>
           ) : !isMobile && listings.length < 4 ? (
             <div className="flex flex-wrap justify-center gap-4">
-              {listings.map((listing,index) => (
+              {listings.map((listing, index) => (
                 <div key={listing.id} className="w-full max-w-[280px] flex-shrink-0">
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
@@ -274,12 +274,12 @@ export default function ListingsTabs() {
                         />
                       </div>
                       <div className="mt-4">
-                     
-                      <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
-  {/* {index === 0 ? listing.business_name?.split(" ")[0] : listing.business_name} */}
- {listing.business_name}
 
-</h2>
+                        <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
+
+                          {listing.business_name.length > 50 ? listing.business_name.slice(0, 50) + '...' : listing.business_name}
+
+                        </h2>
                         <div className="flex items-center justify-between mt-2">
                           <p className="text-xs text-gray-600 truncate max-w-[60%]">
                             {listing.listing_type}
@@ -294,7 +294,7 @@ export default function ListingsTabs() {
             </div>
           ) : (
             <Slider {...settings}>
-              {listings.map((listing,index) => (
+              {listings.map((listing, index) => (
                 <div key={listing.id} className="px-1">
                   <Link href={`/buy-business/${listing.id}`}>
                     <div className="relative  bg-white rounded-xl p-4 h-full transition-all hover:shadow-lg">
@@ -317,7 +317,7 @@ export default function ListingsTabs() {
                       </div>
                       <div className="mt-4">
                         <h2 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-12">
-                          {listing.business_name}
+                          {listing.business_name.length > 50 ? listing.business_name.slice(0, 50) + '...' : listing.business_name}
                         </h2>
                         <div className="flex items-center justify-between mt-2">
                           <p className="text-xs text-gray-600 truncate max-w-[60%]">

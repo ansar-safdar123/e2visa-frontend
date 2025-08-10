@@ -364,6 +364,7 @@ export default function Forum() {
                       </div>
                       <div>
                         <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
+                        <span className="font-semibold text-xs mr-2">{forum.created_by.role}</span>
                         <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
                       </div>
                     </div>
@@ -406,6 +407,7 @@ export default function Forum() {
                     </div>
                     <div>
                       <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
+                      <span className="font-semibold text-xs mr-2">{forum.created_by.role}</span>
                       <span className="text-[#9E9E9E] text-xs">· {new Date(forum.created_at).toLocaleDateString()}</span>
                     </div>
                   </div>

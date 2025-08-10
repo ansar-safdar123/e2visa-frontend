@@ -193,7 +193,7 @@ const BusinessDetail = ({ params }) => {
 
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>EBITDA</span>
-                <span>{business.ebitda != null ? `$${business.ebitda.toLocaleString()}` : 'N/A'}</span>
+                <span>{business.ebitdas != null ? `$${business.ebitdas.toLocaleString()}` : 'N/A'}</span>
               </div>
 
               <div className="flex text-[#64748B] justify-between items-center">
@@ -209,7 +209,7 @@ const BusinessDetail = ({ params }) => {
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Inventory</span>
                 <span>
-                  {business.inventory?.value != null ? `$${business.inventory.value.toLocaleString()}` : 'N/A'}
+                  {business.inventory != null ? `$${business.inventory.toLocaleString()}` : 'N/A'}
                 </span>
               </div>
 
@@ -222,7 +222,7 @@ const BusinessDetail = ({ params }) => {
 
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Established</span>
-                <span>{business.established || 'N/A'}</span>
+                <span>{business.year_established || 'N/A'}</span>
               </div>
             </div>
 
@@ -323,7 +323,7 @@ const BusinessDetail = ({ params }) => {
 
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>EBITDA</span>
-                <span>{business.ebitda != null ? `$${business.ebitda.toLocaleString()}` : 'N/A'}</span>
+                <span>{business.ebitdas != null ? `$${business.ebitdas.toLocaleString()}` : 'N/A'}</span>
               </div>
 
               <div className="flex text-[#64748B] justify-between items-center">
@@ -339,7 +339,7 @@ const BusinessDetail = ({ params }) => {
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Inventory</span>
                 <span>
-                  {business.inventory?.value != null ? `$${business.inventory.value.toLocaleString()}` : 'N/A'}
+                  {business.inventory ? `$${business.inventory.toLocaleString()}` : 'N/A'}
                 </span>
               </div>
 
@@ -352,7 +352,7 @@ const BusinessDetail = ({ params }) => {
 
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Established</span>
-                <span>{business.established || 'N/A'}</span>
+                <span>{business.year_established || 'N/A'}</span>
               </div>
             </div>
 

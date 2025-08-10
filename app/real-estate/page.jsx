@@ -337,7 +337,7 @@ function RealEstate() {
             <div className="listing-slider flex flex-wrap justify-center gap-4 mb-16">
               {paginatedEstates.map((estate) => (
                 <Link key={estate.id} href={`/buy-business/${estate.id}`}>
-                  <div className="bg-[#1B263B1A] w-full sm:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] min-w-[280px] max-w-[350px]">
+                  <div className="bg-[#1B263B1A]  w-[280px] flex-shrink-0">
                     <div className="relative border rounded-lg border-[#40433F] w-full pt-[14px] pb-[19px] px-[18px]">
                     {estate?.verified && (
                         <div className="absolute top-7 right-8 bg-[#2EC4B6] z-30 text-white text-xs lg:text-sm px-2 py-1 rounded-full">
@@ -354,8 +354,8 @@ function RealEstate() {
                       </div>
                       <div className="mt-[15px]">
                         <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                          {estate.business_name.length > 18
-                            ? estate.business_name.slice(0, 18) + '...'
+                          {estate.business_name.length > 50
+                            ? estate.business_name.slice(0, 50) + '...'
                             : estate.business_name}
                         </h2>
                         <div className="flex items-center justify-between">

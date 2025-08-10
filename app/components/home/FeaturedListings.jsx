@@ -55,10 +55,9 @@ const FeaturedListings = ({ listings, loading, title = 'Featured Listing' }) => 
                   </div>
                   <div className="mt-[15px]">
                     <h2 className="text-xs lg:text-sm leading-6 font-semibold mb-1">
-                      {/* {listing.business_name.length > 28
-                        ? listing.business_name.slice(0, 28) + '...'
-                        : listing.business_name} */}
-                        {listing.business_name}
+                      {listing.business_name.length > 50
+                        ? listing.business_name.slice(0, 50) + '...'
+                        : listing.business_name}
                     </h2>
                     <div className="flex items-center justify-between">
                       <p className="text-xs lg:text-sm mb-2">
