@@ -31,7 +31,7 @@ function NextArrow(props) {
       onClick={onClick}
       aria-label="Next"
     >
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
     </button>
   );
 }
@@ -60,7 +60,7 @@ function PrevArrow(props) {
       onClick={onClick}
       aria-label="Previous"
     >
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
     </button>
   );
 }
@@ -85,7 +85,7 @@ const FeaturedProfessionals = () => {
   const [professionals, setProfessionals] = useState([]);
   const [loading, setLoading] = useState(true);
   const isMobile = useMediaQuery('(max-width: 768px)');
-
+  const BACKEND_STORAGE_URL = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL;
   useEffect(() => {
     const fetchProfessionals = async () => {
       try {
@@ -110,15 +110,15 @@ const FeaturedProfessionals = () => {
 
   const settings = {
     dots: false,
-  
-    infinite: professionals.length > 4, // Only infinite if enough items
+
+    infinite: false, // Only infinite if enough items
     speed: 500,
     slidesToShow: Math.min(4, professionals.length),
     slidesToScroll: 1,
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    
+
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: Math.min(3, professionals.length), slidesToScroll: 1, infinite: false } },
       { breakpoint: 768, settings: { slidesToShow: Math.min(2, professionals.length), slidesToScroll: 1, arrows: true, infinite: false } },
@@ -129,7 +129,7 @@ const FeaturedProfessionals = () => {
   return (
     <div className="xl:py-[92px] py-10 bg-white">
       <div className="container mx-auto px-4">
-          <h1 className="text-center xl:text-3xl text-[#40433F] text-2xl font-bold mb-20">
+        <h1 className="text-center xl:text-3xl text-[#40433F] text-2xl font-bold mb-20">
           Featured Professionals
         </h1>
 
@@ -204,17 +204,17 @@ const FeaturedProfessionals = () => {
             <Slider {...settings}>
 
               {professionals.map((pro, index) => {
-               let imagePath = pro.user_information && pro.user_information.image
-               ? pro.user_information.image
-               : pro.image
-                 ? pro.image
-                 : null;
-             let imageUrl;
-             if (imagePath && !imagePath.startsWith('/images/')) {
-               imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
-             } else {
-               imageUrl = imagePath || "/images/professionals/image.png";
-             }
+                let imagePath = pro.user_information && pro.user_information.image
+                  ? pro.user_information.image
+                  : pro.image
+                    ? pro.image
+                    : null;
+                let imageUrl;
+                if (imagePath && !imagePath.startsWith('/images/')) {
+                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/, '');
+                } else {
+                  imageUrl = imagePath || "/images/professionals/image.png";
+                }
                 return (
                   <div
                     key={pro.id}
@@ -239,6 +239,25 @@ const FeaturedProfessionals = () => {
                           {pro.name}
                           <br />
                           <span className="text-gray-600 text-xs font-normal">{pro.role}</span>
+                          <div className="w-6 h-6 rounded-full overflow-hidden mr-3 border border-gray-200">
+                            {pro.badge_icon && BACKEND_STORAGE_URL ? (
+                              <Image
+                                src={`${BACKEND_STORAGE_URL}/${pro.badge_icon}`}
+                                alt={pro.name}
+                                width={40}
+                                height={40}
+                                className="object-cover rounded-full w-full h-full"
+                              />
+                            ) : (
+                              <span className="flex items-center justify-center w-full h-full">
+                                <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
+                                  <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
+                                  <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
+                                </svg>
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -250,23 +269,23 @@ const FeaturedProfessionals = () => {
             <div className="professionals-row" style={{ justifyContent: 'center' }}>
               {professionals.map((pro, index) => {
                 let imagePath = pro.user_information && pro.user_information.image
-                ? pro.user_information.image
-                : pro.image
-                  ? pro.image
-                  : null;
-              let imageUrl;
-              if (imagePath && !imagePath.startsWith('/images/')) {
-                imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
-              } else {
-                imageUrl = imagePath || "/images/professionals/image.png";
-              }
+                  ? pro.user_information.image
+                  : pro.image
+                    ? pro.image
+                    : null;
+                let imageUrl;
+                if (imagePath && !imagePath.startsWith('/images/')) {
+                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/, '');
+                } else {
+                  imageUrl = imagePath || "/images/professionals/image.png";
+                }
                 return (
                   <div
                     key={pro.id}
                     className='professional-card w-full bg-white transition-all cursor-pointer hover:shadow-lg '
                     onClick={() => handleProfessionalClick(pro.id)}
                   >
-                    
+
                     <div className="w-full h-[376px] border border-[#40433F] rounded-xl relative">
                       {/* Featured label */}
                       {(pro.is_featured === true || pro.is_featured === "Yes") && (
@@ -284,7 +303,27 @@ const FeaturedProfessionals = () => {
                         <div className="professional-name-tags w-full px-4 py-2 rounded-lg inline-block font-semibold">
                           {pro.name}
                           <br />
-                          <span className="text-gray-600 text-xs font-normal">{pro.role}</span>
+                          <span className="text-gray-600 text-xs font-normal">{pro.role}sdfasdfds</span>
+                          <div className="w-6 h-6 rounded-full overflow-hidden mr-3 border border-gray-200">
+                            {pro.badge_icon && BACKEND_STORAGE_URL ? (
+                              <Image
+                                src={`${BACKEND_STORAGE_URL}/${pro.badge_icon}`}
+                                alt={pro.name}
+                                width={40}
+                                height={40}
+                                className="object-cover rounded-full w-full h-full"
+                              />
+                            ) : (
+                              <span className="flex items-center justify-center w-full h-full">
+                                <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
+                                  <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
+                                  <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
+                                </svg>
+                              </span>
+                            )}
+                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -302,7 +341,7 @@ const FeaturedProfessionals = () => {
                     : null;
                 let imageUrl;
                 if (imagePath && !imagePath.startsWith('/images/')) {
-                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/,'');
+                  imageUrl = process.env.NEXT_PUBLIC_BACKEND_STORAGE_URL + '/' + imagePath.replace(/^\/+/, '');
                 } else {
                   imageUrl = imagePath || "/images/professionals/image.png";
                 }
@@ -329,7 +368,29 @@ const FeaturedProfessionals = () => {
                         <div className="professional-name-tags w-full px-4 py-2 rounded-lg inline-block font-semibold">
                           {pro.name}
                           <br />
+                          <div className="flex items-center justify-center gap-2">
+
                           <span className="text-gray-600 text-xs font-normal">{pro.role}</span>
+                          <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200">
+                            {pro.badge_icon && BACKEND_STORAGE_URL ? (
+                              <Image
+                                src={`${BACKEND_STORAGE_URL}/${pro.badge_icon}`}
+                                alt={pro.name}
+                                width={40}
+                                height={40}
+                                className="object-cover rounded-full w-full h-full"
+                              />
+                            ) : (
+                              <span className="flex items-center justify-center w-full h-full">
+                                <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="10" cy="10" r="10" fill="#CBD5E1" />
+                                  <path d="M10 10.8333C11.3807 10.8333 12.5 9.71408 12.5 8.33333C12.5 6.95258 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95258 7.5 8.33333C7.5 9.71408 8.61929 10.8333 10 10.8333Z" fill="#64748B" />
+                                  <path d="M5.83325 15.0001C5.83325 13.1591 7.49221 11.6667 9.99992 11.6667C12.5076 11.6667 14.1666 13.1591 14.1666 15.0001V15.8334H5.83325V15.0001Z" fill="#64748B" />
+                                </svg>
+                              </span>
+                            )}
+                          </div>
+                          </div>
                         </div>
                       </div>
                     </div>
