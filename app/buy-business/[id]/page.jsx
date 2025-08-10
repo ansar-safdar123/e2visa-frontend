@@ -216,7 +216,7 @@ const BusinessDetail = ({ params }) => {
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Rent</span>
                 <span>
-                  {business.rent != null ? `$${business.rent.toLocaleString()}/per month` : 'N/A'}
+                  {business.rent != null ? `$${business.rent.toLocaleString()}` : 'N/A'}
                 </span>
               </div>
 
@@ -346,7 +346,7 @@ const BusinessDetail = ({ params }) => {
               <div className="flex text-[#64748B] justify-between items-center">
                 <span>Rent</span>
                 <span>
-                  {business.rent != null ? `$${business.rent.toLocaleString()}/per month` : 'N/A'}
+                  {business.rent != null ? `$${business.rent.toLocaleString()}` : 'N/A'}
                 </span>
               </div>
 
