@@ -284,7 +284,7 @@ export default function ListingsTabs() {
                           <p className="text-xs text-gray-600 truncate max-w-[60%]">
                             {listing.listing_type}
                           </p>
-                          <p className="text-sm font-medium text-gray-900">${listing.asking_price}</p>
+                          <p className="text-sm font-medium text-gray-900">${parseInt(listing.asking_price,10)}</p>
                         </div>
                       </div>
                     </div>
@@ -323,7 +323,7 @@ export default function ListingsTabs() {
                           <p className="text-xs text-gray-600 truncate max-w-[60%]">
                             {listing.listing_type}
                           </p>
-                          <p className="text-sm font-medium text-gray-900">${listing.asking_price}</p>
+                          <p className="text-sm font-medium text-gray-900">${parseInt(listing.asking_price,10)}</p>
                         </div>
                       </div>
                     </div>

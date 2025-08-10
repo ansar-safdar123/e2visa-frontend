@@ -364,7 +364,7 @@ function RealEstate() {
                               ? estate.listing_type.slice(0, 18) + '...'
                               : estate.listing_type}
                           </p>
-                          <div className="text-xs lg:text-sm mb-2">${estate.asking_price}</div>
+                          <div className="text-xs lg:text-sm mb-2">${parseInt(estate.asking_price, 10)}</div>
                         </div>
                       </div>
                     </div>

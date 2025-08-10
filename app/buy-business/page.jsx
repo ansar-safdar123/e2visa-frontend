@@ -388,11 +388,17 @@ function BuyBusiness() {
                             ? business.business_name.slice(0, 50) + '...'
                             : business.business_name}
                         </h2>
-                        <p className="text-xs lg:text-sm mb-2">
+                        {/* <p className="text-xs lg:text-sm mb-2">
                           {business.listing_type.length > 28
                             ? business.listing_type.slice(0, 28) + '...'
                             : business.listing_type}
-                        </p>
+                        </p> */}
+                        <div className="flex items-center justify-between mt-2">
+                          <p className="text-xs text-gray-600 truncate max-w-[60%]">
+                            {business.listing_type}
+                          </p>
+                          <p className="text-sm font-medium text-gray-900">${parseInt(business.asking_price, 10)}</p>
+                        </div>
 
                       </div>
                     </div>

@@ -315,10 +315,10 @@ export default function ForumPostPage({ params }) {
                     </div>
                   )}
                   {c.replies && c.replies.length > 0 && (
-                    <div className="text-sm ml-6 mt-2 space-y-4">
+                    <div className="text-sm sm:ml-6 mt-2 space-y-4">
                       {c.replies.map(r => (
                         <div key={r.id} className="flex items-start w-full gap-3">
-                          <div className="!max-w-10 w-full !h-10 rounded-full flex items-center justify-center">
+                          <div className="!min-w-10 !h-10 rounded-full flex items-center justify-center">
 
                             {r.user && r.user.image && BACKEND_STORAGE_URL ? (
                               <Image
@@ -339,8 +339,8 @@ export default function ForumPostPage({ params }) {
                             )}
                           </div>
                           <div>
-                            <div className="font-semibold text-[#0A3161] flex items-center">
-                              {r.user.name}
+                            <div className="font-semibold text-[#0A3161] flex text-xs sm:text-sm items-center">
+                              <span className=''>{r.user.name}</span>
                             <div className="w-6 h-6 rounded-full overflow-hidden mx-1 border border-gray-200">
                               {r.replier_badge_icon && BACKEND_STORAGE_URL ? (
                                 <Image
