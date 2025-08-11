@@ -61,10 +61,11 @@ const FeaturedListings = ({ listings, loading, title = 'Featured Listing' }) => 
                     </h2>
                     <div className="flex items-center justify-between">
                       <p className="text-xs lg:text-sm mb-2">
-                        {listing.listing_type?.length > 28
-                          ? listing.listing_type.slice(0, 28) + '...'
+                        {listing.listing_type?.length > 20
+                          ? listing.listing_type.slice(0, 20) + '...'
                           : listing.listing_type}
                       </p>
+                      <p className="text-sm font-medium text-gray-900">${parseInt(listing.asking_price, 10)}</p>
                     </div>
                   </div>
                 </div>
