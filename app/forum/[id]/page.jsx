@@ -164,7 +164,9 @@ export default function ForumPostPage({ params }) {
           </div>
           <div className="flex items-center">
             <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
-            <div className="w-6 h-6 rounded-full overflow-hidden mr-3 border border-gray-200">
+            <div className="w-6 h-6 rounded-full overflow-hidden mr-3 border border-gray-200"
+            title={forum.created_by.role}
+            >
               {forum.creator_badge_icon && BACKEND_STORAGE_URL ? (
                 <Image
                   src={`${BACKEND_STORAGE_URL}/${forum.creator_badge_icon}`}
@@ -229,8 +231,9 @@ export default function ForumPostPage({ params }) {
           {forum.comment && forum.comment.length > 0 ? (
             forum.comment.map((c) => (
               <div key={c.id} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden border flex justify-center items-center border-gray-200">
-
+                <div className="w-10 h-10 rounded-full overflow-hidden border flex justify-center items-center border-gray-200"
+                
+                >
                   {c.user && c.user.image && BACKEND_STORAGE_URL ? (
                     <Image
                       src={`${BACKEND_STORAGE_URL}/${c.user.image}`}
@@ -256,7 +259,9 @@ export default function ForumPostPage({ params }) {
                     <span>
                       {c.user.name}
                     </span>
-                    <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200">
+                    <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200"
+                    title={c.user.role} 
+                    >
                       {c.commentor_badge_icon && BACKEND_STORAGE_URL ? (
                         <Image
                           src={`${BACKEND_STORAGE_URL}/${c.commentor_badge_icon}`}
@@ -341,7 +346,9 @@ export default function ForumPostPage({ params }) {
                           <div>
                             <div className="font-semibold text-[#0A3161] flex text-xs sm:text-sm items-center">
                               <span className=''>{r.user.name}</span>
-                            <div className="w-6 h-6 rounded-full overflow-hidden mx-1 border border-gray-200">
+                            <div className="w-6 h-6 rounded-full overflow-hidden mx-1 border border-gray-200"
+                            title={r.user.role}
+                            >
                               {r.replier_badge_icon && BACKEND_STORAGE_URL ? (
                                 <Image
                                   src={`${BACKEND_STORAGE_URL}/${r.replier_badge_icon}`}

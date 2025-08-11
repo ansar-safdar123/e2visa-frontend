@@ -988,7 +988,9 @@ function Forum() {
                     </div>
                     <div className="flex items-center">
                       <span className="font-semibold text-[#0A3161] mr-2">{forum.created_by.name}</span>
-                      <div className="w-6 h-6 rounded-full overflow-hidden mr-3 border border-gray-200">
+                      <div className="w-6 h-6 rounded-full overflow-hidden mr-3 border border-gray-200"
+                      title={forum.created_by.role} // <-- Tooltip text
+                      >
                       {forum.creator_badge_icon && BACKEND_STORAGE_URL ? (
                         <Image
                           src={`${BACKEND_STORAGE_URL}/${forum.creator_badge_icon}`}
